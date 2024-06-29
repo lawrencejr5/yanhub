@@ -39,7 +39,7 @@ const Greet = () => {
   return (
     <div className="header">
       <h3>{greet} Lawrencejr</h3>
-      <small>{datetime.toLocaleTimeString}</small>
+      <small>{datetime.toString()}</small>
     </div>
   );
 };
