@@ -13,10 +13,11 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <main className="dashboard-main">
+    <main className="grid-body dashboard-main">
       <Nav />
       <section className="body">
         <Greet />
+        <h2 className="heading">Your Dashboard</h2>
         <div className="layout">
           <div className="layout1">
             <div className="total-xp">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 const Greet = () => {
   const [datetime, setDatetime] = useState(new Date());
-  const [greet, setGreet] = useState("");
+  const [greet, setGreet] = useState("Good .....");
 
   useEffect(() => {
     const timeInterval = setInterval(() => {

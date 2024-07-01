@@ -4,7 +4,7 @@ export const navList = [
   {
     nav: "Dashboard",
     icon: <FaBars />,
-    dir: "/dashboard",
+    dir: "/",
   },
   {
     nav: "Tasks",
@@ -17,8 +17,8 @@ export const navList = [
     dir: "/users",
   },
   {
-    nav: "Settings",
+    nav: "Account",
     icon: <FaBars />,
-    dir: "/settings",
+    dir: "/account",
   },
 ];

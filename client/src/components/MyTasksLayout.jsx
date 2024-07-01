@@ -25,7 +25,7 @@ const MyTasksLayout = () => {
         </tbody>
       </table>
       <div className="link-container">
-        <Link to={"/tasks"} className="link">
+        <Link to={"/my-tasks"} className="link">
           Manage all your tasks...
         </Link>
       </div>

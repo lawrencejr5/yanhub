@@ -1,6 +1,6 @@
 // modules
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FaPowerOff } from "react-icons/fa";
 
 // components
@@ -10,6 +10,7 @@ import Logo from "./Logo";
 import { navList } from "../data/nav";
 
 const Nav = () => {
+  const { pathname } = useLocation();
   return (
     <nav className="relative">
       <div className="sticky">
@@ -27,7 +28,7 @@ const Nav = () => {
                 <li key={index}>
                   <Link
                     to={dir}
-                    className={index === 0 ? "link active" : "link"}
+                    className={pathname === dir ? "link active" : "link"}
                   >
                     {icon}
                     &nbsp; {nav}
