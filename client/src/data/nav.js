@@ -7,6 +7,11 @@ export const navList = [
     dir: "/",
   },
   {
+    nav: "Videos",
+    icon: <FaBars />,
+    dir: "/videos",
+  },
+  {
     nav: "Tasks",
     icon: <FaBars />,
     dir: "/tasks",

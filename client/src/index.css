@@ -9,12 +9,14 @@
 
 :root {
   --primary: #fc3e25;
+  --primary-light: #f96b58;
   --secondary: whitesmoke;
   --secondary2: white;
   --black: black;
   --box-shadow: 8px 8px 24px rgba(188, 188, 188, 0.439);
   --box-shadow2: 4px 4px 12px rgba(188, 188, 188, 0.439);
   --box-shadow3: 2px 2px 24px rgba(188, 188, 188, 0.25);
+  --box-shadow4: 8px 8px 24px rgb(71, 71, 71);
 }
 .dark {
   --primary: red;
@@ -192,26 +194,26 @@ main {
 }
 
 /* SearchBox Component Styling */
-.search-box{
+.search-box {
   margin: 1rem 0;
 }
-.search-box .inp-holder{
+.search-box .inp-holder {
   background-color: var(--secondary2);
   width: 100%;
   display: flex;
   align-items: center;
-  padding: .2rem .5rem;
+  padding: 0.2rem 0.5rem;
   border: 1px solid var(--black);
   border-radius: 5px;
 }
-.search-box .inp-holder input{
-  padding: .5rem;
+.search-box .inp-holder input {
+  padding: 0.5rem;
   width: 90%;
   border: none;
   outline: none;
 }
-.search-box .inp-holder .search-icon{
-  width: 10%;
+.search-box .inp-holder .search-icon {
+  /* width: 10%; */
   font-size: 20px;
   color: var(--black);
 }
@@ -356,7 +358,7 @@ main {
   background: transparent;
   padding: 1rem;
 }
-.dashboard-main .body .heading{
+.dashboard-main .body .heading {
   margin-top: 3rem;
 }
 .dashboard-main .body .layout {
@@ -443,38 +445,267 @@ main {
 }
 
 /* Tasks Page Styling */
-.tasks-main .body{
+.tasks-main .body {
   padding: 1rem;
 }
-.tasks-main .body .createTaskBtn{
+.tasks-main .body .createTaskBtn {
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   display: flex;
   justify-content: flex-end;
 }
-.tasks-main .body .createTaskBtn button{
+.tasks-main .body .createTaskBtn button {
   background-color: var(--primary);
   color: var(--secondary2);
   border: none;
   outline: none;
-  padding: .3rem .5rem;
+  padding: 0.3rem 0.5rem;
   border-radius: 2px;
   font-weight: 600;
   display: flex;
   align-items: center;
-  box-shadow: 2px 2px 10px grey;
 }
-.tasks-main .body .createTaskBtn button:hover{
-  box-shadow: none;
-}
-.tasks-main .body .tasks{
+
+.tasks-main .body .tasks {
   width: 100%;
   height: 500px;
   margin: 1rem 0;
   border-radius: 5px;
 }
 
+.task-form-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  transform: translateY(100%);
+}
+.task-form-container form {
+  background-color: var(--secondary2);
+  width: 100%;
+  height: 100vh;
+  box-shadow: var(--box-shadow4);
+  border-radius: 30px;
+  padding: 0.5rem;
+}
+.task-form-open {
+  transform: translateY(8%);
+}
+.task-form-container form .header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+.task-form-container form .header .icon {
+  font-size: 25px;
+  cursor: pointer;
+}
+.task-form-container form .inp-handler {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.task-form-container form .inp-handler .inp-holder {
+  width: 90%;
+  background-color: var(--secondary2);
+  margin: 1rem;
+  padding: 0.5rem;
+  box-shadow: var(--box-shadow2);
+}
+.task-form-container form .inp-handler .inp-holder input,
+.task-form-container form .inp-handler .inp-holder select {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 0.5rem;
+}
+.task-form-container form .btn-handler {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+.task-form-container form .btn-handler button {
+  width: 50%;
+  background-color: var(--primary);
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: var(--secondary2);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: var(--box-shadow);
+}
+.task-form-container form .btn-handler button:hover {
+  box-shadow: none;
+}
+
+/* Videos Page Styling */
+.video-main .body {
+  padding: 1rem;
+}
+.video-main .body .createVideoBtn {
+  width: 100%;
+  padding: 0.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+.video-main .body .createVideoBtn button {
+  background-color: var(--primary);
+  color: var(--secondary2);
+  border: none;
+  outline: none;
+  padding: 0.3rem 0.5rem;
+  border-radius: 2px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+}
+
+.video-main .create-video-container {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(1);
+}
+
+.video-main .hide {
+  scale: 0;
+}
+
+.video-main .create-video-container form {
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  width: 500px;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.video-main .create-video-container form .header {
+  display: flex;
+  justify-content: space-between;
+}
+.video-main .create-video-container form .header .icon {
+  cursor: pointer;
+}
+
+.video-main .create-video-container form .inp-handler .inp-holder {
+  width: 90%;
+  background-color: var(--secondary2);
+  margin: 1rem;
+  padding: 0.5rem;
+  box-shadow: var(--box-shadow2);
+}
+.video-main .create-video-container form .inp-handler .inp-holder input,
+.video-main .create-video-container form .inp-handler .inp-holder select {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 0.5rem;
+}
+.video-main .create-video-container form .btn-handler {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+.video-main .create-video-container form .btn-handler button {
+  width: 50%;
+  background-color: var(--primary);
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: var(--secondary2);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: var(--box-shadow);
+}
+.video-main .create-video-container form .btn-handler button:hover {
+  box-shadow: none;
+}
+
+.video-main .videos {
+  margin-top: 1rem;
+}
+.video-main .videos .header {
+  display: flex;
+  justify-content: space-between;
+}
+.video-main .videos .header select {
+  padding: 0.3rem;
+  outline: 0;
+}
+.video-main .videos-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  margin-top: 2rem;
+}
+.video-main .videos-container .video {
+  background: var(--secondary2);
+  box-shadow: var(--box-shadow);
+  border-radius: 5px;
+  height: auto;
+  width: 90%;
+  margin: 0.5rem;
+  padding: 1rem;
+  cursor: pointer;
+}
+.video-main .videos-container .video .vid-icon {
+  display: grid;
+  place-content: center;
+  margin: 1rem 0;
+}
+.video-main .videos-container .video .vid-icon img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+.video-main .videos-container .video .vid-details strong {
+  height: 60px;
+  display: table;
+}
+.video-main .videos-container .video .vid-details .tag {
+  background-color: green;
+  padding: 0.3rem;
+  color: var(--secondary2);
+  border-radius: 4px;
+}
+
+.video-main .vid-details-modal {
+  height: 100vh;
+  width: 100%;
+  background-color: var(--secondary2);
+  box-shadow: var(--box-shadow4);
+  position: fixed;
+  top: 0;
+  transform: translateY(8%);
+  padding: 1rem;
+}
+.video-main .hide-down {
+  transform: translateY(100%);
+}
+.video-main .vid-details-modal .header {
+  display: flex;
+  justify-content: space-between;
+}
+.video-main .vid-details-modal .header .icon {
+  cursor: pointer;
+}
 /* Users Page Styling */
-.users-main .body{
+.users-main .body {
   padding: 1rem;
 }
