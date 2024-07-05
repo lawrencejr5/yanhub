@@ -1,11 +1,14 @@
 import React from "react";
 
 import { leaderboard } from "../data/leaderboard";
+import { month } from "../data/date";
 const LeaderboardNav = () => {
+  const d = new Date();
+  const currMonth = month[d.getMonth()];
   return (
     <aside className="relative">
       <div className="sticky">
-        <h4>June Leaderboard</h4>
+        <h4>{currMonth} Leaderboard</h4>
 
         <div className="list">
           <ul>

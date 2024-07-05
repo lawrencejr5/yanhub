@@ -675,16 +675,23 @@ main {
   border-radius: 50%;
 }
 .video-main .videos-container .video .vid-details strong {
-  height: 60px;
   display: table;
 }
 .video-main .videos-container .video .vid-details .tag {
-  background-color: green;
   padding: 0.3rem;
   color: var(--secondary2);
   border-radius: 4px;
+  font-size: 10px;
 }
-
+.video-main .videos-container .video .vid-details .danger {
+  background-color: #fc3e25;
+}
+.video-main .videos-container .video .vid-details .success {
+  background-color: #10c319;
+}
+.video-main .videos-container .video .vid-details .warning {
+  background-color: #ff9900;
+}
 .video-main .vid-details-modal {
   height: 100vh;
   width: 100%;
@@ -692,7 +699,7 @@ main {
   box-shadow: var(--box-shadow4);
   position: fixed;
   top: 0;
-  transform: translateY(8%);
+  transform: translateY(60%);
   padding: 1rem;
 }
 .video-main .hide-down {
@@ -704,6 +711,14 @@ main {
 }
 .video-main .vid-details-modal .header .icon {
   cursor: pointer;
+}
+.video-main .vid-details-modal .details {
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+.video-main .vid-details-modal .details .details-container {
+  margin: 1rem;
 }
 /* Users Page Styling */
 .users-main .body {

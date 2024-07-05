@@ -9,6 +9,7 @@ import Users from "./pages/Users";
 import Account from "./pages/Account";
 import MyTasks from "./pages/MyTasks";
 import Videos from "./pages/Videos";
+import Video from "./pages/Video";
 const App = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const App = () => {
           <Route path="login" element={<Login />}></Route>
           <Route path="register" element={<Register />}></Route>
           <Route path="videos" element={<Videos />}></Route>
+          <Route path="videos/:name" element={<Video />}></Route>
           <Route path="tasks" element={<Tasks />}></Route>
           <Route path="users" element={<Users />}></Route>
           <Route path="account" element={<Account />}></Route>
