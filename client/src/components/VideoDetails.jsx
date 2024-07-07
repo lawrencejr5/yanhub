@@ -3,44 +3,61 @@ import { FaChevronDown } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
-import { videos } from "../data/videos";
+import { shows, videos } from "../data/videos";
 
-const VideoDetails = ({ open }) => {
+const VideoDetails = ({ open, curr }) => {
   const { setVideoDetailsModal, vidDetailsId } = useGlobalContext();
+
+  const findShow = shows.find((show) => show.show === curr);
+
   const singleVid = videos.find((vid) => vid.id === vidDetailsId);
-  const { show, ep, dur, users, status } = singleVid;
+  const { show, ep, dur, users, status, datetime } = singleVid;
   return (
-    <div className={open ? "vid-details-modal" : "vid-details-modal hide-down"}>
-      <div className="header">
-        <h3>Video details</h3>
-        <FaChevronDown
-          className="icon"
-          onClick={() => setVideoDetailsModal(false)}
-        />
+    <div
+      className={
+        open ? `vid-details-container open` : `vid-details-container close`
+      }
+    >
+      <div className="vid-details-modal">
+        <div className="header">
+          <h3>Video details</h3>
+          <FaChevronDown
+            style={{ cursor: "pointer" }}
+            onClick={() => setVideoDetailsModal(false)}
+          />
+        </div>
+        <div
+          className="banner"
+          style={{ backgroundImage: `url(/imgs/background/${findShow.img})` }}
+        ></div>
+        <div className="details">
+          <div className="details-container">
+            <strong>Show: </strong>
+            <span>{show}</span>
+          </div>
+          <div className="details-container">
+            <strong>Episode: </strong>
+            <span>{ep}</span>
+          </div>
+          <div className="details-container">
+            <strong>Status: </strong>
+            <span>{status}</span>
+          </div>
+          <div className="details-container">
+            <strong>No. of users on it: </strong>
+            <span>{users}</span>
+          </div>
+          <div className="details-container">
+            <strong>Duration: </strong>
+            <span>{dur}</span>
+          </div>
+          <div className="details-container">
+            <strong>Date Created: </strong>
+            <span>{datetime}</span>
+          </div>
+        </div>
+        <button>Show Tasks</button>
       </div>
-      <div className="details">
-        <div className="details-container">
-          <strong>Show: </strong>
-          <span>{show}</span>
-        </div>
-        <div className="details-container">
-          <strong>Episode: </strong>
-          <span>{ep}</span>
-        </div>
-        <div className="details-container">
-          <strong>Status: </strong>
-          <span>{status}</span>
-        </div>
-        <div className="details-container">
-          <strong>No. of users on it: </strong>
-          <span>{users}</span>
-        </div>
-        <div className="details-container">
-          <strong>Duration: </strong>
-          <span>{dur}</span>
-        </div>
-      </div>
-      <button>Show Tasks</button>
     </div>
   );
 };

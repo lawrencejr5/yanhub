@@ -1,9 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { useGlobalContext } from "../Context";
-import { videos } from "../data/videos";
-
 const SingleShow = ({ shws }) => {
   const { show, numOfVids } = shws;
 
@@ -19,6 +16,7 @@ const SingleShow = ({ shws }) => {
       </div>
       <div className="vid-details">
         <strong>{`${show}`}</strong>
+        <br />
         <small>{numOfVids} Videos</small>
       </div>
     </div>
