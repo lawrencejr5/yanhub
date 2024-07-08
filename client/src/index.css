@@ -55,6 +55,15 @@ main {
 .warning {
   background-color: var(--warning);
 }
+.text-danger {
+  color: var(--danger);
+}
+.text-warning {
+  color: var(--warning);
+}
+.text-success {
+  color: var(--success);
+}
 .center {
   display: flex;
   justify-content: center;
