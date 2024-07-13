@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
@@ -6,12 +7,19 @@ import { useGlobalContext } from "../Context";
 import { shows, videos } from "../data/videos";
 
 const VideoDetails = ({ open, curr }) => {
+  const navigate = useNavigate();
+
   const { setVideoDetailsModal, vidDetailsId } = useGlobalContext();
 
   const findShow = shows.find((show) => show.show === curr);
 
   const singleVid = videos.find((vid) => vid.id === vidDetailsId);
   const { show, ep, dur, users, status, datetime } = singleVid;
+
+  const func = () => {
+    navigate(`/task/${vidDetailsId}`);
+    setVideoDetailsModal(false);
+  };
   return (
     <div
       className={
@@ -56,7 +64,9 @@ const VideoDetails = ({ open, curr }) => {
             <span>{datetime}</span>
           </div>
         </div>
-        <button>Show Tasks</button>
+        <div className="btn-holder">
+          <button onClick={() => func()}>Show Tasks</button>
+        </div>
       </div>
     </div>
   );

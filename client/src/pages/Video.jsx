@@ -9,7 +9,7 @@ import { videos, shows } from "../data/videos";
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
-import Greet from "../components/Greet";
+import Back from "../components/Back";
 import SingleVideo from "../components/SingleVideo";
 import VideoDetails from "../components/VideoDetails";
 
@@ -29,7 +29,7 @@ const Video = () => {
     <main className="video-main grid-body">
       <Nav />
       <section className="body">
-        <Greet />
+        <Back text={"Gbam video"} />
         <div className="createVideoBtn">
           <button>
             New Video &nbsp;

@@ -41,7 +41,7 @@ const Nav = () => {
       </div>
       <div className="logout">
         <FaPowerOff />
-        <Link to="login" className="link">
+        <Link to="/login" className="link">
           Logout
         </Link>
       </div>

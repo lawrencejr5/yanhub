@@ -11,11 +11,11 @@ export const navList = [
     icon: <FaBars />,
     dir: "/videos",
   },
-  {
-    nav: "Tasks",
-    icon: <FaBars />,
-    dir: "/tasks",
-  },
+  // {
+  //   nav: "Tasks",
+  //   icon: <FaBars />,
+  //   dir: "/tasks",
+  // },
   {
     nav: "Users",
     icon: <FaBars />,
