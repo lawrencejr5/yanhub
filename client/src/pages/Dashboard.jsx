@@ -30,7 +30,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="layout2">
-            <h2>Current Task</h2>
+            <h2>Latest Task</h2>
             <h4>Obiagelli Studio</h4>
             <br />
             <p>Type: Subtitle</p>
