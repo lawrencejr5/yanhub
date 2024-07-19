@@ -25,8 +25,11 @@ const Tasks = () => {
             <FaPlusCircle />
           </button>
         </div>
-        <div className="tasks">
+        <div className="header">
           <h2>Tasks</h2>
+        </div>
+        <div className="tasks-container">
+          <div className="task-box"></div>
         </div>
       </section>
       <LeaderboardNav />

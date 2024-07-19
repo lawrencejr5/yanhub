@@ -6,6 +6,7 @@ export const Context = ({ children }) => {
   const [openCreateVideoModal, setOpenCreateVideoModal] = useState(false);
   const [videoDetailsModal, setVideoDetailsModal] = useState(false);
   const [vidDetailsId, setVidDetailsId] = useState(1);
+  const [assignModal, setAssignModal] = useState(false);
   return (
     <ContextApp.Provider
       value={{
@@ -17,6 +18,8 @@ export const Context = ({ children }) => {
         setVideoDetailsModal,
         vidDetailsId,
         setVidDetailsId,
+        assignModal,
+        setAssignModal,
       }}
     >
       {children}
