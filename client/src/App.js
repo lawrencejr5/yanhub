@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Notfound from "./pages/Notfound";
 import Tasks from "./pages/Tasks";
+import TasksPersonal from "./pages/TasksPersonal";
 import Task from "./pages/Task";
 import Users from "./pages/Users";
 import Account from "./pages/Account";
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="videos" element={<Videos />}></Route>
           <Route path="videos/:name" element={<Video />}></Route>
           <Route path="tasks" element={<Tasks />}></Route>
+          <Route path="tasks/personal" element={<TasksPersonal />}></Route>
           <Route path="task/:id" element={<Task />}></Route>
           <Route path="users" element={<Users />}></Route>
           <Route path="account" element={<Account />}></Route>

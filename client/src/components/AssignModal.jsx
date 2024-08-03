@@ -40,7 +40,7 @@ const AssignModal = () => {
           })}
           <br />
           <div className="btn-holder">
-            <button>Save changes</button>
+            <button type="button" onClick={()=>setAssignModal(false)}>Save changes</button>
           </div>
         </form>
       </div>

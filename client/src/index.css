@@ -71,9 +71,9 @@ main {
   align-items: center;
 }
 .sticky {
-  position: sticky;
+  position: fixed;
   top: 1rem;
-  height: 0vh;
+  width: 15%;
 }
 .relative {
   position: relative;
@@ -650,21 +650,45 @@ main {
   display: flex;
   align-items: center;
 }
+.tasks-main .body .header .sort-nav{
+  width: 97%;
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid black;
+  padding: .5rem;
+  border-radius: 5px;
+}
+.tasks-main .body .header .sort-nav button{
+  width: 40%;
+  padding: .5rem;
+  font-weight: 600;
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  background: transparent;
+}
+.tasks-main .body .header .sort-nav .active{
+  background-color: var(--primary);
+  color: var(--secondary2);
+}
+
 .tasks-main .body .tasks-container {
   margin: 1rem 0.5rem;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  /* display: grid;
+  grid-template-columns: 1fr; */
 }
 .tasks-main .body .tasks-container .task-box {
   background-color: var(--secondary2);
-  border-left: 5px solid var(--primary);
+  /* border-left: 5px solid var(--primary); */
   width: 96%;
   height: 100px;
   border-radius: 10px;
   box-shadow: var(--box-shadow2);
   margin: 1rem;
   margin-left: 0;
-  padding: 0.5rem;
+  padding: 0.5rem 1.5rem;
 }
 .tasks-main .body .tasks-container .task-box .header {
   display: flex;

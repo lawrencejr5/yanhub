@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { FaChevronCircleUp } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
@@ -16,7 +17,7 @@ const Tasks = () => {
   useEffect(() => {
     document.title = "Yanhub - Tasks";
   }, []);
-
+const navigate = useNavigate()
   const { openCreateTaskModal, setOpenCreateTaskModal } = useGlobalContext();
   return (
     <main className="grid-body tasks-main">
@@ -31,6 +32,10 @@ const Tasks = () => {
         </div>
         <div className="header">
           <h2>Tasks</h2>
+          <div className="sort-nav">
+            <button className="active" onClick={()=>navigate('/tasks')}>All</button>
+            <button className="" onClick={()=>navigate('/tasks/personal')}>Personal</button>
+          </div>
         </div>
         <div className="tasks-container">
           {tasks.map((task, index) => {
@@ -65,9 +70,11 @@ const Tasks = () => {
                   <span>{duration}</span> . <span>{type}</span>
                 </div>
                 <div className="users">
-                  {usrs.map((usr) => {
+                  {usrs.map((usr, i) => {
                     const getUser = users.find((user) => usr === user.username);
-                    return <img src={`/imgs/user/${getUser.pic}`} alt="" />;
+                    return (
+                      <img src={`/imgs/user/${getUser.pic}`} alt="" key={i} />
+                    );
                   })}
                 </div>
               </div>
