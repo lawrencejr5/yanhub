@@ -1,3 +1,42 @@
+export const shows = [
+  {
+    id: 1,
+    img: "white1.jpg",
+    show: "Gbam",
+    numOfVids: 7,
+  },
+  {
+    id: 2,
+    img: "red1.jpg",
+    show: "Umu Ada",
+    numOfVids: 3,
+  },
+  {
+    id: 3,
+    img: "red1.jpg",
+    show: "Obiagelli Studios",
+    numOfVids: 5,
+  },
+  {
+    id: 4,
+    img: "red1.jpg",
+    show: "Oku na Uka",
+    numOfVids: 9,
+  },
+  {
+    id: 5,
+    img: "red1.jpg",
+    show: "Oku Di Over",
+    numOfVids: 6,
+  },
+  {
+    id: 1,
+    img: "red1.jpg",
+    show: "O set eh",
+    numOfVids: 2,
+  },
+];
+
 export const videos = [
   {
     id: 1,
@@ -191,44 +230,5 @@ export const videos = [
     status: "undone",
     ep: "8",
     dur: "",
-  },
-];
-
-export const shows = [
-  {
-    id: 1,
-    img: "white1.jpg",
-    show: "Gbam",
-    numOfVids: 7,
-  },
-  {
-    id: 2,
-    img: "red1.jpg",
-    show: "Umu Ada",
-    numOfVids: 3,
-  },
-  {
-    id: 3,
-    img: "red1.jpg",
-    show: "Obiagelli Studios",
-    numOfVids: 5,
-  },
-  {
-    id: 4,
-    img: "red1.jpg",
-    show: "Oku na Uka",
-    numOfVids: 9,
-  },
-  {
-    id: 5,
-    img: "red1.jpg",
-    show: "Oku Di Over",
-    numOfVids: 6,
-  },
-  {
-    id: 1,
-    img: "red1.jpg",
-    show: "O set eh",
-    numOfVids: 2,
   },
 ];

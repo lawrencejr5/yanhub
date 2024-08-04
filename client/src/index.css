@@ -650,26 +650,26 @@ main {
   display: flex;
   align-items: center;
 }
-.tasks-main .body .header .sort-nav{
+.tasks-main .body .header .sort-nav {
   width: 97%;
   margin: 1.5rem 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 1px solid black;
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 5px;
 }
-.tasks-main .body .header .sort-nav button{
+.tasks-main .body .header .sort-nav button {
   width: 40%;
-  padding: .5rem;
+  padding: 0.5rem;
   font-weight: 600;
   border: none;
   outline: none;
   border-radius: 15px;
   background: transparent;
 }
-.tasks-main .body .header .sort-nav .active{
+.tasks-main .body .header .sort-nav .active {
   background-color: var(--primary);
   color: var(--secondary2);
 }
@@ -1024,4 +1024,36 @@ main {
 /* Users Page Styling */
 .users-main .body {
   padding: 1rem;
+}
+
+.users-main .admins-container {
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.users-main .admins-container h3 {
+  flex-basis: 100%;
+  color: var(--primary);
+}
+.users-main .user-box {
+  width: 200px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: var(--box-shadow2);
+  margin: 1rem;
+  border-radius: 4px;
+  padding: 0.5rem;
+}
+.users-main #admin {
+  background-image: url(../public/imgs/background/white1.jpg);
+}
+.users-main #editor {
+  background-image: url(../public/imgs/background/white3.jpg);
+}
+.users-main .user-box p {
+  text-transform: capitalize;
+  font-weight: 600;
+  font-size: 18px;
 }
