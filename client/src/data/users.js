@@ -62,4 +62,11 @@ export const users = [
     admin: true,
     role: "developer",
   },
+  {
+    id: 1,
+    username: "effa",
+    pic: "user-6.png",
+    admin: false,
+    role: "editor",
+  },
 ];

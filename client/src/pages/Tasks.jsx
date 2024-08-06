@@ -17,7 +17,7 @@ const Tasks = () => {
   useEffect(() => {
     document.title = "Yanhub - Tasks";
   }, []);
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const { openCreateTaskModal, setOpenCreateTaskModal } = useGlobalContext();
   return (
     <main className="grid-body tasks-main">
@@ -25,16 +25,20 @@ const navigate = useNavigate()
       <section className="body">
         <Greet />
         <div className="createTaskBtn">
-          <button onClick={() => setOpenCreateTaskModal(true)}>
+          {/* <button onClick={() => setOpenCreateTaskModal(true)}>
             Todo List &nbsp;
             <FaChevronCircleUp />
-          </button>
+          </button> */}
         </div>
         <div className="header">
           <h2>Tasks</h2>
           <div className="sort-nav">
-            <button className="active" onClick={()=>navigate('/tasks')}>All</button>
-            <button className="" onClick={()=>navigate('/tasks/personal')}>Personal</button>
+            <button className="active" onClick={() => navigate("/tasks")}>
+              All
+            </button>
+            <button className="" onClick={() => navigate("/tasks/personal")}>
+              Personal
+            </button>
           </div>
         </div>
         <div className="tasks-container">

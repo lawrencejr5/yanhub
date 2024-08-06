@@ -8,6 +8,7 @@ import Tasks from "./pages/Tasks";
 import TasksPersonal from "./pages/TasksPersonal";
 import Task from "./pages/Task";
 import Users from "./pages/Users";
+import User from "./pages/User";
 import Account from "./pages/Account";
 import MyTasks from "./pages/MyTasks";
 import Videos from "./pages/Videos";
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="tasks/personal" element={<TasksPersonal />}></Route>
           <Route path="task/:id" element={<Task />}></Route>
           <Route path="users" element={<Users />}></Route>
+          <Route path="user/:username" element={<User />}></Route>
           <Route path="account" element={<Account />}></Route>
           <Route path="my-tasks" element={<MyTasks />}></Route>
           <Route path="*" element={<Notfound />}></Route>

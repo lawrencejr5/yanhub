@@ -7,12 +7,14 @@ import Greet from "../components/Greet";
 import SearchBox from "../components/SearchBox";
 
 import { users } from "../data/users";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Users = () => {
   useEffect(() => {
     document.title = "Yanhub - Users";
   }, []);
+
+  const navigate = useNavigate();
 
   const admins = users.filter((user) => user.admin === true);
   const editors = users.filter((user) => user.admin === false);
@@ -29,7 +31,12 @@ const Users = () => {
           {admins.map((admin, index) => {
             const { username, pic, role } = admin;
             return (
-              <div className="user-box" id="admin" key={index}>
+              <div
+                className="user-box"
+                id="admin"
+                key={index}
+                onClick={() => navigate(`/user/${username}`)}
+              >
                 <img src={`/imgs/user/${pic}`} alt="" />
                 <p>{username}</p>
                 <small>{role}</small>
@@ -42,7 +49,12 @@ const Users = () => {
           {editors.map((editor, index) => {
             const { username, pic, role } = editor;
             return (
-              <div className="user-box" id="editor" key={index}>
+              <div
+                className="user-box"
+                id="editor"
+                key={index}
+                onClick={() => navigate(`/user/${username}`)}
+              >
                 <img src={`/imgs/user/${pic}`} alt="" />
                 <p>{username}</p>
                 <small>{role}</small>

@@ -25,8 +25,8 @@
 }
 .dark {
   --primary: red;
-  --secondary: black;
-  --secondary2: black;
+  --secondary: #000;
+  --secondary2: rgb(62, 62, 62);
   --text1: #fff;
   --text2: #000;
 }
@@ -307,6 +307,40 @@ main {
   border: none;
   border-radius: 3px;
   margin: 1rem 0;
+}
+
+/* Task box component */
+.task-box {
+  background-color: var(--secondary2);
+  /* border-left: 5px solid var(--primary); */
+  width: 96%;
+  /* height: 100px; */
+  border-radius: 10px;
+  box-shadow: var(--box-shadow2);
+  margin: 1rem;
+  margin-left: 0;
+  padding: 0.5rem 1.5rem;
+}
+.task-box .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+.task-box .header #status {
+  padding: 0.2rem;
+  font-size: 10px;
+  border-radius: 4px;
+  color: var(--secondary2);
+}
+.task-box .users {
+  display: flex;
+  justify-content: flex-start;
+}
+.task-box .users img {
+  border: 3px solid var(--secondary2);
+  width: 20px;
+  height: 20px;
 }
 
 /* Assign Modal Component Styling */
@@ -1045,15 +1079,107 @@ main {
   margin: 1rem;
   border-radius: 4px;
   padding: 0.5rem;
+  background-color: var(--secondary2);
+  cursor: pointer;
 }
-.users-main #admin {
+/* .users-main #admin {
   background-image: url(../public/imgs/background/white1.jpg);
 }
 .users-main #editor {
   background-image: url(../public/imgs/background/white3.jpg);
-}
+} */
 .users-main .user-box p {
   text-transform: capitalize;
   font-weight: 600;
   font-size: 18px;
+}
+
+/* Account page styling */
+.account-main {
+  padding: 1rem;
+}
+.account-main .body .banner {
+  background-image: url(../public/imgs/background/white1.jpg);
+  height: 200px;
+  width: auto;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: 1rem;
+  position: relative;
+  border-radius: 3px;
+}
+.account-main .body .banner img {
+  position: absolute;
+  top: 140px;
+  right: 1rem;
+  width: 120px;
+  height: 120px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+}
+.account-main .body .details-sec {
+  margin: 0.5rem 0;
+}
+.account-main .body .name-sec h3 {
+  color: var(--primary);
+  text-transform: capitalize;
+}
+.account-main .body .name-sec p {
+  margin: 0.5rem 0;
+}
+.account-main .body .details-sec {
+  margin: 1rem 0;
+}
+.account-main .body .details-sec .details {
+  margin: 1rem 0;
+  background-color: var(--secondary2);
+  box-shadow: var(--box-shadow2);
+  /* border: 1px solid grey; */
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+.account-main .body .details-sec .details span {
+  display: block;
+  margin: 0.4rem 0;
+}
+.account-main .body .details-sec .details .btn-holder {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+.account-main .body .details-sec .details .btn-holder button {
+  background-color: var(--blue);
+  padding: 0.3rem 0.5rem;
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+}
+.account-main .body .set-sec {
+  margin: 1rem 0;
+}
+.account-main .body .set-sec .set-item {
+  width: 100%;
+  background-color: var(--secondary2);
+  padding: 1rem 0.5rem;
+  /* border: 1px solid grey; */
+  box-shadow: var(--box-shadow2);
+  border-radius: 3px;
+  margin: 1rem 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.account-main .body .set-sec .set-item button {
+  background-color: transparent;
+  color: var(--text1);
+  border: none;
+  outline: none;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: 600;
+}
+.account-main .body .tasks-sec h3 {
+  text-transform: capitalize;
 }

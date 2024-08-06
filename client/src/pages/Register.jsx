@@ -18,15 +18,19 @@ const Register = () => {
             <form action="">
               <div className="inp-handler">
                 <FaUser className="icon" />
-                <input type="text" placeholder="Username" autoComplete="off" />
+                <input type="text" placeholder="Fullname" autoComplete="off" />
+              </div>
+              <div className="inp-handler">
+                <FaEnvelope className="icon left" />
+                <input
+                  type="username"
+                  placeholder="Username"
+                  autoComplete="off"
+                />
               </div>
               <div className="inp-handler">
                 <FaPhone className="icon" />
                 <input type="tel" placeholder="Phone" autoComplete="off" />
-              </div>
-              <div className="inp-handler">
-                <FaEnvelope className="icon left" />
-                <input type="email" placeholder="Email" autoComplete="off" />
               </div>
               <div className="inp-handler">
                 <FaLock className="icon" />
