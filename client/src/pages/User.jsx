@@ -30,7 +30,7 @@ const Account = () => {
           <img src={`/imgs/user/${pic}`} alt="" />
         </div>
         <div className="name-sec">
-          <h3>{username}</h3>
+          <h3>{user.fullname}</h3>
           <small>{`@${username}`}</small>
           <p>I am the developer of yanhub</p>
         </div>

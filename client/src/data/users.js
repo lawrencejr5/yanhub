@@ -2,6 +2,7 @@ export const users = [
   {
     id: 5,
     username: "yanbaba",
+    fullname: "Chijioke Igwendu",
     admin: true,
     role: "boss",
     pic: "user-4.png",
@@ -9,6 +10,7 @@ export const users = [
   {
     id: 2,
     username: "dave",
+    fullname: "David Ojonugba",
     admin: true,
     role: "chief-editor",
     pic: "user-2.png",
@@ -16,6 +18,7 @@ export const users = [
   {
     id: 3,
     username: "stanely",
+    fullname: "Stanely Uka",
     admin: false,
     role: "editor",
     pic: "user-3.png",
@@ -23,6 +26,7 @@ export const users = [
   {
     id: 4,
     username: "kelechi",
+    fullname: "Nimem Kelechi",
     admin: false,
     role: "editor",
     pic: "user-4.png",
@@ -30,6 +34,7 @@ export const users = [
   {
     id: 5,
     username: "asher",
+    fullname: "Arinze Michael",
     admin: false,
     role: "editor",
     pic: "user-5.png",
@@ -37,6 +42,7 @@ export const users = [
   {
     id: 5,
     username: "vivian",
+    fullname: "Vivian Mbise",
     admin: false,
     role: "editor",
     pic: "user-9.png",
@@ -44,6 +50,7 @@ export const users = [
   {
     id: 5,
     username: "chioma",
+    fullname: "Chioma Chukwuka",
     admin: false,
     role: "editor",
     pic: "user-8.png",
@@ -51,6 +58,7 @@ export const users = [
   {
     id: 5,
     username: "gospel",
+    fullname: "Gospel John",
     admin: true,
     role: "manager",
     pic: "user-7.png",
@@ -58,6 +66,7 @@ export const users = [
   {
     id: 1,
     username: "lawrencejr",
+    fullname: "Oputa Ifeanyi Lawrence",
     pic: "user-6.png",
     admin: true,
     role: "developer",
@@ -65,6 +74,7 @@ export const users = [
   {
     id: 1,
     username: "effa",
+    fullname: "Effa Desmond",
     pic: "user-6.png",
     admin: false,
     role: "editor",

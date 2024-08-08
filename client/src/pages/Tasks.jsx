@@ -8,7 +8,7 @@ import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
-import CreateTaskForm from "../components/CreateTaskForm";
+import UserModal from "../components/UserModal";
 
 import { tasks } from "../data/tasks";
 import { users } from "../data/users";
@@ -18,18 +18,25 @@ const Tasks = () => {
     document.title = "Yanhub - Tasks";
   }, []);
   const navigate = useNavigate();
-  const { openCreateTaskModal, setOpenCreateTaskModal } = useGlobalContext();
+
+  const { setUserModal, userForUserModal, setUserForUserModal } =
+    useGlobalContext();
+
+  const clickFunc = (user) => {
+    setUserModal(true);
+    setUserForUserModal(user);
+  };
+  const currUser = users.find((user) => {
+    if (userForUserModal) return user.username === userForUserModal;
+    else return;
+  });
+
   return (
     <main className="grid-body tasks-main">
       <Nav />
       <section className="body">
         <Greet />
-        <div className="createTaskBtn">
-          {/* <button onClick={() => setOpenCreateTaskModal(true)}>
-            Todo List &nbsp;
-            <FaChevronCircleUp />
-          </button> */}
-        </div>
+        <div className="createTaskBtn"></div>
         <div className="header">
           <h2>Tasks</h2>
           <div className="sort-nav">
@@ -77,7 +84,12 @@ const Tasks = () => {
                   {usrs.map((usr, i) => {
                     const getUser = users.find((user) => usr === user.username);
                     return (
-                      <img src={`/imgs/user/${getUser.pic}`} alt="" key={i} />
+                      <img
+                        src={`/imgs/user/${getUser.pic}`}
+                        alt=""
+                        key={i}
+                        onClick={() => clickFunc(getUser.username)}
+                      />
                     );
                   })}
                 </div>
@@ -86,9 +98,9 @@ const Tasks = () => {
           })}
         </div>
       </section>
+      <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
-      <CreateTaskForm open={openCreateTaskModal} />
     </main>
   );
 };

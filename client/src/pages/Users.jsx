@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import SearchBox from "../components/SearchBox";
+import UserModal from "../components/UserModal";
 
 import { users } from "../data/users";
-import { useNavigate } from "react-router-dom";
+
+import { useGlobalContext } from "../Context";
 
 const Users = () => {
   useEffect(() => {
@@ -18,6 +21,18 @@ const Users = () => {
 
   const admins = users.filter((user) => user.admin === true);
   const editors = users.filter((user) => user.admin === false);
+
+  const { setUserModal, userForUserModal, setUserForUserModal } =
+    useGlobalContext();
+
+  const clickFunc = (user) => {
+    setUserModal(true);
+    setUserForUserModal(user);
+  };
+  const currUser = users.find((user) => {
+    if (userForUserModal) return user.username === userForUserModal;
+    else return;
+  });
 
   return (
     <main className="grid-body users-main">
@@ -35,7 +50,7 @@ const Users = () => {
                 className="user-box"
                 id="admin"
                 key={index}
-                onClick={() => navigate(`/user/${username}`)}
+                onClick={() => clickFunc(username)}
               >
                 <img src={`/imgs/user/${pic}`} alt="" />
                 <p>{username}</p>
@@ -53,7 +68,7 @@ const Users = () => {
                 className="user-box"
                 id="editor"
                 key={index}
-                onClick={() => navigate(`/user/${username}`)}
+                onClick={() => clickFunc(username)}
               >
                 <img src={`/imgs/user/${pic}`} alt="" />
                 <p>{username}</p>
@@ -63,6 +78,7 @@ const Users = () => {
           })}
         </div>
       </section>
+      <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
     </main>

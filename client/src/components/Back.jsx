@@ -4,7 +4,7 @@ import { FaArrowLeft } from "react-icons/fa";
 const Back = ({ text }) => {
   const navigate = useNavigate();
   return (
-    <div className="back-nav">
+    <div className="back-nav sticky">
       <FaArrowLeft className="back-icon" onClick={() => navigate(-1)} />
       <h3>{text}</h3>
       <div></div>
