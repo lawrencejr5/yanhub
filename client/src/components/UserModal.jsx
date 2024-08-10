@@ -31,7 +31,7 @@ const UserModal = ({ currUser }) => {
         </div>
         <h3>{currUser.fullname}</h3>
         <span>
-          {currUser.username} . {currUser.role}
+          @{currUser.username} . {currUser.role}
         </span>
         <div className="btn-holder">
           <button type="button" onClick={() => goToPage()}>

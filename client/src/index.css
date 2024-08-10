@@ -9,7 +9,7 @@
 
 :root {
   --primary: #fc3e25;
-  --primary-light: #f96b58;
+  --primary-light: #ffa99b;
   --secondary: #f5f5f5;
   --secondary2: #fff;
   --text1: #000;
@@ -26,7 +26,7 @@
 .dark {
   --primary: red;
   --secondary: #000;
-  --secondary2: rgb(62, 62, 62);
+  --secondary2: #f4e1de;
   --text1: #fff;
   --text2: #000;
 }
@@ -474,6 +474,57 @@ main {
   cursor: pointer;
 }
 
+/* Edit Details Modal Styling */
+.edit-modal-container {
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* background-color: rgba(0, 0, 0, 0.8); */
+}
+.edit-modal-open {
+  transform: translateY(0%);
+}
+.edit-modal-close {
+  transform: translateY(-100%);
+}
+.edit-modal-container .edit-modal {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: auto;
+  padding: 1rem;
+  background-color: var(--secondary2);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: var(--box-shadow);
+}
+.edit-modal-container .edit-modal .header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.edit-modal-container .edit-modal form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 1rem 0;
+}
+.edit-modal-container .edit-modal .inp-holder {
+  background-color: var(--secondary2);
+  box-shadow: var(--box-shadow2);
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+}
+.edit-modal-container .edit-modal .inp-holder input {
+  width: 50%;
+  display: block;
+  outline-color: var(--primary-light);
+  padding: 0.5rem;
+  margin: 0.5rem 0;
+}
+
 /* Back Component Styling */
 .back-nav {
   display: flex;
@@ -801,6 +852,7 @@ main {
   border: 3px solid var(--secondary2);
   width: 20px;
   height: 20px;
+  cursor: pointer;
 }
 
 .task-form-container {

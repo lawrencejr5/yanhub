@@ -23,12 +23,12 @@ const Videos = () => {
       <Nav />
       <section className="body">
         <Greet />
-        <div className="createVideoBtn">
+        {/* <div className="createVideoBtn">
           <button onClick={() => setOpenCreateVideoModal(true)}>
             New Video &nbsp;
             <FaPlusCircle />
           </button>
-        </div>
+        </div> */}
         <div className="videos">
           <div className="header">
             <h2>Videos</h2>

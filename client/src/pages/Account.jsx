@@ -11,9 +11,18 @@ import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
+import EditDetailsModal from "../components/EditDetailsModal";
 import TaskBox from "../components/TaskBox";
 
+import { users } from "../data/users";
+import { tasks } from "../data/tasks";
+
+import { useGlobalContext } from "../Context";
+
 const Account = () => {
+  const { setEditModal, loggedIn } = useGlobalContext();
+
+  // Dark/Light mode function
   const [isDark, setIsDark] = useState(false);
   useEffect(() => {
     document.title = "Yanhub - My Account";
@@ -25,18 +34,24 @@ const Account = () => {
       return !prev;
     });
   };
+
+  // Get personal tasks
+  const user = users.find((usr) => usr.username === loggedIn);
+  const { pic, username, fullname } = user;
+  const userTasks = tasks.filter((task) => task.users.includes(loggedIn));
+
   return (
     <main className="grid-body account-main">
       <Nav />
       <section className="body">
         <Greet />
         <div className="banner">
-          <img src="/imgs/user/user-12.png" alt="" />
+          <img src={`/imgs/user/${pic}`} alt="" />
         </div>
         <div className="name-sec">
-          <h3>Oputa Ifeanyi Lawrence</h3>
-          <small>@lawrencejr</small>
-          <p>I am the developer of yanhub</p>
+          <h3>{fullname}</h3>
+          <small>@{username}</small>
+          <p>{"I am the developer of yanhub"}</p>
         </div>
         <div className="details-sec">
           <h3>User details...</h3>
@@ -51,7 +66,9 @@ const Account = () => {
               <FaPhone /> 09025816161
             </span>
             <div className="btn-holder">
-              <button>Edit details...</button>
+              <button onClick={() => setEditModal(true)}>
+                Edit details...
+              </button>
             </div>
           </div>
         </div>
@@ -66,11 +83,14 @@ const Account = () => {
         </div>
         <div className="tasks-sec">
           <h3>Your tasks...</h3>
-          {/* <TaskBox /> */}
+          {userTasks.map((task, index) => {
+            return <TaskBox task={task} key={index} />;
+          })}
         </div>
       </section>
       <LeaderboardNav />
       <Bell />
+      <EditDetailsModal />
     </main>
   );
 };

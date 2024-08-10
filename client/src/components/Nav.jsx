@@ -8,18 +8,33 @@ import Logo from "./Logo";
 
 // data
 import { navList } from "../data/nav";
+import { users } from "../data/users";
+
+// custom hooks
+import { useGlobalContext } from "../Context";
 
 const Nav = () => {
+  const { loggedIn } = useGlobalContext();
+
+  // Get user logged in
+  const user = users.find((usr) => usr.username === loggedIn);
+  const { pic, username } = user;
+
   const { pathname } = useLocation();
   return (
     <nav className="relative">
       <div className="sticky">
         <Logo size={"small"} />
         <div className="center">
-          <div className="avatar"></div>
+          <div
+            className="avatar"
+            style={{ backgroundImage: `url(/imgs/user/${pic})` }}
+          ></div>
         </div>
         <br />
-        <h4 className="username">Lawrencejr</h4>
+        <h4 className="username" style={{ textTransform: "capitalize" }}>
+          {username}
+        </h4>
         <div className="nav-list">
           <ul>
             {navList.map((item, index) => {

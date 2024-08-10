@@ -3,21 +3,25 @@ import React, { createContext, useContext, useState } from "react";
 const ContextApp = createContext();
 export const Context = ({ children }) => {
   // Modals
-  const [openCreateTaskModal, setOpenCreateTaskModal] = useState(false);
-  const [openCreateVideoModal, setOpenCreateVideoModal] = useState(false);
+  // const [openCreateTaskModal, setOpenCreateTaskModal] = useState(false);
+  // const [openCreateVideoModal, setOpenCreateVideoModal] = useState(false);
   const [videoDetailsModal, setVideoDetailsModal] = useState(false);
+  const [vidDetailsId, setVidDetailsId] = useState(1);
   const [assignModal, setAssignModal] = useState(false);
+  const [editModal, setEditModal] = useState(false);
   const [userModal, setUserModal] = useState(false);
   const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
 
-  const [vidDetailsId, setVidDetailsId] = useState(1);
+  // Logged in user
+  const [loggedIn, setLoggedIn] = useState("stanely");
+
   return (
     <ContextApp.Provider
       value={{
-        openCreateTaskModal,
-        setOpenCreateTaskModal,
-        openCreateVideoModal,
-        setOpenCreateVideoModal,
+        // openCreateTaskModal,
+        // setOpenCreateTaskModal,
+        // openCreateVideoModal,
+        // setOpenCreateVideoModal,
         videoDetailsModal,
         setVideoDetailsModal,
         vidDetailsId,
@@ -28,6 +32,10 @@ export const Context = ({ children }) => {
         setUserModal,
         userForUserModal,
         setUserForUserModal,
+        editModal,
+        setEditModal,
+        loggedIn,
+        setLoggedIn,
       }}
     >
       {children}
