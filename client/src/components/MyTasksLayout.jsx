@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { myTasks } from "../data/myTasks";
+
+import { tasks } from "../data/tasks";
+
+import { useGlobalContext } from "../Context";
 
 const MyTasksLayout = () => {
-  const filteredTasks = myTasks.filter((task) => task.user === "lawrencejr");
+  const { loggedIn } = useGlobalContext();
+  const filteredTasks = tasks.filter((task) => task.users.includes(loggedIn));
   return (
     <div className="tasks-layout">
       <h2>Your Tasks</h2>
@@ -11,13 +15,13 @@ const MyTasksLayout = () => {
       <table>
         <tbody>
           {filteredTasks.map((task, i) => {
-            const { task: aTask, duration, xp, type, status } = task;
+            const { show, duration, ep, type, status } = task;
             return (
               <tr key={i}>
-                <td>{aTask}</td>
-                <td>{type}</td>
+                <td>{show}</td>
+                <td>{ep}</td>
                 <td>{duration}</td>
-                <td>{xp}xp</td>
+                <td>{type}</td>
                 <td>{status}</td>
               </tr>
             );
@@ -25,8 +29,8 @@ const MyTasksLayout = () => {
         </tbody>
       </table>
       <div className="link-container">
-        <Link to={"/my-tasks"} className="link">
-          Manage all your tasks...
+        <Link to={"/tasks/personal"} className="link">
+          View all my tasks...
         </Link>
       </div>
     </div>

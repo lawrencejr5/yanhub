@@ -49,7 +49,7 @@ const Greet = () => {
     return greeting;
   };
   return (
-    <div className="header" style={{ textTransform: "capitalize" }}>
+    <div className="greet-component" s>
       <h3>
         {greet} {username}
       </h3>

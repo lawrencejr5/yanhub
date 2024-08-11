@@ -65,7 +65,7 @@ export const tasks = [
     ep: "Ike Mazelli",
     type: "Finishing",
     duration: "1hr 5mins",
-    users: ["dave"],
+    users: ["dave", "lawrencejr"],
     status: "ongoing",
     date: "16th July, 2024",
   },

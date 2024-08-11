@@ -32,9 +32,7 @@ const Nav = () => {
           ></div>
         </div>
         <br />
-        <h4 className="username" style={{ textTransform: "capitalize" }}>
-          {username}
-        </h4>
+        <h4 className="username">{username}</h4>
         <div className="nav-list">
           <ul>
             {navList.map((item, index) => {
