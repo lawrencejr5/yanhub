@@ -13,8 +13,9 @@ export const Context = ({ children }) => {
   const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
 
   // Logged in user
-  const [loggedIn, setLoggedIn] = useState("stanely");
-
+  const [loggedIn, setLoggedIn] = useState("kelechi");
+  // Dark mode
+  const [isDark, setIsDark] = useState(false);
   return (
     <ContextApp.Provider
       value={{
@@ -36,6 +37,8 @@ export const Context = ({ children }) => {
         setEditModal,
         loggedIn,
         setLoggedIn,
+        isDark,
+        setIsDark,
       }}
     >
       {children}

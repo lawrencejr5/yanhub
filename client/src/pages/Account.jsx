@@ -20,16 +20,20 @@ import { tasks } from "../data/tasks";
 import { useGlobalContext } from "../Context";
 
 const Account = () => {
-  const { setEditModal, loggedIn } = useGlobalContext();
+  const { setEditModal, loggedIn, isDark, setIsDark } = useGlobalContext();
 
   // Dark/Light mode function
-  const [isDark, setIsDark] = useState(false);
   useEffect(() => {
     document.title = "Yanhub - My Account";
   }, []);
+  useEffect(() => {
+    localStorage.setItem("dark", isDark);
+  }, [isDark]);
   useEffect(() => {}, [isDark]);
   const setDark = () => {
-    document.body.className = isDark ? "" : "dark";
+    document.body.className = JSON.parse(localStorage.getItem("dark"))
+      ? ""
+      : "dark";
     setIsDark((prev) => {
       return !prev;
     });
