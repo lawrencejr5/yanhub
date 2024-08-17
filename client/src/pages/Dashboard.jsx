@@ -38,7 +38,6 @@ const Dashboard = () => {
             <p>Day 5</p>
           </div>
         </div>
-        {/* <UsersHighlights /> */}
         <MyTasksLayout />
       </section>
       <LeaderboardNav />

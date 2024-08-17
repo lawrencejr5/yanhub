@@ -13,9 +13,10 @@ body {
 
 :root {
   --primary: #fc3e25;
-  --primary-light: #ffa99b;
-  --secondary: #f5f5f5;
+  --primary-light: #ff8673;
+  --secondary: #b7b7b7;
   --secondary2: #fff;
+  --secondary3: #f5f5f5;
   --border: 1px solid #000;
   --text1: #000;
   --text2: #fff;
@@ -97,6 +98,13 @@ main {
 }
 
 /* Logo Component Styling */
+.logo {
+  background-color: var(--secondary2);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 3px;
+}
 .logo #yan {
   color: var(--primary);
 }
@@ -169,13 +177,43 @@ main {
 }
 
 /* Nav Component Styling */
-.grid-body nav {
+/* small screen view */
+.grid-body .small-nav {
+  display: none;
+  position: relative;
+  place-items: center;
+  top: 0;
   width: 100%;
-  height: 100vh;
-  background-color: transparent;
-  padding: 0.5rem;
+  height: auto;
+  z-index: 1;
 }
-.grid-body nav .avatar {
+.grid-body .small-nav .nav-box {
+  position: fixed;
+  top: 0;
+  width: 97%;
+  background-color: var(--primary);
+  margin: 0.5rem 0;
+  border-radius: 10px;
+  overflow-y: hidden;
+}
+.grid-body .small-nav .closed {
+  height: 60px;
+}
+.grid-body .small-nav .collapsed {
+  height: 480px;
+}
+.grid-body .small-nav .nav-box .header {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem;
+}
+.grid-body .small-nav .nav-box .header .drop-icon {
+  color: var(--secondary2);
+  font-size: 30px;
+}
+.grid-body .small-nav .nav-box .avatar {
   height: 100px;
   width: 100px;
   background: url(../public/imgs/user/user-12.png);
@@ -186,23 +224,83 @@ main {
   border: 2px solid var(--primary);
   margin-top: 3rem;
 }
-.grid-body nav .username {
+.grid-body .small-nav .nav-box .username {
   text-align: center;
   text-transform: capitalize;
-  color: var(--text1);
+  color: var(--text2);
 }
-.grid-body nav .nav-list {
-  margin: 4rem 1rem;
+.grid-body .small-nav .nav-box .nav-list {
+  margin: 1rem 0.5rem;
+  margin-bottom: 2rem;
+  background-color: var(--secondary2);
+  padding: 0.5rem;
+  border-radius: 5px;
 }
-.grid-body nav .nav-list ul {
+.grid-body .small-nav .nav-box .nav-list ul {
   list-style-type: none;
 }
-.grid-body nav .nav-list ul li {
+.grid-body .small-nav .nav-box ul li {
   margin: 1rem 0;
   display: flex;
   align-items: center;
 }
-.grid-body nav .nav-list ul li .link {
+.grid-body .small-nav .nav-box ul li .link {
+  color: var(--secondary2);
+  text-decoration: none;
+  width: 100%;
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  color: var(--text1);
+}
+.grid-body .small-nav .nav-box ul li .active {
+  background-color: var(--primary);
+  color: var(--secondary2);
+  border: none;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 3px;
+  padding: 0.3rem;
+  padding-left: 1rem;
+  width: 90%;
+}
+
+/* wider view */
+.grid-body .big-nav {
+  width: 100%;
+  height: 100vh;
+  background-color: transparent;
+  padding: 0.5rem;
+}
+.grid-body .big-nav .avatar {
+  height: 100px;
+  width: 100px;
+  background: url(../public/imgs/user/user-12.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 50%;
+  border: 2px solid var(--primary);
+  margin-top: 3rem;
+}
+.grid-body .big-nav .username {
+  text-align: center;
+  text-transform: capitalize;
+  color: var(--text1);
+}
+.grid-body .big-nav .nav-list {
+  margin: 4rem 1rem;
+}
+.grid-body .big-nav .nav-list ul {
+  list-style-type: none;
+}
+.grid-body .big-nav .nav-list ul li {
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+}
+.grid-body .big-nav .nav-list ul li .link {
   color: #000000;
   text-decoration: none;
   width: 100%;
@@ -213,7 +311,7 @@ main {
   color: var(--text1);
 }
 
-.grid-body nav .nav-list ul li .active {
+.grid-body .big-nav .nav-list ul li .active {
   background-color: var(--primary);
   color: var(--secondary2);
   border: none;
@@ -223,7 +321,7 @@ main {
   padding: 0.3rem;
   padding-left: 1rem;
 }
-.grid-body nav .logout {
+.grid-body .big-nav .logout {
   position: fixed;
   bottom: 0;
   margin: 2rem 1rem;
@@ -231,7 +329,7 @@ main {
   align-items: center;
   color: var(--primary);
 }
-.grid-body nav .logout .link {
+.grid-body .big-nav .logout .link {
   color: var(--primary);
   text-decoration: none;
   width: 100%;
@@ -288,9 +386,10 @@ main {
 .vid-details-container .vid-details-modal {
   background-color: var(--secondary2);
   height: 50%;
-  width: auto;
+  width: 500px;
   padding: 1rem;
   border-radius: 5px;
+  overflow-y: auto;
   box-shadow: var(--box-shadow);
   /* border: 3px solid var(--primary); */
   display: fixed;
@@ -337,7 +436,7 @@ main {
   top: 0;
   width: 100%;
   height: 100vh;
-  z-index: 1;
+  z-index: 2;
   display: flex;
   justify-content: flex-end;
   /* background-color: rgba(0, 0, 0, 0.2); */
@@ -456,9 +555,8 @@ main {
   align-items: center;
 }
 .assign-modal-container .assign-modal .body {
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
 }
 .assign-modal-container .assign-modal .body .btn-holder {
@@ -504,6 +602,7 @@ main {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 2;
   /* background-color: rgba(0, 0, 0, 0.8); */
 }
 .edit-modal-open {
@@ -528,7 +627,7 @@ main {
   align-items: center;
   justify-content: space-between;
 }
-.edit-modal-container .edit-modal form {
+.edit-modal-container .edit-modal form .inp-handler {
   display: grid;
   grid-template-columns: 1fr 1fr;
   margin: 1rem 0;
@@ -546,6 +645,17 @@ main {
   outline-color: var(--primary-light);
   padding: 0.5rem;
   margin: 0.5rem 0;
+}
+.edit-modal-container .edit-modal .btn-holder {
+  width: 100%;
+  padding: 0.5rem 1rem;
+}
+.edit-modal-container .edit-modal .btn-holder button {
+  background-color: var(--blue);
+  color: var(--text2);
+  font-weight: 600;
+  padding: 0.3rem 0.5rem;
+  border-radius: 5px;
 }
 
 /* Back Component Styling */
@@ -574,7 +684,7 @@ main {
   box-shadow: var(--box-shadow);
   width: 85%;
   height: 80vh;
-  background-color: var(--secondary);
+  background-color: var(--secondary2);
   border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -605,7 +715,7 @@ main {
   margin: 2rem 0;
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: var(--secondary3);
   box-shadow: var(--box-shadow2);
   border-radius: 10px;
   padding: 0.5rem 1rem;
@@ -627,7 +737,7 @@ main {
 }
 .register-main .rhs form .btn-handler button {
   background-color: var(--primary);
-  color: var(--secondary);
+  color: var(--secondary3);
   border: none;
   font-weight: 600;
   padding: 0.5rem 2rem;
@@ -641,7 +751,7 @@ main {
   box-shadow: var(--box-shadow);
   width: 85%;
   height: 80vh;
-  background-color: var(--secondary);
+  background-color: var(--secondary3);
   border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -694,7 +804,7 @@ main {
 }
 .login-main .lhs form .btn-handler button {
   background-color: var(--primary);
-  color: var(--secondary);
+  color: var(--secondary3);
   border: none;
   font-weight: 600;
   padding: 0.5rem 2rem;
@@ -748,13 +858,14 @@ main {
   padding: 1rem;
   border-radius: 10px;
   margin: 1rem;
+  overflow-x: auto;
 }
 .dashboard-main .body .tasks-layout table {
   width: 100%;
   text-align: left;
 }
 .dashboard-main .body .tasks-layout table td {
-  padding: 1rem 0;
+  padding: 1rem 1.5rem;
 }
 .dashboard-main .body .tasks-layout .link-container {
   width: 100%;
@@ -1180,6 +1291,13 @@ main {
 }
 .video-main .body .videos .videos-container .video .details {
   margin-left: 1rem;
+  width: 100%;
+}
+.video-main .body .videos .videos-container .video .details .header {
+  margin-top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .video-main .body .videos .videos-container .video .details strong {
   display: block;

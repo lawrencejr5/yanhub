@@ -22,9 +22,8 @@ const SingleVideo = ({ vid, curr }) => {
         }}
       ></div>
       <div className="details">
-        <strong>{`${vid.show}(${vid.ep})`}</strong>
-        <div className="info">
-          <span className="dur">{vid.dur}</span> {" . "}
+        <div className="header">
+          <strong>{`${vid.show}(${vid.ep})`}</strong>
           <span
             className={
               vid.status === "done"
@@ -36,7 +35,9 @@ const SingleVideo = ({ vid, curr }) => {
           >
             {vid.status}
           </span>{" "}
-          {" . "}
+        </div>
+        <div className="info">
+          <span className="dur">{vid.dur}</span> {" . "}
           <span className="date">{vid.datetime}</span>
         </div>
       </div>

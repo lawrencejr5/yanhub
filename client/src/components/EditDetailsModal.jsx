@@ -22,25 +22,30 @@ const EditDetailsModal = () => {
           />
         </div>
         <form>
-          <div className="inp-holder">
-            <label htmlFor="uname">Username</label>
-            <input type="text" id="uname" placeholder="" />
+          <div className="inp-handler">
+            <div className="inp-holder">
+              <label htmlFor="uname">Username</label>
+              <input type="text" id="uname" placeholder="exp: stanely" />
+            </div>
+            <div className="inp-holder">
+              <label htmlFor="fname">Fullname</label>
+              <input type="text" id="fname" placeholder="exp: Gospel John" />
+            </div>
+            <div className="inp-holder">
+              <label htmlFor="bio">Bio</label>
+              <input type="text" id="bio" placeholder="exp: Use your head!" />
+            </div>
+            <div className="inp-holder">
+              <label htmlFor="dob">DOB</label>
+              <input type="date" id="dob" placeholder="" />
+            </div>
+            <div className="inp-holder">
+              <label htmlFor="phone">Phone</label>
+              <input type="text" id="phone" placeholder="exp: 09025816161" />
+            </div>
           </div>
-          <div className="inp-holder">
-            <label htmlFor="fname">Fullname</label>
-            <input type="text" id="fname" placeholder="" />
-          </div>
-          <div className="inp-holder">
-            <label htmlFor="bio">Bio</label>
-            <input type="text" id="bio" placeholder="" />
-          </div>
-          <div className="inp-holder">
-            <label htmlFor="dob">DOB</label>
-            <input type="date" id="dob" placeholder="" />
-          </div>
-          <div className="inp-holder">
-            <label htmlFor="phone">Phone</label>
-            <input type="text" id="phone" placeholder="" />
+          <div className="btn-holder">
+            <button>Save changes</button>
           </div>
         </form>
       </div>

@@ -10,10 +10,11 @@ export const Context = ({ children }) => {
   const [assignModal, setAssignModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [userModal, setUserModal] = useState(false);
+  const [mobileNav, setMobileNav] = useState(false);
   const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
 
   // Logged in user
-  const [loggedIn, setLoggedIn] = useState("kelechi");
+  const [loggedIn, setLoggedIn] = useState("lawrencejr");
   // Dark mode
   const [isDark, setIsDark] = useState(false);
   return (
@@ -39,6 +40,8 @@ export const Context = ({ children }) => {
         setLoggedIn,
         isDark,
         setIsDark,
+        mobileNav,
+        setMobileNav,
       }}
     >
       {children}

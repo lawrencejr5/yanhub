@@ -29,7 +29,7 @@ const Video = () => {
     <main className="video-main grid-body">
       <Nav />
       <section className="body">
-        <Back text={"Gbam video"} />
+        <Back text={`${curr} videos`} />
         <div className="createVideoBtn">
           <button>
             New Video &nbsp;

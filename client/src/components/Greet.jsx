@@ -49,7 +49,7 @@ const Greet = () => {
     return greeting;
   };
   return (
-    <div className="greet-component" s>
+    <div className="greet-component">
       <h3>
         {greet} {username}
       </h3>

@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const SingleShow = ({ shws }) => {
-  const { show, numOfVids } = shws;
+  const { show } = shws;
 
   const navigate = useNavigate();
   const setVid = () => {
@@ -17,7 +17,7 @@ const SingleShow = ({ shws }) => {
       <div className="vid-details">
         <strong>{`${show}`}</strong>
         <br />
-        <small>{numOfVids} Videos</small>
+        <small>{10} Videos</small>
       </div>
     </div>
   );

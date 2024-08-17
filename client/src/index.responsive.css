@@ -1,0 +1,108 @@
+/* Responsive Design */
+@media screen and (max-width: 1121px) {
+  .grid-body {
+    display: block;
+  }
+  .grid-body .big-nav {
+    display: none;
+  }
+  .grid-body aside {
+    display: none;
+  }
+
+  .greet-component {
+    margin-top: 4rem;
+  }
+  .grid-body .small-nav {
+    display: grid;
+  }
+
+  .edit-modal-container .edit-modal .inp-holder input {
+    width: 100%;
+  }
+
+  .back-nav-container {
+    left: 0;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 4rem;
+  }
+  .back-nav {
+    z-index: 2;
+    background-color: var(--primary);
+    color: var(--secondary2);
+    box-shadow: none;
+    height: 60px;
+    position: fixed;
+    top: 0.5rem;
+
+    width: 97%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  /* Dashboard */
+  .dashboard-main .body .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .dashboard-main .body .layout .layout1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* Videos */
+  .videos-main .videos-container {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* AssignModal */
+  .assign-modal-container .assign-modal .body {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .users-main .user-box {
+    width: 100%;
+  }
+
+  /* AssignModal */
+  .assign-modal-container .assign-modal .body {
+    grid-template-columns: 1fr;
+  }
+
+  .edit-modal-container .edit-modal form .inp-handler {
+    grid-template-columns: 1fr;
+  }
+
+  .vid-details-container {
+    padding: 0;
+  }
+  .vid-details-container .vid-details-modal {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  /* Dashboard */
+  .dashboard-main .body .layout {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .dashboard-main .body .layout .layout1 {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  /* Videos */
+  .videos-main .videos-container {
+    grid-template-columns: 1fr;
+  }
+
+  /* User Modal */
+  .user-modal-container .user-modal {
+    width: 100%;
+    border-radius: 10px;
+  }
+}
