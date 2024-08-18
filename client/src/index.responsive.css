@@ -1,5 +1,6 @@
 /* Responsive Design */
 @media screen and (max-width: 1121px) {
+  /* Nav component */
   .grid-body {
     display: block;
   }
@@ -10,6 +11,7 @@
     display: none;
   }
 
+  /* Greet component */
   .greet-component {
     margin-top: 4rem;
   }
@@ -17,10 +19,12 @@
     display: grid;
   }
 
+  /* Edit details modal */
   .edit-modal-container .edit-modal .inp-holder input {
     width: 100%;
   }
 
+  /* Back nav component */
   .back-nav-container {
     left: 0;
     display: flex;
@@ -41,6 +45,16 @@
 }
 
 @media screen and (max-width: 800px) {
+  /* Register */
+  .register-main .container {
+    grid-template-columns: 0.6fr 1fr;
+  }
+
+  /* Login */
+  .login-main .container {
+    grid-template-columns: 1fr 0.6fr;
+  }
+
   /* Dashboard */
   .dashboard-main .body .layout {
     display: grid;
@@ -62,7 +76,28 @@
   }
 }
 
+@media screen and (max-width: 600px) {
+  /* Register */
+  .register-main .container {
+    grid-template-columns: 1fr;
+  }
+
+  .register-main .lhs {
+    display: none;
+  }
+
+  /* Login */
+  .login-main .container {
+    grid-template-columns: 1fr;
+  }
+
+  .login-main .rhs {
+    display: none;
+  }
+}
+
 @media screen and (max-width: 530px) {
+  /* Users */
   .users-main .user-box {
     width: 100%;
   }
@@ -72,10 +107,12 @@
     grid-template-columns: 1fr;
   }
 
+  /* Edit details modal */
   .edit-modal-container .edit-modal form .inp-handler {
     grid-template-columns: 1fr;
   }
 
+  /* Vid details modal */
   .vid-details-container {
     padding: 0;
   }
@@ -85,6 +122,16 @@
 }
 
 @media screen and (max-width: 450px) {
+  /* Register */
+  .register-main .container {
+    width: 100%;
+  }
+
+  /* Login */
+  .login-main .container {
+    width: 100%;
+  }
+
   /* Dashboard */
   .dashboard-main .body .layout {
     display: grid;

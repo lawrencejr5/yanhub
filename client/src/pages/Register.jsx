@@ -15,6 +15,7 @@ const Register = () => {
           <div className="lhs"></div>
           <div className="rhs">
             <h2>Register</h2>
+            <small>**Try dey use your head....</small>
             <form action="">
               <div className="inp-handler">
                 <FaUser className="icon" />

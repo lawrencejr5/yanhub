@@ -684,7 +684,7 @@ main {
   box-shadow: var(--box-shadow);
   width: 85%;
   height: 80vh;
-  background-color: var(--secondary2);
+  background-color: var(--secondary3);
   border-radius: 10px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -715,7 +715,7 @@ main {
   margin: 2rem 0;
   display: flex;
   align-items: center;
-  background-color: var(--secondary3);
+  background-color: var(--secondary2);
   box-shadow: var(--box-shadow2);
   border-radius: 10px;
   padding: 0.5rem 1rem;
