@@ -39,6 +39,7 @@ const Dashboard = () => {
           </div>
         </div>
         <MyTasksLayout />
+        <br />
       </section>
       <LeaderboardNav />
       <Bell />

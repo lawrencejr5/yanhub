@@ -20,22 +20,16 @@ import { tasks } from "../data/tasks";
 import { useGlobalContext } from "../Context";
 
 const Account = () => {
-  const { setEditModal, loggedIn, isDark, setIsDark } = useGlobalContext();
+  const { setEditModal, loggedIn, theme, setTheme } = useGlobalContext();
 
-  // Dark/Light mode function
   useEffect(() => {
     document.title = "Yanhub - My Account";
   }, []);
-  useEffect(() => {
-    localStorage.setItem("dark", isDark);
-  }, [isDark]);
-  useEffect(() => {}, [isDark]);
-  const setDark = () => {
-    document.body.className = JSON.parse(localStorage.getItem("dark"))
-      ? ""
-      : "dark";
-    setIsDark((prev) => {
-      return !prev;
+
+  // Dark/Light mode toggle function
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      return prev === "light" ? "dark" : "light";
     });
   };
 
@@ -80,8 +74,8 @@ const Account = () => {
           <h3>Settings...</h3>
           <div className="set-item">
             <span>Set light/dark mode</span>
-            <button onClick={() => setDark()}>
-              {isDark ? <FaSun /> : <FaMoon />}
+            <button onClick={toggleTheme}>
+              {theme === "dark" ? <FaSun /> : <FaMoon />}
             </button>
           </div>
         </div>
@@ -91,6 +85,7 @@ const Account = () => {
             return <TaskBox task={task} key={index} />;
           })}
         </div>
+        <br />
       </section>
       <LeaderboardNav />
       <Bell />

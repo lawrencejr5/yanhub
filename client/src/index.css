@@ -3,7 +3,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  transition: 0.5s;
   font-family: "Montserrat", sans-serif;
 }
 body {
@@ -28,18 +27,21 @@ body {
   --box-shadow2: 4px 4px 12px rgba(188, 188, 188, 0.439);
   --box-shadow3: 2px 2px 24px rgba(188, 188, 188, 0.25);
   --box-shadow4: 8px 8px 24px rgb(71, 71, 71);
+  --white-bg-img: url(../public/imgs/background/white1.jpg);
 }
 .dark {
-  --primary: red;
-  --secondary: #000;
+  --primary: #fc3e25;
+  --secondary: #000000;
   --secondary2: #000000;
+  --secondary3: #000000;
   --border: 1px solid #fff;
   --text1: #d5d5d5;
   --text2: #000;
-  --box-shadow: 8px 8px 24px rgba(60, 59, 59, 0.439);
-  --box-shadow2: 4px 4px 12px rgba(57, 56, 56, 0.439);
-  --box-shadow3: 2px 2px 24px rgba(98, 97, 97, 0.25);
-  --box-shadow4: 8px 8px 24px rgb(71, 71, 71);
+  --box-shadow: 2px 4px 2px rgba(60, 59, 59, 0.439);
+  --box-shadow2: 4px 4px 2px rgba(57, 56, 56, 0.439);
+  --box-shadow3: 2px 2px 2px rgba(98, 97, 97, 0.25);
+  --box-shadow4: 8px 8px 2px rgb(71, 71, 71);
+  --white-bg-img: #000;
 }
 
 a,
@@ -48,7 +50,7 @@ button {
 }
 
 main {
-  background: url(../public/imgs/background/white1.jpg);
+  background: var(--white-bg-img);
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -188,19 +190,20 @@ main {
   z-index: 1;
 }
 .grid-body .small-nav .nav-box {
+  transition: 0.5s;
   position: fixed;
   top: 0;
   width: 97%;
-  background-color: var(--primary);
-  margin: 0.5rem 0;
+  background-color: var(--secondary2);
   border-radius: 10px;
   overflow-y: hidden;
+  box-shadow: var(--box-shadow);
 }
 .grid-body .small-nav .closed {
   height: 60px;
 }
 .grid-body .small-nav .collapsed {
-  height: 480px;
+  height: 101vh;
 }
 .grid-body .small-nav .nav-box .header {
   height: 60px;
@@ -210,8 +213,8 @@ main {
   padding: 0 0.5rem;
 }
 .grid-body .small-nav .nav-box .header .drop-icon {
-  color: var(--secondary2);
-  font-size: 30px;
+  color: var(--text1);
+  font-size: 25px;
 }
 .grid-body .small-nav .nav-box .avatar {
   height: 100px;
@@ -227,7 +230,7 @@ main {
 .grid-body .small-nav .nav-box .username {
   text-align: center;
   text-transform: capitalize;
-  color: var(--text2);
+  color: var(--text1);
 }
 .grid-body .small-nav .nav-box .nav-list {
   margin: 1rem 0.5rem;
@@ -384,6 +387,7 @@ main {
   transition: 0.7s;
 }
 .vid-details-container .vid-details-modal {
+  transition: 0.5s;
   background-color: var(--secondary2);
   height: 50%;
   width: 500px;
@@ -432,6 +436,7 @@ main {
 
 /* User Modal Component */
 .user-modal-container {
+  transition: 0.5s;
   position: fixed;
   top: 0;
   width: 100%;
@@ -525,6 +530,7 @@ main {
 /* Assign Modal Component Styling */
 
 .assign-modal-container {
+  transition: 0.5s;
   height: 100vh;
   width: 100%;
   top: 0;
@@ -597,6 +603,7 @@ main {
 
 /* Edit Details Modal Styling */
 .edit-modal-container {
+  transition: 0.5s;
   width: 100%;
   height: 100vh;
   position: fixed;
@@ -652,10 +659,12 @@ main {
 }
 .edit-modal-container .edit-modal .btn-holder button {
   background-color: var(--blue);
-  color: var(--text2);
+  color: #fff;
   font-weight: 600;
   padding: 0.3rem 0.5rem;
   border-radius: 5px;
+  border: none;
+  outline: none;
 }
 
 /* Back Component Styling */
@@ -728,6 +737,7 @@ main {
   outline: 0;
   margin-left: 0.5rem;
   padding: 0.5rem;
+  color: var(--text1);
 }
 
 .register-main .rhs form .btn-handler {
@@ -782,7 +792,7 @@ main {
   margin: 2rem 0;
   display: flex;
   align-items: center;
-  background-color: white;
+  background-color: var(--secondary2);
   box-shadow: var(--box-shadow2);
   border-radius: 10px;
   padding: 0.5rem 1rem;
@@ -795,6 +805,7 @@ main {
   outline: 0;
   margin-left: 0.5rem;
   padding: 0.5rem;
+  color: var(--text1);
 }
 
 .login-main .lhs form .btn-handler {
@@ -1376,6 +1387,7 @@ main {
   margin: 0.5rem 0;
 }
 .account-main .body .name-sec h3 {
+  margin-top: 1rem;
   color: var(--primary);
   text-transform: capitalize;
 }

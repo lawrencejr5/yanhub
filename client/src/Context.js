@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 
 const ContextApp = createContext();
 export const Context = ({ children }) => {
@@ -16,7 +16,9 @@ export const Context = ({ children }) => {
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
   // Dark mode
-  const [isDark, setIsDark] = useState(false);
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
+  );
   return (
     <ContextApp.Provider
       value={{
@@ -38,8 +40,8 @@ export const Context = ({ children }) => {
         setEditModal,
         loggedIn,
         setLoggedIn,
-        isDark,
-        setIsDark,
+        theme,
+        setTheme,
         mobileNav,
         setMobileNav,
       }}

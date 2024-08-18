@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
@@ -12,10 +12,30 @@ import User from "./pages/User";
 import Account from "./pages/Account";
 import Videos from "./pages/Videos";
 import Video from "./pages/Video";
+
+import { useGlobalContext } from "./Context";
+
+import ScrollTop from "./components/ScrollTop";
+
 const App = () => {
+  const { theme, setTheme } = useGlobalContext();
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme) {
+      setTheme(savedTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.body.className = theme;
+    localStorage.setItem("theme", theme);
+  }, [theme]);
   return (
     <>
       <Router>
+        <ScrollTop />
         <Routes>
           <Route exact path="/" element={<Dashboard />}></Route>
           <Route path="login" element={<Login />}></Route>
