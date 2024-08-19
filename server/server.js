@@ -22,22 +22,25 @@ app.use(express.json());
 
 // Routes
 app.use("/api/v1/tasks", tasksRouter);
-app.use(".api/v1/shows", showsRouter);
-app.use(".api/v1/users", usersRouter);
-app.use(".api/v1/videos", videosRouter);
+app.use("/api/v1/shows", showsRouter);
+app.use("/api/v1/users", usersRouter);
+app.use("/api/v1/videos", videosRouter);
 
 // Custom Middlewares
 app.use(notFound);
 app.use(authMiddleware);
 
-const port = process.env.PORT || 5000;
-const db = process.env.MONGO_URI;
-
 // Function to spin off server
 const startServer = async () => {
-  await connectDb(db);
-  app.listen(port, () => {
-    console.log(`App listening on port ${port}`);
-  });
+  const port = process.env.PORT || 5000;
+  const db = process.env.MONGO_URI;
+  try {
+    await connectDb(db);
+    app.listen(port, () => {
+      console.log(`App listening on port ${port}`);
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 startServer();
