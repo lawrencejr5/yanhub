@@ -6,9 +6,9 @@ const app = express();
 // Security
 const cors = require("cors");
 // Routers
+const usersRouter = require("./routes/users");
 const tasksRouter = require("./routes/tasks");
 const showsRouter = require("./routes/shows");
-const usersRouter = require("./routes/users");
 const videosRouter = require("./routes/videos");
 // Custom Middlewares
 const notFound = require("./middlewares/not-found");
@@ -21,10 +21,10 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use("/api/v1/tasks", tasksRouter);
-app.use("/api/v1/shows", showsRouter);
 app.use("/api/v1/users", usersRouter);
-app.use("/api/v1/videos", videosRouter);
+app.use("/api/v1/tasks", authMiddleware, tasksRouter);
+app.use("/api/v1/shows", authMiddleware, showsRouter);
+app.use("/api/v1/videos", authMiddleware, videosRouter);
 
 // Custom Middlewares
 app.use(notFound);
