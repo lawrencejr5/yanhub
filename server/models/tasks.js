@@ -37,6 +37,9 @@ const taskSchema = new mongoose.Schema(
       enum: ["ongoing", "completed"],
       default: "undone",
     },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+    },
   },
   { timestamps: true }
 );

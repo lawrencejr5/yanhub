@@ -10,6 +10,9 @@ const showSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+    },
   },
   {
     timestamps: true,

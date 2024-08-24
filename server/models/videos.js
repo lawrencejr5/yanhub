@@ -4,6 +4,7 @@ const videoSchema = new mongoose.Schema(
   {
     show: {
       type: String,
+      ref: "Shows",
       required: true,
     },
     ep: {
@@ -12,12 +13,16 @@ const videoSchema = new mongoose.Schema(
     },
     duration: {
       type: String,
-      required: true,
+      default: "--_--",
     },
     status: {
       type: String,
-      enum: ["ongoing", "completed"],
+      enum: ["ongoing", "completed", "undone"],
       default: "undone",
+    },
+    createdBy: {
+      type: mongoose.Types.ObjectId,
+      ref: "Users",
     },
   },
   {
