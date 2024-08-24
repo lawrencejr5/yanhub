@@ -33,8 +33,8 @@
   }
   .back-nav {
     z-index: 2;
-    background-color: var(--primary);
-    color: var(--secondary2);
+    background-color: var(--secondary2);
+    /* color: var(--secondary2); */
     box-shadow: none;
     height: 60px;
     position: fixed;

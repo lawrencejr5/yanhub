@@ -67,6 +67,7 @@ const Nav = () => {
             <Logo size={"small"} />
             <FaBars
               className="drop-icon"
+              style={{ cursor: "pointer" }}
               onClick={() => {
                 setMobileNav((prev) => {
                   return !prev;
