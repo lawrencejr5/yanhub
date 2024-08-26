@@ -3,22 +3,22 @@ const Video = require("../models/videos");
 const getAllVideos = async (req, res) => {
   try {
     const videos = await Video.find({});
-    res.status(200).json({ msg: "Success", videos });
+    res.status(200).json({ msg: "Success", rowCount: videos.length, videos });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const getVideo = async (req, res) => {
   try {
     const { id } = req.params;
-    const videos = await Video.findById(id);
 
+    const videos = await Video.findById(id);
     if (!videos)
       return res.status(404).json({ msg: `Video with id: ${id} not found` });
 
     res.status(200).json({ msg: "Success", videos });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const createVideo = async (req, res) => {
@@ -34,7 +34,7 @@ const createVideo = async (req, res) => {
 
     res.status(200).json({ msg: "created", createdVideo });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const updateVideo = async (req, res) => {
@@ -57,7 +57,7 @@ const updateVideo = async (req, res) => {
 
     res.status(200).json({ msg: "updated", updatedVideo });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const delVideo = async (req, res) => {
@@ -70,7 +70,7 @@ const delVideo = async (req, res) => {
 
     res.status(200).json({ msg: "deleted", deletedVideo: id });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 

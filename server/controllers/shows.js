@@ -3,9 +3,9 @@ const Show = require("../models/shows");
 const getAllShows = async (req, res) => {
   try {
     const shows = await Show.find({});
-    res.status(200).json({ msg: "Success", shows });
+    res.status(200).json({ msg: "Success", rowCount: shows.length, shows });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const getShow = async (req, res) => {
@@ -15,7 +15,7 @@ const getShow = async (req, res) => {
 
     res.status(200).json({ msg: "Success", shows });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const createShow = async (req, res) => {
@@ -23,7 +23,7 @@ const createShow = async (req, res) => {
     const { show, bgImg } = req.body;
     const { userId } = req.user;
 
-    if (!show) return res.status(500).json({ msg: "An error occured" });
+    if (!show) return res.status(500).json({ msg: "Input required fields" });
 
     // Checking if show already exists
     const oldShow = await Show.findOne({ show });
@@ -37,7 +37,7 @@ const createShow = async (req, res) => {
 
     res.status(200).json({ msg: "created", createdShow });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const updateShow = async (req, res) => {
@@ -58,7 +58,7 @@ const updateShow = async (req, res) => {
 
     res.status(200).json({ msg: "updated", updatedShow });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 const delShow = async (req, res) => {
@@ -71,7 +71,7 @@ const delShow = async (req, res) => {
 
     res.status(200).json({ msg: "deleted", deletedShow: id });
   } catch (err) {
-    res.status(500).json({ msg: "An error occured" });
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 

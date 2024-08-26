@@ -34,9 +34,11 @@ const register = async (req, res) => {
     );
 
     // Sending response
-    res.status(200).json({ user: user._id, token });
+    res
+      .status(200)
+      .json({ msg: "registration completed", user: user._id, token });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 
@@ -68,10 +70,119 @@ const login = async (req, res) => {
     // Sending response
     res
       .status(200)
-      .json({ msg: "Successfully signed in", user: user._id, token });
+      .json({ msg: "successfully signed in", user: user._id, token });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({ msg: "An error occured", err });
   }
 };
 
-module.exports = { register, login };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find();
+
+    res.status(200).json({ msg: "success", rowCount: users.length, users });
+  } catch (err) {
+    res.status(500).json({ msg: "An error occured", err });
+  }
+};
+
+const getUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findOne({ _id: id });
+    if (!user)
+      return res.status(404).json({ msg: `No user was found with id: ${id}` });
+
+    res.status(200).json({ msg: "success", user });
+  } catch (err) {
+    res.status(500).json({ msg: "An error occured", err });
+  }
+};
+
+const editUser = async (req, res) => {
+  try {
+    const {
+      params: { id },
+      body: { fullname, username, phone, dob, bio, admin, role, pic },
+    } = req;
+
+    if (!fullname & !username & !phone & !dob & !bio & !admin & !role & !pic)
+      return res
+        .status(500)
+        .json({ msg: "Make sure you're inputing the right fields" });
+
+    const user = await User.findByIdAndUpdate(
+      id,
+      { ...req.body },
+      { new: true, runValidators: true }
+    );
+    if (!user)
+      return res.status(404).json({ msg: `No user was found with id: ${id}` });
+
+    res.status(200).json({ msg: "updated", user });
+  } catch (err) {
+    res.status(500).json({ msg: "An error occured", err });
+  }
+};
+
+const delUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findByIdAndDelete(id);
+    if (!user)
+      return res.status(404).json({ msg: `No user was found with id: ${id}` });
+
+    res.status(200).json({ msg: "deleted", deletedUser: id });
+  } catch (err) {
+    res.status(500).json({ msg: "An error occured", err });
+  }
+};
+
+const updatePassword = async (req, res) => {
+  try {
+    const {
+      params: { id },
+      body: { oldPass, newPass, confirmPass },
+    } = req;
+
+    if (!oldPass || !newPass || !confirmPass)
+      return res.status(500).json({ msg: "Fill in required fields" });
+
+    const user = await User.findById(id);
+    if (!user)
+      return res.status(404).json({ msg: `No user was found with id: ${id}` });
+
+    const verifyOldPass = await bcrypt.compare(oldPass, user.password);
+
+    if (!verifyOldPass)
+      return res.status(500).json({ msg: "Old password is not correct" });
+
+    if (newPass !== confirmPass)
+      return res.status(500).json({ msg: "Passwords do not match" });
+
+    const salt = await bcrypt.genSalt(10);
+    const newHashedPass = await bcrypt.hash(newPass, salt);
+
+    const updatedUser = await User.findByIdAndUpdate(
+      id,
+      { password: newHashedPass },
+      { new: true, runValidators: true }
+    );
+
+    res.status(200).json({ msg: "success", updatedUser });
+  } catch (err) {
+    res.status(500).json({ msg: "An error occured", err });
+  }
+};
+
+module.exports = {
+  register,
+  login,
+  getAllUsers,
+  getUser,
+  editUser,
+  delUser,
+  updatePassword,
+};

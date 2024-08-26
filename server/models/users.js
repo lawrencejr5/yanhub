@@ -19,12 +19,15 @@ const userSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
+      default: "-------",
     },
     dob: {
       type: Date,
+      default: "-------",
     },
     bio: {
       type: String,
+      default: "Hey there, I'm using Yanhub",
     },
     admin: {
       type: Boolean,
@@ -33,6 +36,7 @@ const userSchema = new mongoose.Schema(
     },
     role: {
       type: String,
+      default: "editor",
     },
     pic: {
       type: String,
@@ -40,6 +44,7 @@ const userSchema = new mongoose.Schema(
     },
     xp: {
       type: Number,
+      default: 0,
     },
   },
   { timestamps: true }

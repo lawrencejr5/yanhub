@@ -15,30 +15,25 @@ const taskSchema = new mongoose.Schema(
       ],
       required: true,
     },
-    show: {
-      type: String,
+    vidId: {
+      type: mongoose.Types.ObjectId,
       required: true,
+      ref: "Videos",
     },
-    ep: {
-      type: String,
-      required: true,
-    },
-    duration: {
-      type: String,
-      required: true,
-    },
-    users: {
+    assignedTo: {
       type: [mongoose.Types.ObjectId],
+      required: true,
+      ref: "Users",
+    },
+    assignedBy: {
+      type: mongoose.Types.ObjectId,
       required: true,
       ref: "Users",
     },
     status: {
       type: String,
-      enum: ["ongoing", "completed"],
-      default: "undone",
-    },
-    createdBy: {
-      type: mongoose.Types.ObjectId,
+      enum: ["ongoing", "done"],
+      default: "ongoing",
     },
   },
   { timestamps: true }
