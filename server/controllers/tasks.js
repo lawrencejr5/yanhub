@@ -1,9 +1,41 @@
 const Task = require("../models/tasks");
 const Video = require("../models/videos");
+const User = require("../models/users");
 
 const getAllTasks = async (req, res) => {
   try {
+    const { simplified } = req.query;
     const tasks = await Task.find({});
+
+    const simpTasks = await Promise.all(
+      tasks.map(async (task) => {
+        const video = await Video.findOne({ _id: task.vidId });
+        const user = await User.findOne({ _id: task.assignedBy });
+
+        const users = await Promise.all(
+          task.assignedTo.map(async (user) => {
+            const usr = await User.findOne(
+              { _id: user },
+              { _id: 0, username: 1 }
+            );
+            return usr ? usr.username : "unknown";
+          })
+        );
+        const simpTask = {
+          ...task._doc,
+          show: video.show,
+          ep: video.ep,
+          duration: video.duration,
+          assignedBy: user.username,
+          assignedTo: users,
+        };
+        return simpTask;
+      })
+    );
+
+    if (simplified)
+      return res.status(200).json({ msg: "Success", task: simpTasks });
+
     res.status(200).json({ msg: "Success", rowCount: tasks.length, tasks });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
@@ -12,10 +44,36 @@ const getAllTasks = async (req, res) => {
 
 const getTask = async (req, res) => {
   try {
-    const { id } = req.params;
+    const {
+      params: { id },
+      query: { simplified },
+    } = req;
 
     const task = await Task.findOne({ _id: id });
+    const video = await Video.findOne({ _id: task.vidId });
+    const user = await User.findOne({ _id: task.assignedBy });
+
+    // Getting all usernames using their user ids
+    const users = await Promise.all(
+      task.assignedTo.map(async (user) => {
+        const usr = await User.findOne({ _id: user }, { _id: 0, username: 1 });
+        return usr ? usr.username : "unknown";
+      })
+    );
+
     if (!task) return res.status(404).json({ msg: `No task with id: ${id}` });
+
+    // Creating a simplified task array
+    const simpTask = {
+      ...task._doc,
+      show: video.show,
+      ep: video.ep,
+      duration: video.duration,
+      assignedBy: user.username,
+      assignedTo: users,
+    };
+    if (simplified)
+      return res.status(200).json({ msg: "Success", task: simpTask });
 
     res.status(200).json({ msg: "Success", task });
   } catch (err) {
