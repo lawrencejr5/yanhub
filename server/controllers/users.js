@@ -5,11 +5,20 @@ const bcrypt = require("bcryptjs");
 
 const register = async (req, res) => {
   try {
-    const { username, fullname, phone, password } = req.body;
+    const { username, fullname, phone, password, cpassword } = req.body;
 
     // Check required fields
-    if (!username || !fullname || !password)
+    if (!username || !fullname || !password || !cpassword)
       return res.status(501).json({ msg: "Fill in required fields" });
+
+    // Checking if passwords match
+    if (password !== cpassword)
+      return res.status(501).json({ msg: "Passwords do not match" });
+
+    if (password.length < 6)
+      return res
+        .status(501)
+        .json({ msg: "Password must be up to 6 characters" });
 
     // Check if user exists
     const oldUser = await User.findOne({ username });

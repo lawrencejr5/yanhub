@@ -3,7 +3,7 @@ import React from "react";
 import { useGlobalContext } from "../Context";
 
 const VidSingleTask = ({ task }) => {
-  const { setAssignModal, assignModal } = useGlobalContext();
+  const { setAssignModal } = useGlobalContext();
 
   return (
     <div className="vid-single-task">

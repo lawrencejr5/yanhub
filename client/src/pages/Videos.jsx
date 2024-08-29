@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { FaPlusCircle } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
@@ -13,7 +12,7 @@ import CreateVideoForm from "../components/CreateVideoForm";
 import SingleShow from "../components/SingleShow";
 
 const Videos = () => {
-  const { openCreateVideoModal, setOpenCreateVideoModal } = useGlobalContext();
+  const { openCreateVideoModal } = useGlobalContext();
   useEffect(() => {
     document.title = "Yanhub - Videos";
   }, []);

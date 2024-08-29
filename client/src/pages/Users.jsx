@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
@@ -16,8 +15,6 @@ const Users = () => {
   useEffect(() => {
     document.title = "Yanhub - Users";
   }, []);
-
-  const navigate = useNavigate();
 
   const admins = users.filter((user) => user.admin === true);
   const editors = users.filter((user) => user.admin === false);

@@ -1,12 +1,52 @@
-import { React, useEffect } from "react";
+import { React, useEffect, useState } from "react";
 
 import { FaLock, FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import axios from "axios";
+
 import Logo from "../components/Logo";
+
+import { useGlobalContext } from "../Context";
 const Login = () => {
   useEffect(() => {
     document.title = "Yahhub - Login";
   }, []);
+
+  const { endpoint, setNotification, btnLoad, setBtnLoad } = useGlobalContext();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const reset = () => {
+    setUsername("");
+    setPassword("");
+    setBtnLoad(false);
+  };
+
+  const loginUser = async (e) => {
+    e.preventDefault();
+
+    try {
+      setBtnLoad(true);
+      const { data } = await axios.post(`${endpoint}/users/login`, {
+        username,
+        password,
+      });
+
+      console.log(data);
+      setNotification(data.msg);
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.user);
+      reset();
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+      reset();
+      setNotification(data.msg);
+    }
+  };
   return (
     <main className="login-main">
       <Logo size={"big"} />
@@ -15,21 +55,31 @@ const Login = () => {
           <div className="lhs">
             <h2>Login</h2>
             <small>**Try dey use your head....</small>
-            <form action="">
+            <form action="" onSubmit={loginUser}>
               <div className="inp-handler">
                 <FaUser className="icon" />
-                <input type="text" placeholder="Username" autoComplete="off" />
+                <input
+                  type="text"
+                  placeholder="Username"
+                  name="username"
+                  autoComplete="off"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
               </div>
               <div className="inp-handler">
                 <FaLock className="icon" />
                 <input
                   type="password"
                   placeholder="Password"
+                  name="password"
                   autoComplete="off"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
               <div className="btn-handler">
-                <button>Login</button>
+                <button>{btnLoad ? "Signin..." : "Login"}</button>
               </div>
               <br />
               <center>

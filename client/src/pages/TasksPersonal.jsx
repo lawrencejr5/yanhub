@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaChevronCircleUp } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
@@ -8,7 +7,6 @@ import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
-import CreateTaskForm from "../components/CreateTaskForm";
 import TaskBox from "../components/TaskBox";
 
 import { tasks } from "../data/tasks";

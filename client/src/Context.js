@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 const ContextApp = createContext();
 export const Context = ({ children }) => {
@@ -13,12 +13,22 @@ export const Context = ({ children }) => {
   const [mobileNav, setMobileNav] = useState(false);
   const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
 
+  //Notification
+  const [notification, setNotification] = useState("");
+
+  // Btn Loading
+  const [btnLoad, setBtnLoad] = useState(false);
+
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
+
   // Dark mode
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
+
+  // Endpoint
+  const endpoint = "http://localhost:5000/api/v1";
   return (
     <ContextApp.Provider
       value={{
@@ -26,6 +36,7 @@ export const Context = ({ children }) => {
         // setOpenCreateTaskModal,
         // openCreateVideoModal,
         // setOpenCreateVideoModal,
+        endpoint,
         videoDetailsModal,
         setVideoDetailsModal,
         vidDetailsId,
@@ -44,6 +55,10 @@ export const Context = ({ children }) => {
         setTheme,
         mobileNav,
         setMobileNav,
+        notification,
+        setNotification,
+        btnLoad,
+        setBtnLoad,
       }}
     >
       {children}

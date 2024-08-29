@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaChevronCircleUp } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
