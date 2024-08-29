@@ -26,7 +26,8 @@ export const Context = ({ children }) => {
     return () => clearTimeout(notTimeout);
   }, [notification]);
 
-  // Btn Loading
+  // Loading
+  const [loading, setLoading] = useState(false);
   const [btnLoad, setBtnLoad] = useState(false);
 
   // Logged in user
@@ -70,6 +71,8 @@ export const Context = ({ children }) => {
         setNotification,
         btnLoad,
         setBtnLoad,
+        loading,
+        setLoading,
       }}
     >
       {children}

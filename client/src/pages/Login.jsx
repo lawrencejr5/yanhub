@@ -6,6 +6,7 @@ import axios from "axios";
 
 import Logo from "../components/Logo";
 import Notification from "../components/Notification";
+import Loading from "../components/Loading";
 
 import { useGlobalContext } from "../Context";
 const Login = () => {
@@ -13,8 +14,14 @@ const Login = () => {
     document.title = "Yahhub - Login";
   }, []);
 
-  const { endpoint, notification, setNotification, btnLoad, setBtnLoad } =
-    useGlobalContext();
+  const {
+    endpoint,
+    notification,
+    setNotification,
+    btnLoad,
+    setBtnLoad,
+    loading,
+  } = useGlobalContext();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -45,9 +52,12 @@ const Login = () => {
         response: { data },
       } = err;
       console.log(data);
+      setBtnLoad(false);
       setNotification({ text: data.msg, theme: "danger", status: true });
     }
   };
+
+  if (loading) return <Loading />;
   return (
     <main className="login-main">
       <Notification

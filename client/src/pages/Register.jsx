@@ -5,11 +5,19 @@ import axios from "axios";
 
 import Logo from "../components/Logo";
 import Notification from "../components/Notification";
+import Loading from "../components/Loading";
 
 import { useGlobalContext } from "../Context";
 const Register = () => {
-  const { endpoint, notification, setNotification, btnLoad, setBtnLoad } =
-    useGlobalContext();
+  const {
+    endpoint,
+    notification,
+    setNotification,
+    btnLoad,
+    setBtnLoad,
+    loading,
+    setLoading,
+  } = useGlobalContext();
 
   const [input, setInput] = useState({
     fullname: "",
@@ -56,16 +64,17 @@ const Register = () => {
       console.log(data);
       setNotification({ text: data.msg, theme: "success", status: true });
       localStorage.setItem("token", data.token);
-      localStorage.setItem("user", data.user);
     } catch (err) {
-      setBtnLoad(false);
       const {
         response: { data },
       } = err;
+      setBtnLoad(false);
       console.log(data);
       setNotification({ text: data.msg, theme: "danger", status: true });
     }
   };
+
+  if (loading) return <Loading />;
   return (
     <main className="register-main">
       <Notification
