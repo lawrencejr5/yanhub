@@ -4,10 +4,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../components/Logo";
+import Notification from "../components/Notification";
 
 import { useGlobalContext } from "../Context";
 const Register = () => {
-  const { endpoint, setNotification, btnLoad, setBtnLoad } = useGlobalContext();
+  const { endpoint, notification, setNotification, btnLoad, setBtnLoad } =
+    useGlobalContext();
 
   const [input, setInput] = useState({
     fullname: "",
@@ -52,7 +54,7 @@ const Register = () => {
       });
       reset();
       console.log(data);
-      setNotification(data.msg);
+      setNotification({ text: data.msg, theme: "success", status: true });
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", data.user);
     } catch (err) {
@@ -61,11 +63,16 @@ const Register = () => {
         response: { data },
       } = err;
       console.log(data);
-      setNotification(data.msg);
+      setNotification({ text: data.msg, theme: "danger", status: true });
     }
   };
   return (
     <main className="register-main">
+      <Notification
+        text={notification.text}
+        theme={notification.theme}
+        status={notification.status}
+      />
       <Logo size={"big"} />
       <div className="center">
         <section className="container">

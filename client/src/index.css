@@ -1,9 +1,14 @@
-@import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap);
+/* @import url(https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap); */
+
+@font-face {
+  font-family: Montserrat;
+  src: url(../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf);
+}
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Montserrat", sans-serif;
+  font-family: Montserrat;
 }
 body {
   color: var(--text1);
@@ -97,6 +102,36 @@ main {
   grid-template-columns: 1fr 3fr 1fr;
   padding: 0;
   background: var(--secondary2);
+}
+
+/* Notification component */
+.notification-container {
+  display: flex;
+  justify-content: center;
+  transition: 5s;
+  z-index: 3;
+}
+.notification-container .notification {
+  background-color: var(--secondary2);
+  width: 400px;
+  height: auto;
+  padding: 1rem;
+  margin: 0 1rem;
+  position: absolute;
+  top: 0;
+  display: flex;
+  font-weight: 600;
+  align-items: center;
+  box-shadow: var(--box-shadow);
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  transition: 0.5s;
+}
+.notification-container .down {
+  transform: translateY(0);
+}
+.notification-container .up {
+  transform: translateY(-100%);
 }
 
 /* Logo Component Styling */

@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
 
 const ContextApp = createContext();
 export const Context = ({ children }) => {
@@ -14,7 +14,17 @@ export const Context = ({ children }) => {
   const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
 
   //Notification
-  const [notification, setNotification] = useState("");
+  const [notification, setNotification] = useState({
+    text: "",
+    status: "",
+    theme: "",
+  });
+  useEffect(() => {
+    const notTimeout = setTimeout(() => {
+      setNotification({ ...notification, status: false });
+    }, 2000);
+    return () => clearTimeout(notTimeout);
+  }, [notification]);
 
   // Btn Loading
   const [btnLoad, setBtnLoad] = useState(false);
@@ -29,6 +39,7 @@ export const Context = ({ children }) => {
 
   // Endpoint
   const endpoint = "http://localhost:5000/api/v1";
+
   return (
     <ContextApp.Provider
       value={{
