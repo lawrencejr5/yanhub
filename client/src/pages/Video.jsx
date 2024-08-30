@@ -12,9 +12,11 @@ import Bell from "../components/Bell";
 import Back from "../components/Back";
 import SingleVideo from "../components/SingleVideo";
 import VideoDetails from "../components/VideoDetails";
+import CreateVideoForm from "../components/CreateVideoForm";
 
 const Video = () => {
-  const { videoDetailsModal } = useGlobalContext();
+  const { videoDetailsModal, openCreateVideoModal, setOpenCreateVideoModal } =
+    useGlobalContext();
   const { pathname } = useLocation();
   const curr = pathname.split("/")[2].replaceAll("%20", " ");
 
@@ -31,7 +33,7 @@ const Video = () => {
       <section className="body">
         <Back text={`${curr} videos`} />
         <div className="createVideoBtn">
-          <button>
+          <button onClick={() => setOpenCreateVideoModal(true)}>
             New Video &nbsp;
             <FaPlusCircle />
           </button>
@@ -61,6 +63,7 @@ const Video = () => {
         </div>
       </section>
       <LeaderboardNav />
+      <CreateVideoForm open={openCreateVideoModal} vidName={curr} />
       <Bell />
       <VideoDetails open={videoDetailsModal} curr={curr} />
     </main>

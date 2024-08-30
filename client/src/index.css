@@ -679,7 +679,6 @@ main {
   top: 0;
   left: 0;
   z-index: 2;
-  /* background-color: rgba(0, 0, 0, 0.8); */
 }
 .edit-modal-open {
   transform: translateY(0%);
@@ -734,6 +733,79 @@ main {
   border-radius: 5px;
   border: none;
   outline: none;
+}
+
+.create-video-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: scale(1);
+  z-index: 5;
+  transition: 0.5s;
+}
+
+.create-video-container-hide {
+  scale: 0;
+}
+
+.create-video-container form {
+  background-color: white;
+  box-shadow: var(--box-shadow);
+  width: 500px;
+  padding: 1rem;
+  border-radius: 10px;
+}
+.create-video-container form .header {
+  display: flex;
+  justify-content: space-between;
+}
+.create-video-container form .header .icon {
+  cursor: pointer;
+}
+
+.create-video-container form .inp-handler .inp-holder {
+  width: 90%;
+  background-color: var(--secondary2);
+  margin: 1rem;
+  padding: 0.5rem;
+  box-shadow: var(--box-shadow2);
+}
+.create-video-container form .inp-handler .inp-holder input,
+.create-video-container form .inp-handler .inp-holder select {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 0.5rem;
+}
+.create-video-container form .btn-handler {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  margin-top: 2rem;
+}
+.create-video-container form .btn-handler button {
+  width: 50%;
+  background-color: var(--primary);
+  padding: 0.5rem;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  color: var(--secondary2);
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: var(--box-shadow);
+}
+.create-video-container form .btn-handler button:hover {
+  box-shadow: none;
 }
 
 /* Back Component Styling */
@@ -1194,76 +1266,6 @@ main {
   font-weight: 600;
   display: flex;
   align-items: center;
-}
-
-.videos-main .create-video-container {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transform: scale(1);
-}
-
-.videos-main .hide {
-  scale: 0;
-}
-
-.videos-main .create-video-container form {
-  background-color: white;
-  box-shadow: var(--box-shadow);
-  width: 500px;
-  padding: 1rem;
-  border-radius: 10px;
-}
-.videos-main .create-video-container form .header {
-  display: flex;
-  justify-content: space-between;
-}
-.videos-main .create-video-container form .header .icon {
-  cursor: pointer;
-}
-
-.videos-main .create-video-container form .inp-handler .inp-holder {
-  width: 90%;
-  background-color: var(--secondary2);
-  margin: 1rem;
-  padding: 0.5rem;
-  box-shadow: var(--box-shadow2);
-}
-.videos-main .create-video-container form .inp-handler .inp-holder input,
-.videos-main .create-video-container form .inp-handler .inp-holder select {
-  background-color: transparent;
-  border: none;
-  outline: none;
-  width: 100%;
-  padding: 0.5rem;
-}
-.videos-main .create-video-container form .btn-handler {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 1rem;
-  margin-top: 2rem;
-}
-.videos-main .create-video-container form .btn-handler button {
-  width: 50%;
-  background-color: var(--primary);
-  padding: 0.5rem;
-  border: none;
-  outline: none;
-  border-radius: 5px;
-  color: var(--secondary2);
-  font-size: 15px;
-  font-weight: 600;
-  box-shadow: var(--box-shadow);
-}
-.videos-main .create-video-container form .btn-handler button:hover {
-  box-shadow: none;
 }
 
 .videos-main .videos {

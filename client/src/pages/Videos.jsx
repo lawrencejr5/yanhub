@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { FaPlusCircle } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
@@ -8,29 +9,29 @@ import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
-import CreateVideoForm from "../components/CreateVideoForm";
 import SingleShow from "../components/SingleShow";
+import CreateShowForm from "../components/CreateShowForm";
 
 const Videos = () => {
-  const { openCreateVideoModal } = useGlobalContext();
   useEffect(() => {
-    document.title = "Yanhub - Videos";
+    document.title = "Yanhub - Shows";
   }, []);
 
+  const { openCreateVideoModal, setOpenCreateVideoModal } = useGlobalContext();
   return (
     <main className="videos-main grid-body">
       <Nav />
       <section className="body">
         <Greet />
-        {/* <div className="createVideoBtn">
+        <div className="createVideoBtn">
           <button onClick={() => setOpenCreateVideoModal(true)}>
-            New Video &nbsp;
+            New show &nbsp;
             <FaPlusCircle />
           </button>
-        </div> */}
+        </div>
         <div className="videos">
           <div className="header">
-            <h2>Videos</h2>
+            <h2>Shows</h2>
           </div>
           <div className="videos-container">
             {shows.map((shws, index) => {
@@ -40,7 +41,7 @@ const Videos = () => {
         </div>
       </section>
       <LeaderboardNav />
-      <CreateVideoForm open={openCreateVideoModal} />
+      <CreateShowForm open={openCreateVideoModal} />
       <Bell />
     </main>
   );

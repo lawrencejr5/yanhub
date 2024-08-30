@@ -23,13 +23,13 @@ const getVideo = async (req, res) => {
 };
 const createVideo = async (req, res) => {
   try {
-    const { show, ep, duration, status } = req.body;
+    const { showId, ep, duration, status } = req.body;
     const { userId } = req.user;
 
-    if (!show || !ep)
+    if (!showId || !ep)
       return res.status(501).json({ msg: "Required fields cannot be empty" });
 
-    const dataObj = { show, ep, duration, status, createdBy: userId };
+    const dataObj = { showId, ep, duration, status, createdBy: userId };
     const createdVideo = await Video.create({ ...dataObj });
 
     res.status(200).json({ msg: "created", createdVideo });

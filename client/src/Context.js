@@ -4,7 +4,7 @@ const ContextApp = createContext();
 export const Context = ({ children }) => {
   // Modals
   // const [openCreateTaskModal, setOpenCreateTaskModal] = useState(false);
-  // const [openCreateVideoModal, setOpenCreateVideoModal] = useState(false);
+  const [openCreateVideoModal, setOpenCreateVideoModal] = useState(false);
   const [videoDetailsModal, setVideoDetailsModal] = useState(false);
   const [vidDetailsId, setVidDetailsId] = useState(1);
   const [assignModal, setAssignModal] = useState(false);
@@ -46,8 +46,8 @@ export const Context = ({ children }) => {
       value={{
         // openCreateTaskModal,
         // setOpenCreateTaskModal,
-        // openCreateVideoModal,
-        // setOpenCreateVideoModal,
+        openCreateVideoModal,
+        setOpenCreateVideoModal,
         endpoint,
         videoDetailsModal,
         setVideoDetailsModal,

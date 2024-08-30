@@ -33,6 +33,7 @@ const Dashboard = () => {
             <h2>Latest Task</h2>
             <h4>Obiagelli Studio</h4>
             <br />
+            <p>Ep: Ikem Mazeli</p>
             <p>Type: Subtitle</p>
             <p>Duration: 2hr: 06min</p>
             <p>Day 5</p>
