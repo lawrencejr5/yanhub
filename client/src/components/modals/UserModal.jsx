@@ -2,7 +2,7 @@ import React from "react";
 import { FaChevronDown } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
-import { useGlobalContext } from "../Context";
+import { useGlobalContext } from "../../Context";
 
 const UserModal = ({ currUser }) => {
   const { userModal, setUserModal } = useGlobalContext();

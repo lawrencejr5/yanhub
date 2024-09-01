@@ -2,9 +2,9 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { FaChevronDown } from "react-icons/fa";
 
-import { useGlobalContext } from "../Context";
+import { useGlobalContext } from "../../Context";
 
-import { shows, videos } from "../data/videos";
+import { shows, videos } from "../../data/videos";
 
 const VideoDetails = ({ open, curr }) => {
   const navigate = useNavigate();
@@ -65,7 +65,13 @@ const VideoDetails = ({ open, curr }) => {
           </div>
         </div>
         <div className="btn-holder">
-          <button onClick={() => func()}>Show Tasks</button>
+          <button className="danger" onClick={() => func()}>
+            Show Tasks
+          </button>{" "}
+          &nbsp;
+          <button className="success" onClick={() => func()}>
+            Mark as completed
+          </button>
         </div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import Back from "../components/Back";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import VidSingleTask from "../components/VidSingleTask";
-import AssignModal from "../components/AssignModal";
+import AssignModal from "../components/modals/AssignModal";
 
 import { taskTypes } from "../data/tasks";
 

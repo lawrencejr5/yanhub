@@ -11,8 +11,8 @@ import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Back from "../components/Back";
 import SingleVideo from "../components/SingleVideo";
-import VideoDetails from "../components/VideoDetails";
-import CreateVideoForm from "../components/CreateVideoForm";
+import VideoDetails from "../components/modals/VideoDetails";
+import CreateVideoForm from "../components/modals/CreateVideoForm";
 
 const Video = () => {
   const { videoDetailsModal, openCreateVideoModal, setOpenCreateVideoModal } =

@@ -5,13 +5,16 @@ import {
   FaThumbsUp,
   FaMoon,
   FaSun,
+  FaEdit,
 } from "react-icons/fa";
 
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
-import EditDetailsModal from "../components/EditDetailsModal";
+import EditDetailsModal from "../components/modals/EditDetailsModal";
+import EditPasswordModal from "../components/modals/EditPasswordModal";
+import Notification from "../components/Notification";
 import TaskBox from "../components/TaskBox";
 
 import { users } from "../data/users";
@@ -20,7 +23,15 @@ import { tasks } from "../data/tasks";
 import { useGlobalContext } from "../Context";
 
 const Account = () => {
-  const { setEditModal, loggedIn, theme, setTheme } = useGlobalContext();
+  const {
+    setEditModal,
+    setEditPassModal,
+    loggedIn,
+    theme,
+    setTheme,
+    notification,
+    setNotification,
+  } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - My Account";
@@ -31,6 +42,20 @@ const Account = () => {
     setTheme((prev) => {
       return prev === "light" ? "dark" : "light";
     });
+    if (theme == "light") {
+      setNotification({
+        text: "Theme set to dark mode",
+        status: "true",
+        theme: "success",
+      });
+    }
+    if (theme == "dark") {
+      setNotification({
+        text: "Theme set to light mode",
+        status: "true",
+        theme: "success",
+      });
+    }
   };
 
   // Get personal tasks
@@ -73,9 +98,21 @@ const Account = () => {
         <div className="set-sec">
           <h3>Settings...</h3>
           <div className="set-item">
-            <span>Set light/dark mode</span>
+            <span>Set theme</span>
             <button onClick={toggleTheme}>
-              {theme === "dark" ? <FaSun /> : <FaMoon />}
+              {theme === "dark" ? <FaMoon /> : <FaSun />}
+            </button>
+          </div>
+          <div className="set-item">
+            <span>Change password</span>
+            <button onClick={() => setEditPassModal(true)}>
+              <FaEdit />
+            </button>
+          </div>
+          <div className="set-item">
+            <span>Change avatar (coming soon...)</span>
+            <button>
+              <FaEdit />
             </button>
           </div>
         </div>
@@ -86,10 +123,16 @@ const Account = () => {
           })}
         </div>
         <br />
+        <Notification
+          text={notification.text}
+          theme={notification.theme}
+          status={notification.status}
+        />
       </section>
       <LeaderboardNav />
       <Bell />
       <EditDetailsModal />
+      <EditPasswordModal />
     </main>
   );
 };

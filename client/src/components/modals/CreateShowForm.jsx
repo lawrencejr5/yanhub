@@ -1,7 +1,7 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 
-import { useGlobalContext } from "../Context";
+import { useGlobalContext } from "../../Context";
 
 const CreateShowForm = ({ open }) => {
   const { setOpenCreateVideoModal } = useGlobalContext();

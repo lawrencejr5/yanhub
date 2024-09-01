@@ -83,6 +83,9 @@ main {
 .text-success {
   color: var(--success);
 }
+.text-blue {
+  color: var(--blue);
+}
 .center {
   display: flex;
   justify-content: center;
@@ -151,7 +154,7 @@ main {
   height: auto;
   padding: 1rem;
   margin: 0 1rem;
-  position: absolute;
+  position: fixed;
   top: 0;
   display: flex;
   font-weight: 600;
@@ -495,7 +498,6 @@ main {
   justify-content: flex-end;
 }
 .vid-details-container .vid-details-modal .btn-holder button {
-  background-color: var(--primary);
   color: var(--text2);
   padding: 0.3rem 0.5rem;
   border: none;
@@ -565,9 +567,8 @@ main {
 .task-box {
   background-color: var(--secondary2);
   color: var(--text1);
-  /* border-left: 5px solid var(--primary); */
   width: 96%;
-  /* height: 100px; */
+  height: auto;
   border-radius: 10px;
   box-shadow: var(--box-shadow2);
   margin: 1rem;
@@ -580,11 +581,27 @@ main {
   align-items: center;
   margin-bottom: 0.5rem;
 }
+.task-box .header .stat-holder {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0;
+}
 .task-box .header #status {
   padding: 0.2rem;
   font-size: 10px;
   border-radius: 4px;
   color: var(--secondary2);
+}
+.task-box .bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.task-box .bottom button {
+  border: 0;
+  outline: 0;
+  background-color: transparent;
+  font-size: 20px;
 }
 .task-box .users {
   display: flex;
@@ -1115,7 +1132,7 @@ main {
   background-color: var(--secondary2);
   /* border-left: 5px solid var(--primary); */
   width: 96%;
-  height: 100px;
+  height: auto;
   border-radius: 10px;
   box-shadow: var(--box-shadow2);
   margin: 1rem;

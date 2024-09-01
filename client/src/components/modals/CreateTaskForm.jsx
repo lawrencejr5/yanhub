@@ -1,7 +1,7 @@
 import React from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-import { useGlobalContext } from "../Context";
+import { useGlobalContext } from "../../Context";
 const CreateTaskForm = ({ open }) => {
   const { setOpenCreateTaskModal } = useGlobalContext();
   return (

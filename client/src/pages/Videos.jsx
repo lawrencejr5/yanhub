@@ -10,7 +10,7 @@ import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import SingleShow from "../components/SingleShow";
-import CreateShowForm from "../components/CreateShowForm";
+import CreateShowForm from "../components/modals/CreateShowForm";
 
 const Videos = () => {
   useEffect(() => {

@@ -1,7 +1,7 @@
 import React from "react";
 import { FaChevronUp } from "react-icons/fa";
 
-import { useGlobalContext } from "../Context";
+import { useGlobalContext } from "../../Context";
 
 const EditDetailsModal = () => {
   const { editModal, setEditModal } = useGlobalContext();

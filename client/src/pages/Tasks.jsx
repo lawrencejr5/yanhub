@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
@@ -7,7 +8,7 @@ import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
-import UserModal from "../components/UserModal";
+import UserModal from "../components/modals/UserModal";
 
 import { tasks } from "../data/tasks";
 import { users } from "../data/users";
@@ -79,18 +80,25 @@ const Tasks = () => {
                 <div className="info">
                   <span>{duration}</span> . <span>{type}</span>
                 </div>
-                <div className="users">
-                  {usrs.map((usr, i) => {
-                    const getUser = users.find((user) => usr === user.username);
-                    return (
-                      <img
-                        src={`/imgs/user/${getUser.pic}`}
-                        alt=""
-                        key={i}
-                        onClick={() => clickFunc(getUser.username)}
-                      />
-                    );
-                  })}
+                <div className="bottom">
+                  <div className="users">
+                    {usrs.map((usr, i) => {
+                      const getUser = users.find(
+                        (user) => usr === user.username
+                      );
+                      return (
+                        <img
+                          src={`/imgs/user/${getUser.pic}`}
+                          alt=""
+                          key={i}
+                          onClick={() => clickFunc(getUser.username)}
+                        />
+                      );
+                    })}
+                  </div>
+                  <button className="text-success">
+                    <FaRegCheckCircle />
+                  </button>
                 </div>
               </div>
             );

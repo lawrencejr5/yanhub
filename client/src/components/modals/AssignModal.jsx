@@ -1,9 +1,9 @@
 import React from "react";
 import { FaChevronDown } from "react-icons/fa";
 
-import { useGlobalContext } from "../Context";
+import { useGlobalContext } from "../../Context";
 
-import { users } from "../data/users";
+import { users } from "../../data/users";
 
 const AssignModal = () => {
   const { assignModal, setAssignModal } = useGlobalContext();
@@ -40,7 +40,9 @@ const AssignModal = () => {
           })}
           <br />
           <div className="btn-holder">
-            <button type="button" onClick={()=>setAssignModal(false)}>Save changes</button>
+            <button type="button" onClick={() => setAssignModal(false)}>
+              Save changes
+            </button>
           </div>
         </form>
       </div>

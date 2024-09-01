@@ -5,7 +5,7 @@ import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import SearchBox from "../components/SearchBox";
-import UserModal from "../components/UserModal";
+import UserModal from "../components/modals/UserModal";
 
 import { users } from "../data/users";
 
