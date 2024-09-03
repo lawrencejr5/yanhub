@@ -32,7 +32,7 @@ app.use(authMiddleware);
 
 // Function to spin off server
 const startServer = async () => {
-  const port = process.env.PORT || 5000;
+  const port = process.env.PORT || 5001;
   const db = process.env.MONGO_URI;
   try {
     await connectDb(db);

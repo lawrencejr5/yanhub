@@ -4,13 +4,18 @@ import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import MyTasksLayout from "../components/MyTasksLayout";
+import Loading from "../components/Loading";
 // import UsersHighlights from "../components/UsersHighlights";
 import Greet from "../components/Greet";
 
+import { useGlobalContext } from "../Context";
 const Dashboard = () => {
   useEffect(() => {
     document.title = "Yanhub - Dashboard";
   }, []);
+
+  const { signedIn, loading } = useGlobalContext();
+  if (loading) return <Loading />;
 
   return (
     <main className="grid-body dashboard-main">
@@ -22,11 +27,11 @@ const Dashboard = () => {
           <div className="layout1">
             <div className="total-xp">
               <h3>Total XP this month</h3>
-              <strong>1756XP</strong>
+              <strong>{signedIn.xp}XP</strong>
             </div>
             <div className="position">
               <h3>Position</h3>
-              <strong>3rd</strong>
+              <strong>...</strong>
             </div>
           </div>
           <div className="layout2">

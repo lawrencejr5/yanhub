@@ -68,10 +68,10 @@ const VideoDetails = ({ open, curr }) => {
           <button className="danger" onClick={() => func()}>
             Show Tasks
           </button>{" "}
-          &nbsp;
+          {/* &nbsp;
           <button className="success" onClick={() => func()}>
             Mark as completed
-          </button>
+          </button> */}
         </div>
       </div>
     </div>

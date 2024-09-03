@@ -31,6 +31,7 @@ const Account = () => {
     setTheme,
     notification,
     setNotification,
+    signedIn,
   } = useGlobalContext();
 
   useEffect(() => {
@@ -42,14 +43,14 @@ const Account = () => {
     setTheme((prev) => {
       return prev === "light" ? "dark" : "light";
     });
-    if (theme == "light") {
+    if (theme === "light") {
       setNotification({
         text: "Theme set to dark mode",
         status: "true",
         theme: "success",
       });
     }
-    if (theme == "dark") {
+    if (theme === "dark") {
       setNotification({
         text: "Theme set to light mode",
         status: "true",
@@ -72,9 +73,9 @@ const Account = () => {
           <img src={`/imgs/user/${pic}`} alt="" />
         </div>
         <div className="name-sec">
-          <h3>{fullname}</h3>
-          <small>@{username}</small>
-          <p>{"I am the developer of yanhub"}</p>
+          <h3>{signedIn.fullname}</h3>
+          <small>@{signedIn.username}</small>
+          <p>{signedIn.bio}</p>
         </div>
         <div className="details-sec">
           <h3>User details...</h3>
@@ -83,10 +84,10 @@ const Account = () => {
               <FaBirthdayCake /> Born on -- --
             </span>
             <span>
-              <FaThumbsUp /> 3 project(s) completed this month
+              <FaThumbsUp /> 0 project(s) completed this month
             </span>
             <span>
-              <FaPhone /> 09025816161
+              <FaPhone /> {signedIn.phone || "--------"}
             </span>
             <div className="btn-holder">
               <button onClick={() => setEditModal(true)}>

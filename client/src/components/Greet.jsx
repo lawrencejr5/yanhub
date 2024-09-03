@@ -7,7 +7,7 @@ import { users } from "../data/users";
 import { useGlobalContext } from "../Context";
 
 const Greet = () => {
-  const { loggedIn } = useGlobalContext();
+  const { loggedIn, signedIn } = useGlobalContext();
 
   // Get user logged in
   const user = users.find((usr) => usr.username === loggedIn);
@@ -51,7 +51,7 @@ const Greet = () => {
   return (
     <div className="greet-component">
       <h3>
-        {greet} {username}
+        {greet} {signedIn.username}
       </h3>
       <small>{datetime.toString()}</small>
     </div>

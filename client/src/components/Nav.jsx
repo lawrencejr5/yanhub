@@ -14,7 +14,7 @@ import { users } from "../data/users";
 import { useGlobalContext } from "../Context";
 
 const Nav = () => {
-  const { loggedIn, mobileNav, setMobileNav } = useGlobalContext();
+  const { loggedIn, mobileNav, setMobileNav, signedIn } = useGlobalContext();
 
   // Get user logged in
   const user = users.find((usr) => usr.username === loggedIn);
@@ -34,7 +34,7 @@ const Nav = () => {
             ></div>
           </div>
           <br />
-          <h4 className="username">@{username}</h4>
+          <h4 className="username">@{signedIn.username}</h4>
           <div className="nav-list">
             <ul>
               {navList.map((item, index) => {
@@ -82,7 +82,7 @@ const Nav = () => {
             ></div>
           </div>
           <br />
-          <h4 className="username">@{username}</h4>
+          <h4 className="username">@{signedIn.username}</h4>
           <div className="nav-list">
             <ul>
               {navList.map((item, index) => {

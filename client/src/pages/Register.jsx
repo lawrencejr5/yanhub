@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useRef } from "react";
-import { FaLock, FaPhone, FaUser, FaEnvelope } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { FaLock, FaPhone, FaUser } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../components/Logo";
 import Notification from "../components/Notification";
-import Loading from "../components/Loading";
 
 import { useGlobalContext } from "../Context";
 const Register = () => {
@@ -15,9 +14,10 @@ const Register = () => {
     setNotification,
     btnLoad,
     setBtnLoad,
-    loading,
-    setLoading,
+    fetchUser,
   } = useGlobalContext();
+
+  const navigate = useNavigate();
 
   const [input, setInput] = useState({
     fullname: "",
@@ -64,6 +64,11 @@ const Register = () => {
       console.log(data);
       setNotification({ text: data.msg, theme: "success", status: true });
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", data.user);
+      setTimeout(() => {
+        navigate("../");
+      }, 2000);
+      fetchUser();
     } catch (err) {
       const {
         response: { data },
@@ -74,7 +79,6 @@ const Register = () => {
     }
   };
 
-  if (loading) return <Loading />;
   return (
     <main className="register-main">
       <Notification

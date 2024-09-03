@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
+import axios from "axios";
 
 const ContextApp = createContext();
 export const Context = ({ children }) => {
@@ -33,6 +34,8 @@ export const Context = ({ children }) => {
 
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
+  const [signedIn, setSignedIn] = useState({});
+  const [personalTasks, setPersonalTasks] = useState({});
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -40,7 +43,23 @@ export const Context = ({ children }) => {
   );
 
   // Endpoint
-  const endpoint = "http://localhost:5000/api/v1";
+  const endpoint = "http://localhost:5001/api/v1";
+
+  const fetchUser = async () => {
+    const userId = localStorage.getItem("user");
+    const token = localStorage.getItem("token");
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/users/${userId}`);
+      setSignedIn(data.user);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchUser();
+  }, []);
 
   return (
     <ContextApp.Provider
@@ -76,6 +95,11 @@ export const Context = ({ children }) => {
         setBtnLoad,
         loading,
         setLoading,
+        //
+        signedIn,
+        setSignedIn,
+        //
+        fetchUser,
       }}
     >
       {children}

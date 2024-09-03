@@ -1,12 +1,10 @@
 import { React, useEffect, useState } from "react";
-
 import { FaLock, FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import Logo from "../components/Logo";
 import Notification from "../components/Notification";
-import Loading from "../components/Loading";
 
 import { useGlobalContext } from "../Context";
 const Login = () => {
@@ -14,13 +12,15 @@ const Login = () => {
     document.title = "Yahhub - Login";
   }, []);
 
+  const navigate = useNavigate();
+
   const {
     endpoint,
     notification,
     setNotification,
     btnLoad,
     setBtnLoad,
-    loading,
+    fetchUser,
   } = useGlobalContext();
 
   const [username, setUsername] = useState("");
@@ -42,10 +42,13 @@ const Login = () => {
         password,
       });
 
-      console.log(data);
       setNotification({ text: data.msg, theme: "success", status: true });
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", data.user);
+      fetchUser();
+      setTimeout(() => {
+        navigate("../");
+      }, 2000);
       reset();
     } catch (err) {
       const {
@@ -57,7 +60,6 @@ const Login = () => {
     }
   };
 
-  if (loading) return <Loading />;
   return (
     <main className="login-main">
       <Notification
