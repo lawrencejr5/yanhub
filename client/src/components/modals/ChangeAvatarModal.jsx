@@ -8,6 +8,8 @@ import { avatars } from "../../data/avatars";
 const ChangeAvatarModal = () => {
   const { avatarModal, setAvatarModal } = useGlobalContext();
 
+  const [selectedDiv, setSelectedDiv] = useState(null);
+
   const containerRef = useRef(null);
   const slideRight = () => {
     if (containerRef.current) {
@@ -47,7 +49,13 @@ const ChangeAvatarModal = () => {
         <div className="avatar-container" ref={containerRef}>
           {avatars.map((avatar, i) => {
             return (
-              <div className="avatar-holder" key={i}>
+              <div
+                className={`avatar-holder ${
+                  selectedDiv === avatar.img ? "red-border" : ""
+                }`}
+                key={i}
+                onClick={() => setSelectedDiv(avatar.img)}
+              >
                 <img
                   src={`/imgs/user-icons/${avatar.img}`}
                   height={"60px"}
@@ -66,6 +74,10 @@ const ChangeAvatarModal = () => {
             <FaChevronLeft />
           </button>
         </div>
+        <form action="" className="apply-btn-holder">
+          <input type="hidden" value={selectedDiv} />
+          <button>Apply changes...</button>
+        </form>
       </div>
     </div>
   );

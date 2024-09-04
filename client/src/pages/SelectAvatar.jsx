@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Logo from "../components/Logo";
 
 import { avatars } from "../data/avatars";
+
 const SelectAvatar = () => {
+  const [selectedDiv, setSelectedDiv] = useState(null);
+
   return (
     <main className="avatar-main">
       <Logo size={"big"} />
       <section className="avatar-container">
         {avatars.map((avatar, i) => {
           return (
-            <div className="avatar-holder" key={i}>
+            <div
+              className={`avatar-holder ${
+                selectedDiv === avatar.img ? "red-border" : ""
+              }`}
+              key={i}
+              onClick={() => setSelectedDiv(avatar.img)}
+            >
               <img
                 src={`/imgs/user-icons/${avatar.img}`}
                 width={"100px"}
@@ -20,7 +29,10 @@ const SelectAvatar = () => {
             </div>
           );
         })}
-        <button disabled>select avatar</button>
+        <form action="">
+          <input type="hidden" value={selectedDiv} />
+          {selectedDiv ? <button>Proceed</button> : <button>Skip</button>}
+        </form>
       </section>
     </main>
   );

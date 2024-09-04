@@ -26,4 +26,49 @@ export const avatars = [
   {
     img: "astronaut.png",
   },
+  {
+    img: "human.png",
+  },
+  {
+    img: "cat.png",
+  },
+  {
+    img: "ghost.png",
+  },
+  {
+    img: "gamer.png",
+  },
+  {
+    img: "panda.png",
+  },
+  {
+    img: "profile.png",
+  },
+  {
+    img: "girl.png",
+  },
+  {
+    img: "avatar.png",
+  },
+  {
+    img: "customer-service.png",
+  },
+  {
+    img: "happy.png",
+  },
+  {
+    img: "gorilla.png",
+  },
+  {
+    img: "man-3.png",
+  },
+  {
+    img: "meerkat.png",
+  },
+  {
+    img: "woman-6.png",
+  },
+  {
+    img: "boy-2.png",
+  },
 ];

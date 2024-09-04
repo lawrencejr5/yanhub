@@ -72,7 +72,7 @@ const Account = () => {
       <section className="body">
         <Greet />
         <div className="banner">
-          <img src={`/imgs/user-icons/hacker.png`} alt="" />
+          <img src={`/imgs/user-icons/${signedIn.pic}`} alt="" />
         </div>
         <div className="name-sec">
           <h3>{signedIn.fullname}</h3>

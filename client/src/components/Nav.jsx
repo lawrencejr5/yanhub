@@ -30,7 +30,9 @@ const Nav = () => {
           <div className="center">
             <div
               className="avatar"
-              style={{ backgroundImage: `url(/imgs/user-icons/hacker.png)` }}
+              style={{
+                backgroundImage: `url(/imgs/user-icons/${signedIn.pic})`,
+              }}
             ></div>
           </div>
           <br />
@@ -78,7 +80,9 @@ const Nav = () => {
           <div className="center">
             <div
               className="avatar"
-              style={{ backgroundImage: `url(/imgs/user/${pic})` }}
+              style={{
+                backgroundImage: `url(/imgs/user-icons/${signedIn.pic})`,
+              }}
             ></div>
           </div>
           <br />
