@@ -63,7 +63,7 @@ const Account = () => {
 
   // Get personal tasks
   const user = users.find((usr) => usr.username === loggedIn);
-  const { pic, username, fullname } = user;
+  const { pic, username, fullname, bio } = signedIn;
   const userTasks = tasks.filter((task) => task.users.includes(loggedIn));
 
   return (
@@ -72,12 +72,12 @@ const Account = () => {
       <section className="body">
         <Greet />
         <div className="banner">
-          <img src={`/imgs/user-icons/${signedIn.pic}`} alt="" />
+          <img src={`/imgs/user-icons/${pic}`} alt="" />
         </div>
         <div className="name-sec">
-          <h3>{signedIn.fullname}</h3>
-          <small>@{signedIn.username}</small>
-          <p>{signedIn.bio}</p>
+          <h3>{fullname}</h3>
+          <small>@{username}</small>
+          <p>{bio}</p>
         </div>
         <div className="details-sec">
           <h3>User details...</h3>

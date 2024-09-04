@@ -113,6 +113,22 @@ const getUser = async (req, res) => {
   }
 };
 
+const updatePic = async (req, res) => {
+  try {
+    const { img } = req.body;
+    const { userId } = req.user;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { pic: img },
+      { new: true, runValidators: true }
+    );
+    res.status(200).json({ msg: "Profile avatar updated", user });
+  } catch (err) {
+    res.status(500).json({ msg: "An error occured", err });
+  }
+};
+
 const editUser = async (req, res) => {
   try {
     const {
@@ -195,6 +211,7 @@ module.exports = {
   login,
   getAllUsers,
   getUser,
+  updatePic,
   editUser,
   delUser,
   updatePassword,

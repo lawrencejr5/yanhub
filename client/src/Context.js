@@ -69,7 +69,6 @@ export const Context = ({ children }) => {
         // setOpenCreateTaskModal,
         openCreateVideoModal,
         setOpenCreateVideoModal,
-        endpoint,
         videoDetailsModal,
         setVideoDetailsModal,
         vidDetailsId,
@@ -89,6 +88,7 @@ export const Context = ({ children }) => {
         //
         loggedIn,
         setLoggedIn,
+        endpoint,
         theme,
         setTheme,
         mobileNav,

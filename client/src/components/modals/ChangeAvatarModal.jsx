@@ -1,14 +1,26 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaChevronUp, FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
 import { avatars } from "../../data/avatars";
 
 const ChangeAvatarModal = () => {
-  const { avatarModal, setAvatarModal } = useGlobalContext();
+  const {
+    avatarModal,
+    setAvatarModal,
+    endpoint,
+    setBtnLoad,
+    btnLoad,
+    fetchUser,
+    setNotification,
+  } = useGlobalContext();
 
   const [selectedDiv, setSelectedDiv] = useState(null);
+
+  const navigate = useNavigate();
 
   const containerRef = useRef(null);
   const slideRight = () => {
@@ -26,6 +38,44 @@ const ChangeAvatarModal = () => {
         top: 0,
         left: -100,
         behavior: "smooth",
+      });
+    }
+  };
+
+  const updateAvatar = async (e) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    try {
+      if (selectedDiv) {
+        setBtnLoad(true);
+        const { data } = await axios.patch(
+          `${endpoint}/users/update-pic`,
+          { img: selectedDiv },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setBtnLoad(false);
+        setNotification({
+          text: data.msg,
+          theme: "success",
+          status: true,
+        });
+        fetchUser();
+        setAvatarModal(false);
+      }
+      setAvatarModal(false);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+      setNotification({
+        text: data.msg,
+        theme: "danger",
+        status: true,
       });
     }
   };
@@ -74,9 +124,8 @@ const ChangeAvatarModal = () => {
             <FaChevronLeft />
           </button>
         </div>
-        <form action="" className="apply-btn-holder">
-          <input type="hidden" value={selectedDiv} />
-          <button>Apply changes...</button>
+        <form action="" className="apply-btn-holder" onSubmit={updateAvatar}>
+          <button>{btnLoad ? "Apllying" : "Apply"}</button>
         </form>
       </div>
     </div>
