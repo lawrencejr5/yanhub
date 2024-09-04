@@ -43,13 +43,11 @@ const register = async (req, res) => {
     );
 
     // Sending response
-    res
-      .status(200)
-      .json({
-        msg: "registration completed, redirecting...",
-        user: user._id,
-        token,
-      });
+    res.status(200).json({
+      msg: "registration completed",
+      user: user._id,
+      token,
+    });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
   }

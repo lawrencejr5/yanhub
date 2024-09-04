@@ -14,6 +14,7 @@ export const Context = ({ children }) => {
   const [mobileNav, setMobileNav] = useState(false);
   const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
   const [editPassModal, setEditPassModal] = useState(false);
+  const [avatarModal, setAvatarModal] = useState(false);
 
   //Notification
   const [notification, setNotification] = useState({
@@ -83,6 +84,9 @@ export const Context = ({ children }) => {
         setEditModal,
         editPassModal,
         setEditPassModal,
+        avatarModal,
+        setAvatarModal,
+        //
         loggedIn,
         setLoggedIn,
         theme,

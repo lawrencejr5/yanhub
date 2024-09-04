@@ -14,6 +14,7 @@ import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import EditDetailsModal from "../components/modals/EditDetailsModal";
 import EditPasswordModal from "../components/modals/EditPasswordModal";
+import ChangeAvatarModal from "../components/modals/ChangeAvatarModal";
 import Notification from "../components/Notification";
 import TaskBox from "../components/TaskBox";
 
@@ -26,6 +27,7 @@ const Account = () => {
   const {
     setEditModal,
     setEditPassModal,
+    setAvatarModal,
     loggedIn,
     theme,
     setTheme,
@@ -70,7 +72,7 @@ const Account = () => {
       <section className="body">
         <Greet />
         <div className="banner">
-          <img src={`/imgs/user/${pic}`} alt="" />
+          <img src={`/imgs/user-icons/hacker.png`} alt="" />
         </div>
         <div className="name-sec">
           <h3>{signedIn.fullname}</h3>
@@ -111,8 +113,8 @@ const Account = () => {
             </button>
           </div>
           <div className="set-item">
-            <span>Change avatar (coming soon...)</span>
-            <button>
+            <span>Change avatar</span>
+            <button onClick={() => setAvatarModal(true)}>
               <FaEdit />
             </button>
           </div>
@@ -134,6 +136,7 @@ const Account = () => {
       <Bell />
       <EditDetailsModal />
       <EditPasswordModal />
+      <ChangeAvatarModal />
     </main>
   );
 };

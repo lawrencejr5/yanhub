@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
+import SelectAvatar from "./pages/SelectAvatar";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Notfound from "./pages/Notfound";
@@ -40,6 +41,7 @@ const App = () => {
           <Route exact path="/" element={<Dashboard />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="register" element={<Register />}></Route>
+          <Route path="register/avatar" element={<SelectAvatar />}></Route>
           <Route path="videos" element={<Videos />}></Route>
           <Route path="videos/:name" element={<Video />}></Route>
           <Route path="tasks" element={<Tasks />}></Route>

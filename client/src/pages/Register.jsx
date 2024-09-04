@@ -66,7 +66,7 @@ const Register = () => {
       localStorage.setItem("token", data.token);
       localStorage.setItem("user", data.user);
       setTimeout(() => {
-        navigate("../");
+        navigate("avatar");
       }, 2000);
       fetchUser();
     } catch (err) {
