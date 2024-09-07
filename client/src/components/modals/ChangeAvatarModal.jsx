@@ -49,7 +49,7 @@ const ChangeAvatarModal = () => {
       if (selectedDiv) {
         setBtnLoad(true);
         const { data } = await axios.patch(
-          `${endpoint}/users/update-pic`,
+          `${endpoint}/users/avatar`,
           { img: selectedDiv },
           {
             headers: {

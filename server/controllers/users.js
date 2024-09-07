@@ -133,10 +133,10 @@ const editUser = async (req, res) => {
   try {
     const {
       params: { id },
-      body: { fullname, username, phone, dob, bio, admin, role, pic },
+      body: { fullname, username },
     } = req;
 
-    if (!fullname & !username & !phone & !dob & !bio & !admin & !role & !pic)
+    if (!fullname || !username)
       return res
         .status(500)
         .json({ msg: "Make sure you're inputing the right fields" });
@@ -172,14 +172,14 @@ const delUser = async (req, res) => {
 const updatePassword = async (req, res) => {
   try {
     const {
-      params: { id },
+      user: { userId },
       body: { oldPass, newPass, confirmPass },
     } = req;
 
     if (!oldPass || !newPass || !confirmPass)
       return res.status(500).json({ msg: "Fill in required fields" });
 
-    const user = await User.findById(id);
+    const user = await User.findById(userId);
     if (!user)
       return res.status(404).json({ msg: `No user was found with id: ${id}` });
 
@@ -195,12 +195,12 @@ const updatePassword = async (req, res) => {
     const newHashedPass = await bcrypt.hash(newPass, salt);
 
     const updatedUser = await User.findByIdAndUpdate(
-      id,
+      userId,
       { password: newHashedPass },
       { new: true, runValidators: true }
     );
 
-    res.status(200).json({ msg: "success", updatedUser });
+    res.status(200).json({ msg: "success", updatedUser: updatedUser._id });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
   }

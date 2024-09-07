@@ -16,10 +16,10 @@ const {
 
 router.post("/login", login);
 router.post("/register", register);
-router.patch("/update-pass/:id", updatePassword);
+router.patch("/pass", auth, updatePassword);
 router.get("/", getAllUsers);
 router.get("/:id", getUser);
-router.patch("/update-pic", auth, updatePic);
+router.patch("/avatar", auth, updatePic);
 router.patch("/:id", editUser);
 router.delete("/:id", delUser);
 

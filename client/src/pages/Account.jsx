@@ -83,7 +83,7 @@ const Account = () => {
           <h3>User details...</h3>
           <div className="details">
             <span>
-              <FaBirthdayCake /> Born on -- --
+              <FaBirthdayCake /> Born on {signedIn.dob || "-- --"}
             </span>
             <span>
               <FaThumbsUp /> 0 project(s) completed this month

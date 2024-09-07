@@ -23,7 +23,6 @@ const userSchema = new mongoose.Schema(
     },
     dob: {
       type: Date,
-      default: new Date(),
     },
     bio: {
       type: String,
