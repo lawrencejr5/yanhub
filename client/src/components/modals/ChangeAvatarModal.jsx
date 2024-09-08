@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FaChevronUp, FaChevronLeft, FaChevronRight } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
@@ -20,14 +19,12 @@ const ChangeAvatarModal = () => {
 
   const [selectedDiv, setSelectedDiv] = useState(null);
 
-  const navigate = useNavigate();
-
   const containerRef = useRef(null);
   const slideRight = () => {
     if (containerRef.current) {
       containerRef.current.scrollBy({
         top: 0,
-        left: 100, // Adjust this value based on how much you want to scroll
+        left: 100,
         behavior: "smooth",
       });
     }

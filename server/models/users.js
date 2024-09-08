@@ -39,7 +39,7 @@ const userSchema = new mongoose.Schema(
     },
     pic: {
       type: String,
-      default: "user-1.png",
+      default: "user.png",
     },
     xp: {
       type: Number,

@@ -1,10 +1,47 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
+import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
-const CreateShowForm = ({ open }) => {
-  const { setOpenCreateVideoModal } = useGlobalContext();
+const CreateShowForm = ({ open, getShows }) => {
+  const {
+    endpoint,
+    token,
+    btnLoad,
+    setBtnLoad,
+    setNotification,
+    setOpenCreateVideoModal,
+  } = useGlobalContext();
+
+  const [show, setShow] = useState("");
+
+  const createShow = async (e) => {
+    e.preventDefault();
+
+    try {
+      setBtnLoad(true);
+      const { data } = await axios.post(
+        `${endpoint}/shows`,
+        { show },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setBtnLoad(false);
+      setShow("");
+      getShows();
+      setNotification({ text: data.msg, status: true, theme: "success" });
+      setOpenCreateVideoModal(false);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      setBtnLoad(false);
+      setNotification({ text: data.msg, status: true, theme: "danger" });
+      setOpenCreateVideoModal(false);
+    }
+  };
   return (
     <div
       className={
@@ -13,7 +50,7 @@ const CreateShowForm = ({ open }) => {
           : "create-video-container create-video-container-hide"
       }
     >
-      <form action="">
+      <form action="" onSubmit={createShow}>
         <div className="header">
           <h2>New Show</h2>
           <FaTimes
@@ -26,11 +63,18 @@ const CreateShowForm = ({ open }) => {
             <input type="file" name="" id="" />
           </div>
           <div className="inp-holder">
-            <input type="" name="" id="" placeholder="Show..." />
+            <input
+              type=""
+              name=""
+              id=""
+              value={show}
+              onChange={(e) => setShow(e.target.value)}
+              placeholder="Show..."
+            />
           </div>
         </div>
         <div className="btn-handler">
-          <button>Create Show</button>
+          <button>{btnLoad ? "Creating..." : "Create Show"}</button>
         </div>
       </form>
     </div>

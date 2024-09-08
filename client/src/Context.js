@@ -45,10 +45,10 @@ export const Context = ({ children }) => {
 
   // Endpoint
   const endpoint = "http://localhost:5001/api/v1";
+  const token = localStorage.getItem("token");
 
   const fetchUser = async () => {
     const userId = localStorage.getItem("user");
-    const token = localStorage.getItem("token");
     try {
       setLoading(true);
       const { data } = await axios.get(`${endpoint}/users/${userId}`);
@@ -89,6 +89,7 @@ export const Context = ({ children }) => {
         loggedIn,
         setLoggedIn,
         endpoint,
+        token,
         theme,
         setTheme,
         mobileNav,

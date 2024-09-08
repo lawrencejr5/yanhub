@@ -8,7 +8,7 @@ const UserModal = ({ currUser }) => {
   const { userModal, setUserModal } = useGlobalContext();
   const navigate = useNavigate();
   const goToPage = () => {
-    navigate(`/user/${currUser.username}`);
+    navigate(`/user/${currUser._id}`);
     setUserModal(false);
   };
   return (

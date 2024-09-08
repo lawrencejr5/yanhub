@@ -1533,6 +1533,10 @@ main {
   background-color: var(--secondary2);
   cursor: pointer;
 }
+.users-main .user-box img {
+  width: 70px;
+  height: 70px;
+}
 /* .users-main #admin {
   background-image: url(../public/imgs/background/white1.jpg);
 }

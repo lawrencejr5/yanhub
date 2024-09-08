@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
-
+import axios from "axios";
 import { useGlobalContext } from "../Context";
 
 import { shows } from "../data/videos";
@@ -11,17 +11,50 @@ import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import SingleShow from "../components/SingleShow";
 import CreateShowForm from "../components/modals/CreateShowForm";
+import Loading from "../components/Loading";
+import Notification from "../components/Notification";
 
 const Videos = () => {
   useEffect(() => {
     document.title = "Yanhub - Shows";
+    getShows();
   }, []);
 
-  const { openCreateVideoModal, setOpenCreateVideoModal } = useGlobalContext();
+  const {
+    endpoint,
+    token,
+    loading,
+    setLoading,
+    notification,
+    openCreateVideoModal,
+    setOpenCreateVideoModal,
+  } = useGlobalContext();
+
+  const [shows, setShows] = useState([]);
+
+  const getShows = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/shows`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setShows(data.shows);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (loading) return <Loading />;
   return (
     <main className="videos-main grid-body">
       <Nav />
       <section className="body">
+        <Notification
+          text={notification.text}
+          theme={notification.theme}
+          status={notification.status}
+        />
         <Greet />
         <div className="createVideoBtn">
           <button onClick={() => setOpenCreateVideoModal(true)}>
@@ -33,15 +66,24 @@ const Videos = () => {
           <div className="header">
             <h2>Shows</h2>
           </div>
-          <div className="videos-container">
-            {shows.map((shws, index) => {
-              return <SingleShow key={index} shws={shws} />;
-            })}
-          </div>
+          {!shows.length ? (
+            <>
+              <br />
+              <h1 className="text-danger">
+                Opps! No shows have been created yet...
+              </h1>
+            </>
+          ) : (
+            <div className="videos-container">
+              {shows.map((shws, index) => {
+                return <SingleShow key={index} shws={shws} />;
+              })}
+            </div>
+          )}
         </div>
       </section>
       <LeaderboardNav />
-      <CreateShowForm open={openCreateVideoModal} />
+      <CreateShowForm open={openCreateVideoModal} getShows={getShows} />
       <Bell />
     </main>
   );

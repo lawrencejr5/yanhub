@@ -48,7 +48,7 @@ const App = () => {
           <Route path="tasks/personal" element={<TasksPersonal />}></Route>
           <Route path="task/:id" element={<Task />}></Route>
           <Route path="users" element={<Users />}></Route>
-          <Route path="user/:username" element={<User />}></Route>
+          <Route path="user/:id" element={<User />}></Route>
           <Route path="account" element={<Account />}></Route>
           <Route path="*" element={<Notfound />}></Route>
         </Routes>

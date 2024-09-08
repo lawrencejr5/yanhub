@@ -1,10 +1,17 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
+import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
 const CreateVideoForm = ({ open, vidName }) => {
-  const { setOpenCreateVideoModal } = useGlobalContext();
+  const { endpoint, token, btnLoad, setBtnLoad, setOpenCreateVideoModal } =
+    useGlobalContext();
+
+  const createVideo = async (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div
       className={
@@ -13,7 +20,7 @@ const CreateVideoForm = ({ open, vidName }) => {
           : "create-video-container create-video-container-hide"
       }
     >
-      <form action="">
+      <form action="" onSubmit={createVideo}>
         <div className="header">
           <h2>New Video</h2>
           <FaTimes
