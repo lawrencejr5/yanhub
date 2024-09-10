@@ -50,11 +50,7 @@ const Videos = () => {
     <main className="videos-main grid-body">
       <Nav />
       <section className="body">
-        <Notification
-          text={notification.text}
-          theme={notification.theme}
-          status={notification.status}
-        />
+        <Notification notification={notification} />
         <Greet />
         <div className="createVideoBtn">
           <button onClick={() => setOpenCreateVideoModal(true)}>

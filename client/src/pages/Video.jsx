@@ -61,11 +61,7 @@ const Video = () => {
       <Nav />
       <section className="body">
         <Back text={`${currShow.show} videos`} />
-        <Notification
-          text={notification.text}
-          theme={notification.theme}
-          status={notification.status}
-        />
+        <Notification notification={notification} />
         <div className="createVideoBtn">
           <button onClick={() => setOpenCreateVideoModal(true)}>
             New Video &nbsp;

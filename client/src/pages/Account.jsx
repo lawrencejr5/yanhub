@@ -126,11 +126,7 @@ const Account = () => {
           })}
         </div>
         <br />
-        <Notification
-          text={notification.text}
-          theme={notification.theme}
-          status={notification.status}
-        />
+        <Notification notification={notification} />
       </section>
       <LeaderboardNav />
       <Bell />

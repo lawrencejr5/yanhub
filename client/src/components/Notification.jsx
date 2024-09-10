@@ -1,7 +1,8 @@
 import React from "react";
 import { FaThumbsUp, FaTimesCircle } from "react-icons/fa";
 
-const Notification = ({ text, theme, status }) => {
+const Notification = ({ notification }) => {
+  const { text, theme, status } = notification;
   return (
     <div className="notification-container">
       <div className={`notification text-${theme} ${status ? "down" : "up"}`}>

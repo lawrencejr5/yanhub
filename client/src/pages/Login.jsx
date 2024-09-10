@@ -62,11 +62,7 @@ const Login = () => {
 
   return (
     <main className="login-main">
-      <Notification
-        text={notification.text}
-        theme={notification.theme}
-        status={notification.status}
-      />
+      <Notification notification={notification} />
       <Logo size={"big"} />
       <div className="center">
         <section className="container">

@@ -81,11 +81,7 @@ const Register = () => {
 
   return (
     <main className="register-main">
-      <Notification
-        text={notification.text}
-        theme={notification.theme}
-        status={notification.status}
-      />
+      <Notification notification={notification} />
       <Logo size={"big"} />
       <div className="center">
         <section className="container">
