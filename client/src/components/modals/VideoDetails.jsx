@@ -61,7 +61,7 @@ const VideoDetails = ({ open, show }) => {
         </div>
         <div className="btn-holder">
           <button className="danger" onClick={() => func()}>
-            Show Tasks
+            Assign Tasks
           </button>{" "}
           {/* &nbsp;
           <button className="success" onClick={() => func()}>

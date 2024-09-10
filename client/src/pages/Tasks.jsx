@@ -9,6 +9,7 @@ import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import UserModal from "../components/modals/UserModal";
+import SearchBox from "../components/SearchBox";
 
 import { tasks } from "../data/tasks";
 import { users } from "../data/users";
@@ -48,6 +49,7 @@ const Tasks = () => {
             </button>
           </div>
         </div>
+        <SearchBox what={"tasks"} />
         <div className="tasks-container">
           {tasks.map((task, index) => {
             const {

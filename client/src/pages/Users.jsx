@@ -57,7 +57,7 @@ const Users = () => {
       <Nav />
       <section className="body">
         <Greet />
-        <SearchBox />
+        <SearchBox what={"users"} />
 
         <h1>YanHub Users</h1>
         <div className="admins-container">

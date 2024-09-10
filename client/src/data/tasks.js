@@ -3,9 +3,9 @@ export const taskTypes = [
   "cutting & sound",
   "subtitling",
   "highlight",
+  "scaling",
   "finishing",
   "rendering",
-  "scaling",
 ];
 
 export const tasks = [
