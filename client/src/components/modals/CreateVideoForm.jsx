@@ -1,15 +1,46 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
-const CreateVideoForm = ({ open, vidName }) => {
-  const { endpoint, token, btnLoad, setBtnLoad, setOpenCreateVideoModal } =
-    useGlobalContext();
+const CreateVideoForm = ({ open, showId, currShow, getVideos }) => {
+  const {
+    endpoint,
+    token,
+    btnLoad,
+    setBtnLoad,
+    setNotification,
+    setOpenCreateVideoModal,
+  } = useGlobalContext();
+
+  const [ep, setEp] = useState("");
+  const [show, setShow] = useState(currShow.show);
 
   const createVideo = async (e) => {
     e.preventDefault();
+
+    try {
+      setBtnLoad(true);
+      const { data } = await axios.post(
+        `${endpoint}/videos`,
+        { showId, ep },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      getVideos();
+      setBtnLoad(false);
+      setEp("");
+      setOpenCreateVideoModal(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      setBtnLoad(false);
+      setOpenCreateVideoModal(false);
+      setNotification({ text: data.msg, theme: "danger", status: true });
+      console.log(data);
+    }
   };
 
   return (
@@ -30,17 +61,30 @@ const CreateVideoForm = ({ open, vidName }) => {
         </div>
         <div className="inp-handler">
           <div className="inp-holder">
-            <input type="text" value={vidName} disabled />
+            <input
+              type="text"
+              value={show}
+              onChange={(e) => {
+                setShow(e.target.value);
+              }}
+              disabled
+            />
           </div>
           <div className="inp-holder">
-            <input type="" name="" id="" placeholder="Episode..." />
-          </div>
-          <div className="inp-holder">
-            <input type="text" name="" id="" placeholder="Duration..." />
+            <input
+              type="text"
+              name="ep"
+              id=""
+              value={ep}
+              onChange={(e) => {
+                setEp(e.target.value);
+              }}
+              placeholder="Episode..."
+            />
           </div>
         </div>
         <div className="btn-handler">
-          <button>Create video</button>
+          <button>{btnLoad ? `Creating...` : `Create video`}</button>
         </div>
       </form>
     </div>

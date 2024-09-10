@@ -8,6 +8,7 @@ const getAllShows = async (req, res) => {
     res.status(500).json({ msg: "An error occured", err });
   }
 };
+
 const getShow = async (req, res) => {
   try {
     const { id } = req.params;
@@ -18,6 +19,7 @@ const getShow = async (req, res) => {
     res.status(500).json({ msg: "An error occured", err });
   }
 };
+
 const createShow = async (req, res) => {
   try {
     const { show, bgImg } = req.body;
@@ -40,6 +42,7 @@ const createShow = async (req, res) => {
     res.status(500).json({ msg: "An error occured", err });
   }
 };
+
 const updateShow = async (req, res) => {
   try {
     const { id } = req.params;
@@ -61,6 +64,7 @@ const updateShow = async (req, res) => {
     res.status(500).json({ msg: "An error occured", err });
   }
 };
+
 const delShow = async (req, res) => {
   try {
     const { id } = req.params;

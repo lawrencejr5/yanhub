@@ -6,18 +6,13 @@ import { useGlobalContext } from "../../Context";
 
 import { shows, videos } from "../../data/videos";
 
-const VideoDetails = ({ open, curr }) => {
+const VideoDetails = ({ open, show }) => {
   const navigate = useNavigate();
 
-  const { setVideoDetailsModal, vidDetailsId } = useGlobalContext();
-
-  const findShow = shows.find((show) => show.show === curr);
-
-  const singleVid = videos.find((vid) => vid.id === vidDetailsId);
-  const { show, ep, dur, users, status, datetime } = singleVid;
+  const { setVideoDetailsModal, currVid } = useGlobalContext();
 
   const func = () => {
-    navigate(`/task/${vidDetailsId}`);
+    navigate(`/task/${currVid._id}`);
     setVideoDetailsModal(false);
   };
   return (
@@ -36,7 +31,7 @@ const VideoDetails = ({ open, curr }) => {
         </div>
         <div
           className="banner"
-          style={{ backgroundImage: `url(/imgs/background/${findShow.img})` }}
+          style={{ backgroundImage: `url(/imgs/background/${"white1.jpg"})` }}
         ></div>
         <div className="details">
           <div className="details-container">
@@ -45,24 +40,24 @@ const VideoDetails = ({ open, curr }) => {
           </div>
           <div className="details-container">
             <strong>Episode: </strong>
-            <span>{ep}</span>
+            <span>{currVid.ep}</span>
           </div>
           <div className="details-container">
             <strong>Status: </strong>
-            <span>{status}</span>
+            <span>{currVid.status}</span>
           </div>
-          <div className="details-container">
+          {/* <div className="details-container">
             <strong>No. of users on it: </strong>
-            <span>{users}</span>
-          </div>
+            <span>{currVid.users}</span>
+          </div> */}
           <div className="details-container">
             <strong>Duration: </strong>
-            <span>{dur}</span>
+            <span>{currVid.duration}</span>
           </div>
-          <div className="details-container">
+          {/* <div className="details-container">
             <strong>Date Created: </strong>
             <span>{datetime}</span>
-          </div>
+          </div> */}
         </div>
         <div className="btn-holder">
           <button className="danger" onClick={() => func()}>

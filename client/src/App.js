@@ -43,7 +43,7 @@ const App = () => {
           <Route path="register" element={<Register />}></Route>
           <Route path="register/avatar" element={<SelectAvatar />}></Route>
           <Route path="videos" element={<Videos />}></Route>
-          <Route path="videos/:name" element={<Video />}></Route>
+          <Route path="videos/:id" element={<Video />}></Route>
           <Route path="tasks" element={<Tasks />}></Route>
           <Route path="tasks/personal" element={<TasksPersonal />}></Route>
           <Route path="task/:id" element={<Task />}></Route>

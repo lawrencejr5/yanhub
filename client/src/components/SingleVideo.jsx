@@ -2,28 +2,25 @@ import React from "react";
 
 import { useGlobalContext } from "../Context";
 
-import { shows } from "../data/videos";
-
-const SingleVideo = ({ vid, curr }) => {
-  const { setVideoDetailsModal, setVidDetailsId } = useGlobalContext();
-
-  const findShow = shows.find((show) => show.show === curr);
+const SingleVideo = ({ vid }) => {
+  const { setVideoDetailsModal, getVidDetails } = useGlobalContext();
 
   const set = () => {
     setVideoDetailsModal(true);
-    setVidDetailsId(vid.id);
+    getVidDetails(vid._id);
   };
+
   return (
-    <div className="video" onClick={() => set()}>
+    <div className="video" onClick={set}>
       <div
         className="img"
         style={{
-          backgroundImage: `url(/imgs/background/${findShow.img})`,
+          backgroundImage: `url(/imgs/background/${"white1.jpg"})`,
         }}
       ></div>
       <div className="details">
         <div className="header">
-          <strong>{`${vid.show}(${vid.ep})`}</strong>
+          <strong>{`${vid.showName}(${vid.ep})`}</strong>
           <span
             className={
               vid.status === "done"
@@ -37,8 +34,8 @@ const SingleVideo = ({ vid, curr }) => {
           </span>{" "}
         </div>
         <div className="info">
-          <span className="dur">{vid.dur}</span> {" . "}
-          <span className="date">{vid.datetime}</span>
+          <span className="dur">{vid.duration}</span> {" . "}
+          <span className="date">{vid.createdAt}</span>
         </div>
       </div>
     </div>

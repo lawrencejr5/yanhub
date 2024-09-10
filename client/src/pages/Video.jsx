@@ -1,10 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import { useGlobalContext } from "../Context";
-
-import { videos, shows } from "../data/videos";
 
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
@@ -13,25 +12,60 @@ import Back from "../components/Back";
 import SingleVideo from "../components/SingleVideo";
 import VideoDetails from "../components/modals/VideoDetails";
 import CreateVideoForm from "../components/modals/CreateVideoForm";
+import Loading from "../components/Loading";
+import Notification from "../components/Notification";
 
 const Video = () => {
-  const { videoDetailsModal, openCreateVideoModal, setOpenCreateVideoModal } =
-    useGlobalContext();
-  const { pathname } = useLocation();
-  const curr = pathname.split("/")[2].replaceAll("%20", " ");
+  const {
+    endpoint,
+    token,
+    notification,
+    loading,
+    setLoading,
+    videoDetailsModal,
+    openCreateVideoModal,
+    setOpenCreateVideoModal,
+    getShowById,
+    currShow,
+  } = useGlobalContext();
+
+  const { id: showId } = useParams();
 
   useEffect(() => {
     document.title = "Yanhub - Videos";
+    getShowById(showId);
+    getVideos();
   }, []);
 
-  const findShow = shows.find((show) => show.show === curr);
-  const vids = videos.filter((vid) => vid.show === curr);
+  const [videos, setVideos] = useState([]);
 
+  const getVideos = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${endpoint}/videos?show=${showId}&simplified=true`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setLoading(false);
+      setVideos(data.simpVideos);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  if (loading) return <Loading />;
   return (
     <main className="video-main grid-body">
       <Nav />
       <section className="body">
-        <Back text={`${curr} videos`} />
+        <Back text={`${currShow.show} videos`} />
+        <Notification
+          text={notification.text}
+          theme={notification.theme}
+          status={notification.status}
+        />
         <div className="createVideoBtn">
           <button onClick={() => setOpenCreateVideoModal(true)}>
             New Video &nbsp;
@@ -43,7 +77,7 @@ const Video = () => {
             <div
               className="banner"
               style={{
-                backgroundImage: `url(/imgs/background/${findShow.img})`,
+                backgroundImage: `url(/imgs/background/${"white1.jpg"})`,
               }}
             ></div>
           </div>
@@ -56,16 +90,21 @@ const Video = () => {
                 <option value="undone">Undone</option>
               </select>
             </div>
-            {vids.map((vid, index) => {
-              return <SingleVideo vid={vid} curr={curr} key={index} />;
+            {videos.map((vid, index) => {
+              return <SingleVideo vid={vid} curr={showId} key={index} />;
             })}
           </div>
         </div>
       </section>
       <LeaderboardNav />
-      <CreateVideoForm open={openCreateVideoModal} vidName={curr} />
+      <CreateVideoForm
+        open={openCreateVideoModal}
+        getVideos={getVideos}
+        showId={showId}
+        currShow={currShow}
+      />
       <Bell />
-      <VideoDetails open={videoDetailsModal} curr={curr} />
+      <VideoDetails open={videoDetailsModal} show={currShow.show} />
     </main>
   );
 };

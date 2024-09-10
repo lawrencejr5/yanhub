@@ -3,15 +3,13 @@ import axios from "axios";
 
 const ContextApp = createContext();
 export const Context = ({ children }) => {
-  // Modals
-  // const [openCreateTaskModal, setOpenCreateTaskModal] = useState(false);
+  // Modals & nav
+  const [mobileNav, setMobileNav] = useState(false);
   const [openCreateVideoModal, setOpenCreateVideoModal] = useState(false);
   const [videoDetailsModal, setVideoDetailsModal] = useState(false);
-  const [vidDetailsId, setVidDetailsId] = useState(1);
   const [assignModal, setAssignModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [userModal, setUserModal] = useState(false);
-  const [mobileNav, setMobileNav] = useState(false);
   const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
   const [editPassModal, setEditPassModal] = useState(false);
   const [avatarModal, setAvatarModal] = useState(false);
@@ -23,10 +21,10 @@ export const Context = ({ children }) => {
     theme: "",
   });
   useEffect(() => {
-    const notTimeout = setTimeout(() => {
+    const notiTimeout = setTimeout(() => {
       setNotification({ ...notification, status: false });
     }, 2000);
-    return () => clearTimeout(notTimeout);
+    return () => clearTimeout(notiTimeout);
   }, [notification]);
 
   // Loading
@@ -36,6 +34,14 @@ export const Context = ({ children }) => {
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
   const [signedIn, setSignedIn] = useState({});
+
+  // Video states
+  const [currVid, setCurrVid] = useState({});
+
+  // Shows states
+  const [currShow, setCurrShow] = useState({});
+
+  // Tasks states
   const [personalTasks, setPersonalTasks] = useState({});
 
   // Dark mode
@@ -58,6 +64,38 @@ export const Context = ({ children }) => {
       console.log(err);
     }
   };
+
+  const getVidDetails = async (id) => {
+    try {
+      const { data } = await axios.get(
+        `${endpoint}/videos/${id}?simplified=true`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setCurrVid(data.simpVideos);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+
+  const getShowById = async (id) => {
+    try {
+      const { data } = await axios.get(`${endpoint}/shows/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCurrShow(data.shows);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -65,14 +103,10 @@ export const Context = ({ children }) => {
   return (
     <ContextApp.Provider
       value={{
-        // openCreateTaskModal,
-        // setOpenCreateTaskModal,
         openCreateVideoModal,
         setOpenCreateVideoModal,
         videoDetailsModal,
         setVideoDetailsModal,
-        vidDetailsId,
-        setVidDetailsId,
         assignModal,
         setAssignModal,
         userModal,
@@ -103,8 +137,12 @@ export const Context = ({ children }) => {
         //
         signedIn,
         setSignedIn,
+        currVid,
+        currShow,
         //
         fetchUser,
+        getVidDetails,
+        getShowById,
       }}
     >
       {children}

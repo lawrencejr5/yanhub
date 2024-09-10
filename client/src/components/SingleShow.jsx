@@ -2,11 +2,11 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const SingleShow = ({ shws }) => {
-  const { show, bgImg } = shws;
+  const { _id: id, show, bgImg } = shws;
 
   const navigate = useNavigate();
   const setVid = () => {
-    navigate(`/videos/${show}`);
+    navigate(`/videos/${id}`);
   };
 
   return (
