@@ -3,12 +3,16 @@ import React from "react";
 import { useGlobalContext } from "../Context";
 
 const VidSingleTask = ({ task }) => {
-  const { setAssignModal } = useGlobalContext();
+  const { setAssignModal, setAssignTask } = useGlobalContext();
 
+  const func = () => {
+    setAssignTask(task);
+    setAssignModal(true);
+  };
   return (
     <div className="vid-single-task">
       <p>{task}</p>
-      <button onClick={() => setAssignModal(true)}>Assign</button>
+      <button onClick={func}>Assign</button>
     </div>
   );
 };

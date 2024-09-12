@@ -14,6 +14,8 @@ export const Context = ({ children }) => {
   const [editPassModal, setEditPassModal] = useState(false);
   const [avatarModal, setAvatarModal] = useState(false);
 
+  const [assignTask, setAssignTask] = useState("");
+
   //Notification
   const [notification, setNotification] = useState({
     text: "",
@@ -34,6 +36,7 @@ export const Context = ({ children }) => {
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
   const [signedIn, setSignedIn] = useState({});
+  const [allUsers, setAllUsers] = useState([]);
 
   // Video states
   const [currVid, setCurrVid] = useState({});
@@ -49,7 +52,7 @@ export const Context = ({ children }) => {
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
 
-  // Endpoint
+  // Endpoint and token
   const endpoint = "http://localhost:5001/api/v1";
   const token = localStorage.getItem("token");
 
@@ -65,8 +68,20 @@ export const Context = ({ children }) => {
     }
   };
 
+  const fetchUsers = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/users`);
+      setAllUsers(data.users);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const getVidDetails = async (id) => {
     try {
+      setLoading(true);
       const { data } = await axios.get(
         `${endpoint}/videos/${id}?simplified=true`,
         {
@@ -74,6 +89,7 @@ export const Context = ({ children }) => {
         }
       );
       setCurrVid(data.simpVideos);
+      setLoading(false);
     } catch (err) {
       const {
         response: { data },
@@ -136,11 +152,15 @@ export const Context = ({ children }) => {
         setLoading,
         //
         signedIn,
+        allUsers,
         setSignedIn,
         currVid,
         currShow,
+        assignTask,
+        setAssignTask,
         //
         fetchUser,
+        fetchUsers,
         getVidDetails,
         getShowById,
       }}
