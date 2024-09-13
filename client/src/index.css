@@ -262,7 +262,7 @@ main {
   z-index: 1;
 }
 .grid-body .small-nav .nav-box {
-  transition: 0.2s;
+  transition: 0.1s;
   position: fixed;
   top: 0;
   width: 97%;
@@ -275,7 +275,7 @@ main {
   height: 60px;
 }
 .grid-body .small-nav .collapsed {
-  height: 101vh;
+  height: 60vh;
 }
 .grid-body .small-nav .nav-box .header {
   height: 60px;
@@ -339,6 +339,19 @@ main {
   padding: 0.3rem;
   padding-left: 1rem;
   width: 90%;
+}
+.grid-body .small-nav .logout {
+  margin: 2rem 0rem;
+  display: flex;
+  align-items: center;
+  color: var(--primary);
+}
+.grid-body .small-nav .logout .link {
+  color: var(--primary);
+  text-decoration: none;
+  width: 100%;
+  font-weight: 600;
+  margin-left: 0.5rem;
 }
 
 /* wider view */

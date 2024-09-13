@@ -14,11 +14,7 @@ import { users } from "../data/users";
 import { useGlobalContext } from "../Context";
 
 const Nav = () => {
-  const { loggedIn, mobileNav, setMobileNav, signedIn } = useGlobalContext();
-
-  // Get user logged in
-  const user = users.find((usr) => usr.username === loggedIn);
-  const { pic, username } = user;
+  const { mobileNav, setMobileNav, signedIn } = useGlobalContext();
 
   const { pathname } = useLocation();
   return (
@@ -107,6 +103,12 @@ const Nav = () => {
                 );
               })}
             </ul>
+            <div className="logout">
+              <FaPowerOff />
+              <Link to="/login" className="link">
+                Logout
+              </Link>
+            </div>
           </div>
         </div>
       </div>

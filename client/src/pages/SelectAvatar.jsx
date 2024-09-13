@@ -67,11 +67,7 @@ const SelectAvatar = () => {
 
   return (
     <main className="avatar-main">
-      <Notification
-        text={notification.text}
-        theme={notification.theme}
-        status={notification.status}
-      />
+      <Notification notification={notification} />
       <Logo size={"big"} />
       <section className="avatar-container">
         <h1>Choose an avatar...</h1>

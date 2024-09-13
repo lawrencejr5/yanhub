@@ -1,21 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import MyTasksLayout from "../components/MyTasksLayout";
 import Loading from "../components/Loading";
-// import UsersHighlights from "../components/UsersHighlights";
 import Greet from "../components/Greet";
 
 import { useGlobalContext } from "../Context";
 const Dashboard = () => {
-  const { signedIn, loading, fetchTasks } = useGlobalContext();
+  const { signedIn, loading, fetchTasks, allTasks } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Dashboard";
     fetchTasks();
   }, []);
+
+  const filteredTasks = allTasks.filter((task) =>
+    task.assignedTo.includes(signedIn._id)
+  );
+
+  const latestTask = filteredTasks[filteredTasks.length - 1];
 
   if (loading) return <Loading />;
 
@@ -36,15 +41,14 @@ const Dashboard = () => {
               <strong>...</strong>
             </div>
           </div>
-          <div className="layout2">
+          {/* <div className="layout2">
             <h2>Latest Task</h2>
-            <h4>Obiagelli Studio</h4>
+            <h4>{latestTask.show}</h4>
             <br />
-            <p>Ep: Ikem Mazeli</p>
-            <p>Type: Subtitle</p>
-            <p>Duration: 2hr: 06min</p>
-            <p>Day 5</p>
-          </div>
+            <p>Ep: {latestTask.ep}</p>
+            <p>Type: {latestTask.type}</p>
+            <p>Duration: {latestTask.duration}</p>
+          </div> */}
         </div>
         <MyTasksLayout />
         <br />

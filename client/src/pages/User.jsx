@@ -9,8 +9,6 @@ import Bell from "../components/Bell";
 import Back from "../components/Back";
 import TaskBox from "../components/TaskBox";
 
-import { tasks } from "../data/tasks";
-
 import { useGlobalContext } from "../Context";
 import Loading from "../components/Loading";
 

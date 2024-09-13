@@ -34,10 +34,13 @@ const Account = () => {
     notification,
     setNotification,
     signedIn,
+    fetchTasks,
+    allTasks,
   } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - My Account";
+    fetchTasks();
   }, []);
 
   // Dark/Light mode toggle function
@@ -62,9 +65,10 @@ const Account = () => {
   };
 
   // Get personal tasks
-  const user = users.find((usr) => usr.username === loggedIn);
   const { pic, username, fullname, bio } = signedIn;
-  const userTasks = tasks.filter((task) => task.users.includes(loggedIn));
+  const filteredTasks = allTasks.filter((task) =>
+    task.assignedTo.includes(signedIn._id)
+  );
 
   return (
     <main className="grid-body account-main">
@@ -121,7 +125,7 @@ const Account = () => {
         </div>
         <div className="tasks-sec">
           <h3>Your tasks...</h3>
-          {userTasks.map((task, index) => {
+          {filteredTasks.map((task, index) => {
             return <TaskBox task={task} key={index} />;
           })}
         </div>
