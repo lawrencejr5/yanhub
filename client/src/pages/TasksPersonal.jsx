@@ -9,14 +9,17 @@ import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import TaskBox from "../components/TaskBox";
 
-import { tasks } from "../data/tasks";
-
 const TasksPersonal = () => {
-  const { loggedIn, userTasks } = useGlobalContext();
+  const { allTasks, fetchTasks } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
+    fetchTasks();
   }, []);
+  const userId = localStorage.getItem("user");
+  const filteredTasks = allTasks.filter((task) =>
+    task.assignedTo.includes(userId)
+  );
   const navigate = useNavigate();
 
   return (
@@ -45,7 +48,7 @@ const TasksPersonal = () => {
           </div>
         </div>
         <div className="tasks-container">
-          {userTasks.map((task, index) => {
+          {filteredTasks.map((task, index) => {
             return <TaskBox task={task} key={index} />;
           })}
         </div>

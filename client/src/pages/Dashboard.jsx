@@ -10,11 +10,13 @@ import Greet from "../components/Greet";
 
 import { useGlobalContext } from "../Context";
 const Dashboard = () => {
+  const { signedIn, loading, fetchTasks } = useGlobalContext();
+
   useEffect(() => {
     document.title = "Yanhub - Dashboard";
+    fetchTasks();
   }, []);
 
-  const { signedIn, loading, userTasks } = useGlobalContext();
   if (loading) return <Loading />;
 
   return (

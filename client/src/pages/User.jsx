@@ -16,13 +16,14 @@ import Loading from "../components/Loading";
 
 const Account = () => {
   const [user, setUser] = useState([]);
+  const { loading, setLoading, endpoint, fetchTasks, allTasks } =
+    useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - My Account";
     getUser();
+    fetchTasks();
   }, []);
-
-  const { loading, setLoading, endpoint } = useGlobalContext();
 
   const { id } = useParams();
   const getUser = async () => {
@@ -35,8 +36,9 @@ const Account = () => {
       console.log(err);
     }
   };
-
   const { username, pic, bio, phone } = user;
+
+  const filteredTasks = allTasks.filter((task) => task.assignedTo.includes(id));
 
   if (loading) return <Loading />;
   return (
@@ -68,9 +70,9 @@ const Account = () => {
         </div>
         <div className="tasks-sec">
           <h3>{`${username}'s tasks...`}</h3>
-          {/* {userTasks.map((task, index) => {
+          {filteredTasks.map((task, index) => {
             return <TaskBox task={task} key={index} />;
-          })} */}
+          })}
         </div>
       </section>
       <LeaderboardNav />

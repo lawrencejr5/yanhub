@@ -148,6 +148,8 @@ export const Context = ({ children }) => {
 
   useEffect(() => {
     fetchUser();
+    fetchUsers();
+    fetchTasks();
   }, []);
 
   return (
