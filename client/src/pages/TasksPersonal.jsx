@@ -8,9 +8,11 @@ import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import TaskBox from "../components/TaskBox";
+import SearchBox from "../components/SearchBox";
+import Loading from "../components/Loading";
 
 const TasksPersonal = () => {
-  const { allTasks, fetchTasks } = useGlobalContext();
+  const { allTasks, fetchTasks, loading } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
@@ -21,6 +23,8 @@ const TasksPersonal = () => {
     task.assignedTo.includes(userId)
   );
   const navigate = useNavigate();
+
+  if (loading) return <Loading />;
 
   return (
     <main className="grid-body tasks-main">
@@ -35,6 +39,8 @@ const TasksPersonal = () => {
         </div> */}
         <div className="header">
           <h2>Tasks</h2>
+          <SearchBox what={"personal tasks"} />
+
           <div className="sort-nav">
             <button className="" onClick={() => navigate("/tasks")}>
               All

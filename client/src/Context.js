@@ -10,7 +10,7 @@ export const Context = ({ children }) => {
   const [assignModal, setAssignModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
   const [userModal, setUserModal] = useState(false);
-  const [userForUserModal, setUserForUserModal] = useState("lawrencejr");
+  const [userForUserModal, setUserForUserModal] = useState("");
   const [editPassModal, setEditPassModal] = useState(false);
   const [avatarModal, setAvatarModal] = useState(false);
 
@@ -50,6 +50,7 @@ export const Context = ({ children }) => {
 
   // Tasks states
   const [personalTasks, setPersonalTasks] = useState({});
+  const [checked, setChecked] = useState(null);
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -150,6 +151,7 @@ export const Context = ({ children }) => {
     fetchUser();
     fetchUsers();
     fetchTasks();
+    // setChecked(null);
   }, []);
 
   return (
@@ -196,6 +198,8 @@ export const Context = ({ children }) => {
         currShow,
         assignTask,
         setAssignTask,
+        checked,
+        setChecked,
         //
         fetchUser,
         fetchUsers,

@@ -3,11 +3,12 @@ import React from "react";
 import { useGlobalContext } from "../Context";
 
 const VidSingleTask = ({ task }) => {
-  const { setAssignModal, setAssignTask } = useGlobalContext();
+  const { setAssignModal, setAssignTask, setChecked } = useGlobalContext();
 
   const func = () => {
     setAssignTask(task);
     setAssignModal(true);
+    setChecked(null);
   };
   return (
     <div className="vid-single-task">

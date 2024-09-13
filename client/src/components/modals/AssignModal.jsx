@@ -14,6 +14,8 @@ const AssignModal = () => {
     token,
     fetchUsers,
     allUsers,
+    checked,
+    setChecked,
     setNotification,
   } = useGlobalContext();
 
@@ -25,6 +27,11 @@ const AssignModal = () => {
   useEffect(() => {
     console.log(userInp);
   }, [userInp]);
+
+  const drop = () => {
+    setAssignModal(false);
+    setChecked(false);
+  };
 
   const handleAssignment = async (e) => {
     e.preventDefault();
@@ -40,6 +47,7 @@ const AssignModal = () => {
       );
       setAssignModal(false);
       setUserInp([]);
+      setChecked(false);
       setNotification({ text: data.msg, theme: "success", status: true });
     } catch (err) {
       const {
@@ -53,8 +61,8 @@ const AssignModal = () => {
   const handleChange = (e) => {
     setUserInp((prev) => {
       if (prev.includes(e.target.value)) {
-        prev.pop();
-        return [...prev];
+        const newItems = prev.filter((item) => item !== e.target.value);
+        return newItems;
       } else if (!prev.includes(e.target.value)) {
         return [...prev, e.target.value];
       }
@@ -70,10 +78,7 @@ const AssignModal = () => {
       <div className="assign-modal">
         <div className="header">
           <h3>{`Assign ${assignTask} to...`}</h3>
-          <FaChevronDown
-            style={{ cursor: "pointer" }}
-            onClick={() => setAssignModal(false)}
-          />
+          <FaChevronDown style={{ cursor: "pointer" }} onClick={drop} />
         </div>
         <form className="body" onSubmit={handleAssignment}>
           {allUsers.map((user, index) => {
@@ -82,6 +87,7 @@ const AssignModal = () => {
               <div className="assignees" key={index}>
                 <input
                   type="checkbox"
+                  checked={checked}
                   value={userId}
                   onChange={handleChange}
                   id={userId}

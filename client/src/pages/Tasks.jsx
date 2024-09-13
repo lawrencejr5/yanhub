@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
 
@@ -12,20 +12,9 @@ import UserModal from "../components/modals/UserModal";
 import SearchBox from "../components/SearchBox";
 import Loading from "../components/Loading";
 
-import { tasks } from "../data/tasks";
-import { users } from "../data/users";
-
 const Tasks = () => {
-  const {
-    setUserModal,
-    userForUserModal,
-    setUserForUserModal,
-    fetchTasks,
-    fetchUsers,
-    loading,
-    allUsers,
-    allTasks,
-  } = useGlobalContext();
+  const { setUserModal, fetchTasks, fetchUsers, loading, allUsers, allTasks } =
+    useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
@@ -35,14 +24,12 @@ const Tasks = () => {
 
   const navigate = useNavigate();
 
+  const [currUser, setCurrUser] = useState([]);
   const clickFunc = (user) => {
     setUserModal(true);
-    setUserForUserModal(user);
+    const usr = allUsers.find((u) => u._id === user);
+    setCurrUser(usr);
   };
-  const currUser = allUsers.find((user) => {
-    if (userForUserModal) return user.username === userForUserModal;
-    else return;
-  });
 
   if (loading) return <Loading />;
   return (
@@ -53,6 +40,8 @@ const Tasks = () => {
         <div className="createTaskBtn"></div>
         <div className="header">
           <h2>Tasks</h2>
+          <SearchBox what={"tasks"} />
+
           <div className="sort-nav">
             <button className="active" onClick={() => navigate("/tasks")}>
               All
@@ -62,7 +51,6 @@ const Tasks = () => {
             </button>
           </div>
         </div>
-        <SearchBox what={"tasks"} />
         <div className="tasks-container">
           {allTasks.map((task, index) => {
             const { ep, show, status, createdAt, duration, assignedTo, type } =
@@ -97,7 +85,7 @@ const Tasks = () => {
                           src={`/imgs/user-icons/${getUser.pic}`}
                           alt=""
                           key={i}
-                          onClick={() => clickFunc(getUser.username)}
+                          onClick={() => clickFunc(getUser._id)}
                         />
                       );
                     })}
@@ -111,7 +99,7 @@ const Tasks = () => {
           })}
         </div>
       </section>
-      {/* <UserModal currUser={currUser} /> */}
+      <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
     </main>
