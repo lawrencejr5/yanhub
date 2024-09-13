@@ -22,6 +22,9 @@ const AssignModal = () => {
   }, []);
 
   const [userInp, setUserInp] = useState([]);
+  useEffect(() => {
+    console.log(userInp);
+  }, [userInp]);
 
   const handleAssignment = async (e) => {
     e.preventDefault();
@@ -49,7 +52,12 @@ const AssignModal = () => {
 
   const handleChange = (e) => {
     setUserInp((prev) => {
-      return [...prev, e.target.value];
+      if (prev.includes(e.target.value)) {
+        prev.pop();
+        return [...prev];
+      } else if (!prev.includes(e.target.value)) {
+        return [...prev, e.target.value];
+      }
     });
   };
 
@@ -76,7 +84,7 @@ const AssignModal = () => {
                   type="checkbox"
                   value={userId}
                   onChange={handleChange}
-                  id="checkbox"
+                  id={userId}
                 />
                 <img
                   src={`/imgs/user-icons/${pic}`}

@@ -14,7 +14,7 @@ const Dashboard = () => {
     document.title = "Yanhub - Dashboard";
   }, []);
 
-  const { signedIn, loading } = useGlobalContext();
+  const { signedIn, loading, userTasks } = useGlobalContext();
   if (loading) return <Loading />;
 
   return (

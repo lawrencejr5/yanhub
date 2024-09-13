@@ -27,7 +27,7 @@ const UserModal = ({ currUser }) => {
           />
         </div>
         <div className="img-holder">
-          <img src={`/imgs/user/${currUser.pic}`} alt="" />
+          <img src={`/imgs/user-icons/${currUser.pic}`} alt="" />
         </div>
         <h3>{currUser.fullname}</h3>
         <span>

@@ -6,7 +6,7 @@ import { tasks } from "../data/tasks";
 import { useGlobalContext } from "../Context";
 
 const MyTasksLayout = () => {
-  const { loggedIn } = useGlobalContext();
+  const { loggedIn, userTasks } = useGlobalContext();
   const filteredTasks = tasks.filter((task) => task.users.includes(loggedIn));
   return (
     <div className="tasks-layout">
@@ -14,7 +14,7 @@ const MyTasksLayout = () => {
       <br />
       <table>
         <tbody>
-          {filteredTasks.map((task, i) => {
+          {userTasks.map((task, i) => {
             const { show, duration, ep, type, status } = task;
             return (
               <tr key={i}>

@@ -12,15 +12,12 @@ import TaskBox from "../components/TaskBox";
 import { tasks } from "../data/tasks";
 
 const TasksPersonal = () => {
-  const { loggedIn } = useGlobalContext();
+  const { loggedIn, userTasks } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
   }, []);
   const navigate = useNavigate();
-
-  // Get personal tasks
-  const userTasks = tasks.filter((task) => task.users.includes(loggedIn));
 
   return (
     <main className="grid-body tasks-main">

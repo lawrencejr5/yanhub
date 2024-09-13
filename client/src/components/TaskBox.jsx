@@ -2,11 +2,11 @@ import React from "react";
 import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
 
 const TaskBox = ({ task }) => {
-  const { show, ep, type, status, duration, date } = task;
+  const { show, ep, type, status, duration, createdAt } = task;
   return (
     <div className="task-box">
       <div className="header">
-        <small>{date}</small>
+        <small>{createdAt}</small>
         <small
           id="status"
           className={

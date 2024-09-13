@@ -1,6 +1,7 @@
 const Task = require("../models/tasks");
 const Video = require("../models/videos");
 const User = require("../models/users");
+const Show = require("../models/shows");
 
 const getAllTasks = async (req, res) => {
   try {
@@ -11,6 +12,7 @@ const getAllTasks = async (req, res) => {
       tasks.map(async (task) => {
         const video = await Video.findOne({ _id: task.vidId });
         const user = await User.findOne({ _id: task.assignedBy });
+        const show = await Show.findOne({ _id: video.show });
 
         const users = await Promise.all(
           task.assignedTo.map(async (user) => {
@@ -23,11 +25,11 @@ const getAllTasks = async (req, res) => {
         );
         const simpTask = {
           ...task._doc,
-          show: video.show,
+          show: show.show,
           ep: video.ep,
           duration: video.duration,
           assignedBy: user.username,
-          assignedTo: users,
+          assignedToNames: users,
         };
         return simpTask;
       })
@@ -49,7 +51,7 @@ const getTask = async (req, res) => {
       query: { simplified },
     } = req;
 
-    const task = await Task.findOne({ _id: id });
+    const task = await Task.find({ assignedTo: [id] });
     const video = await Video.findOne({ _id: task.vidId });
     const user = await User.findOne({ _id: task.assignedBy });
 

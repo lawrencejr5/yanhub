@@ -36,7 +36,11 @@ export const Context = ({ children }) => {
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
   const [signedIn, setSignedIn] = useState({});
+
+  // All data
   const [allUsers, setAllUsers] = useState([]);
+  const [allTasks, setAllTasks] = useState([]);
+  const [userTasks, setUserTasks] = useState([]);
 
   // Video states
   const [currVid, setCurrVid] = useState({});
@@ -73,6 +77,36 @@ export const Context = ({ children }) => {
       setLoading(true);
       const { data } = await axios.get(`${endpoint}/users`);
       setAllUsers(data.users);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchTasks = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/tasks?simplified=true`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAllTasks(data.task);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchTasksByUserId = async () => {
+    try {
+      setLoading(true);
+      const userId = localStorage.getItem("user");
+      const { data } = await axios.get(
+        `${endpoint}/tasks/${userId}?simplified=true`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setUserTasks(data.task);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -153,6 +187,8 @@ export const Context = ({ children }) => {
         //
         signedIn,
         allUsers,
+        allTasks,
+        userTasks,
         setSignedIn,
         currVid,
         currShow,
@@ -161,6 +197,7 @@ export const Context = ({ children }) => {
         //
         fetchUser,
         fetchUsers,
+        fetchTasks,
         getVidDetails,
         getShowById,
       }}

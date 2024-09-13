@@ -10,28 +10,41 @@ import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import UserModal from "../components/modals/UserModal";
 import SearchBox from "../components/SearchBox";
+import Loading from "../components/Loading";
 
 import { tasks } from "../data/tasks";
 import { users } from "../data/users";
 
 const Tasks = () => {
+  const {
+    setUserModal,
+    userForUserModal,
+    setUserForUserModal,
+    fetchTasks,
+    fetchUsers,
+    loading,
+    allUsers,
+    allTasks,
+  } = useGlobalContext();
+
   useEffect(() => {
     document.title = "Yanhub - Tasks";
+    fetchUsers();
+    fetchTasks();
   }, []);
-  const navigate = useNavigate();
 
-  const { setUserModal, userForUserModal, setUserForUserModal } =
-    useGlobalContext();
+  const navigate = useNavigate();
 
   const clickFunc = (user) => {
     setUserModal(true);
     setUserForUserModal(user);
   };
-  const currUser = users.find((user) => {
+  const currUser = allUsers.find((user) => {
     if (userForUserModal) return user.username === userForUserModal;
     else return;
   });
 
+  if (loading) return <Loading />;
   return (
     <main className="grid-body tasks-main">
       <Nav />
@@ -51,20 +64,13 @@ const Tasks = () => {
         </div>
         <SearchBox what={"tasks"} />
         <div className="tasks-container">
-          {tasks.map((task, index) => {
-            const {
-              ep,
-              show,
-              status,
-              date,
-              duration,
-              users: usrs,
-              type,
-            } = task;
+          {allTasks.map((task, index) => {
+            const { ep, show, status, createdAt, duration, assignedTo, type } =
+              task;
             return (
               <div className="task-box" key={index}>
                 <div className="header">
-                  <small>{date}</small>
+                  <small>{createdAt}</small>
                   <small
                     id="status"
                     className={
@@ -84,13 +90,11 @@ const Tasks = () => {
                 </div>
                 <div className="bottom">
                   <div className="users">
-                    {usrs.map((usr, i) => {
-                      const getUser = users.find(
-                        (user) => usr === user.username
-                      );
+                    {assignedTo.map((usr, i) => {
+                      const getUser = allUsers.find((user) => usr === user._id);
                       return (
                         <img
-                          src={`/imgs/user/${getUser.pic}`}
+                          src={`/imgs/user-icons/${getUser.pic}`}
                           alt=""
                           key={i}
                           onClick={() => clickFunc(getUser.username)}
@@ -107,7 +111,7 @@ const Tasks = () => {
           })}
         </div>
       </section>
-      <UserModal currUser={currUser} />
+      {/* <UserModal currUser={currUser} /> */}
       <LeaderboardNav />
       <Bell />
     </main>

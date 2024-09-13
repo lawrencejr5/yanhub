@@ -25,7 +25,7 @@ const Task = () => {
     getVidDetails(id);
   }, []);
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
   return (
     <main className="grid-body task-main">
       <Nav />
