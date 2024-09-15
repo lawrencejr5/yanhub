@@ -1,10 +1,19 @@
 import React from "react";
 import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
+import axios from "axios";
 
 import { useGlobalContext } from "../Context";
 
 const TaskBox = ({ task, hideUsers }) => {
-  const { allUsers, setCurrUser, setUserModal } = useGlobalContext();
+  const {
+    allUsers,
+    setCurrUser,
+    setUserModal,
+    endpoint,
+    token,
+    setLoading,
+    fetchTasks,
+  } = useGlobalContext();
 
   const clickFunc = (user) => {
     setUserModal(true);
@@ -12,7 +21,34 @@ const TaskBox = ({ task, hideUsers }) => {
     setCurrUser(usr);
   };
 
-  const { show, ep, type, status, duration, createdAt, assignedTo } = task;
+  const complete = async (id, type, vidId) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.patch(
+        `${endpoint}/tasks/${id}?complete=true`,
+        { status: "completed", type, vidId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      await fetchTasks();
+      setLoading(false);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+  const {
+    _id: id,
+    show,
+    vidId,
+    ep,
+    type,
+    status,
+    duration,
+    createdAt,
+    assignedTo,
+  } = task;
   return (
     <div className="task-box">
       <div className="header">
@@ -50,7 +86,11 @@ const TaskBox = ({ task, hideUsers }) => {
           })}
         </div>
         <button className="text-success">
-          <FaRegCheckCircle />
+          {status !== "completed" ? (
+            <FaRegCheckCircle onClick={() => complete(id, type, vidId)} />
+          ) : (
+            <FaCheckCircle />
+          )}
         </button>
       </div>
     </div>

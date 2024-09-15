@@ -93,6 +93,16 @@ const setTask = async (req, res) => {
     if (!type || !vidId || !assignedTo)
       return res.status(501).json({ msg: "Fill in required fields" });
 
+    const TaskExists = await Task.findOne({ vidId, type });
+    if (TaskExists) {
+      const updatedTask = await Task.updateOne(
+        { vidId, type },
+        { assignedTo },
+        { new: true, runValidators: true }
+      );
+      return res.status(200).json({ msg: "Task was updated", updatedTask });
+    }
+
     const dataObj = { type, vidId, assignedTo, assignedBy: userId };
     const createdTask = await Task.create({ ...dataObj });
 
@@ -100,7 +110,9 @@ const setTask = async (req, res) => {
       await Video.findByIdAndUpdate(vidId, { status: "ongoing" });
     }
 
-    res.status(200).json({ msg: "created", createdTask });
+    res
+      .status(200)
+      .json({ msg: "Task has been assigned successfully", createdTask });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
   }
@@ -110,6 +122,7 @@ const updateTask = async (req, res) => {
   try {
     const {
       params: { id },
+      query: { complete },
       body: { type, vidId, assignedTo, status: stat },
     } = req;
 
@@ -121,10 +134,22 @@ const updateTask = async (req, res) => {
       { ...req.body },
       { new: true, runValidators: true }
     );
+
     if (!updatedTask)
       return res
         .status(500)
         .json({ msg: `Couldn't find any task with id: ${id}` });
+
+    if (complete === "true") {
+      if (updatedTask.type === "finishing") {
+        await Video.findByIdAndUpdate(updatedTask.vidId, {
+          status: "completed",
+        });
+        return res
+          .status(200)
+          .json({ msg: "Video has been finished", updatedTask });
+      }
+    }
 
     res.status(200).json({ msg: "updated", updatedTask });
   } catch (err) {
