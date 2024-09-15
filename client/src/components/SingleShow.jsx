@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { useGlobalContext } from "../Context";
+
 const SingleShow = ({ shws }) => {
-  const { _id: id, show, bgImg } = shws;
+  const { _id: id, show, bgImg, rowCount } = shws;
 
   const navigate = useNavigate();
-  const setVid = () => {
+  const setVid = async () => {
     navigate(`/videos/${id}`);
   };
 
@@ -17,7 +19,7 @@ const SingleShow = ({ shws }) => {
       <div className="vid-details">
         <strong>{`${show}`}</strong>
         <br />
-        <small>{0} Videos</small>
+        <small>{rowCount} Videos</small>
       </div>
     </div>
   );

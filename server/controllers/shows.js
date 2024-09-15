@@ -1,9 +1,34 @@
 const Show = require("../models/shows");
+const Video = require("../models/videos");
 
 const getAllShows = async (req, res) => {
   try {
-    const shows = await Show.find({});
-    res.status(200).json({ msg: "Success", rowCount: shows.length, shows });
+    const allShows = await Show.find({});
+    const shows = await Promise.all(
+      allShows.map(async (show) => {
+        const videos = await Video.find({ show: show._id });
+        const completed = await Video.find({
+          show: show._id,
+          status: "completed",
+        });
+        const undone = await Video.find({ show: show._id, status: "undone" });
+        const ongoing = await Video.find({ show: show._id, status: "ongoing" });
+        return {
+          ...show._doc,
+          rowCount: videos.length,
+          stats: {
+            completed: completed.length,
+            undone: undone.length,
+            ongoing: ongoing.length,
+          },
+        };
+      })
+    );
+    res.status(200).json({
+      msg: "Success",
+      rowCount: shows.length,
+      shows,
+    });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
   }

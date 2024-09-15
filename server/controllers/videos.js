@@ -79,7 +79,7 @@ const getVideo = async (req, res) => {
       return res.status(200).json({ msg: "Success", simpVideos });
     }
 
-    res.status(200).json({ msg: "Success", videos });
+    res.status(200).json({ msg: "Success", video });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
   }

@@ -5,9 +5,9 @@ import { useGlobalContext } from "../Context";
 const SingleVideo = ({ vid }) => {
   const { setVideoDetailsModal, getVidDetails } = useGlobalContext();
 
-  const set = () => {
+  const set = async () => {
+    await getVidDetails(vid._id);
     setVideoDetailsModal(true);
-    getVidDetails(vid._id);
   };
 
   return (
@@ -23,9 +23,9 @@ const SingleVideo = ({ vid }) => {
           <strong>{`${vid.showName}(${vid.ep})`}</strong>
           <span
             className={
-              vid.status === "done"
+              vid.status === "completed"
                 ? "status success"
-                : vid.status === "editing"
+                : vid.status === "ongoing"
                 ? "status warning"
                 : "status danger"
             }

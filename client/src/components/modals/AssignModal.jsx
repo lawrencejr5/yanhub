@@ -24,9 +24,6 @@ const AssignModal = () => {
   }, []);
 
   const [userInp, setUserInp] = useState([]);
-  useEffect(() => {
-    console.log(userInp);
-  }, [userInp]);
 
   const drop = () => {
     setAssignModal(false);

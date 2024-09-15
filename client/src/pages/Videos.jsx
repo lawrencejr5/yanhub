@@ -3,8 +3,6 @@ import { FaPlusCircle } from "react-icons/fa";
 import axios from "axios";
 import { useGlobalContext } from "../Context";
 
-import { shows } from "../data/videos";
-
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
@@ -13,6 +11,7 @@ import SingleShow from "../components/SingleShow";
 import CreateShowForm from "../components/modals/CreateShowForm";
 import Loading from "../components/Loading";
 import Notification from "../components/Notification";
+import Empty from "../components/Empty";
 
 const Videos = () => {
   useEffect(() => {

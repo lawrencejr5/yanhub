@@ -78,14 +78,14 @@ const Video = () => {
             ></div>
           </div>
           <div className="videos-container">
-            <div className="select">
+            {/* <div className="select">
               <select name="" id="select">
                 <option value="all">Sort...</option>
                 <option value="completed">Completed</option>
                 <option value="editing">Ongoing</option>
                 <option value="undone">Undone</option>
               </select>
-            </div>
+            </div> */}
             {videos.map((vid, index) => {
               return <SingleVideo vid={vid} curr={showId} key={index} />;
             })}
