@@ -10,6 +10,7 @@ import Greet from "../components/Greet";
 import TaskBox from "../components/TaskBox";
 import SearchBox from "../components/SearchBox";
 import Loading from "../components/Loading";
+import Empty from "../components/Empty";
 
 const TasksPersonal = () => {
   const { allTasks, fetchTasks, loading } = useGlobalContext();
@@ -31,12 +32,6 @@ const TasksPersonal = () => {
       <Nav />
       <section className="body">
         <Greet />
-        {/* <div className="createTaskBtn">
-          <button onClick={() => setOpenCreateTaskModal(true)}>
-            Todo List &nbsp;
-            <FaChevronCircleUp />
-          </button>
-        </div> */}
         <div className="header">
           <h2>Tasks</h2>
           <SearchBox what={"personal tasks"} />
@@ -54,14 +49,17 @@ const TasksPersonal = () => {
           </div>
         </div>
         <div className="tasks-container">
-          {filteredTasks.map((task, index) => {
-            return <TaskBox task={task} key={index} />;
-          })}
+          {filteredTasks.length === 0 ? (
+            <Empty />
+          ) : (
+            filteredTasks.map((task, index) => {
+              return <TaskBox task={task} key={index} />;
+            })
+          )}
         </div>
       </section>
       <LeaderboardNav />
       <Bell />
-      {/* <CreateTaskForm open={openCreateTaskModal} /> */}
     </main>
   );
 };

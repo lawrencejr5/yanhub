@@ -20,7 +20,9 @@ const Dashboard = () => {
     task.assignedTo.includes(signedIn._id)
   );
 
-  const latestTask = filteredTasks[filteredTasks.length - 1];
+  const latestTask = filteredTasks[filteredTasks.length - 1]
+    ? filteredTasks[filteredTasks.length - 1]
+    : [];
 
   if (loading) return <Loading />;
 
@@ -41,14 +43,14 @@ const Dashboard = () => {
               <strong>...</strong>
             </div>
           </div>
-          {/* <div className="layout2">
+          <div className="layout2">
             <h2>Latest Task</h2>
             <h4>{latestTask.show}</h4>
             <br />
             <p>Ep: {latestTask.ep}</p>
             <p>Type: {latestTask.type}</p>
             <p>Duration: {latestTask.duration}</p>
-          </div> */}
+          </div>
         </div>
         <MyTasksLayout />
         <br />
