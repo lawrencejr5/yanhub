@@ -8,7 +8,7 @@ export const leaderboard = [
   {
     rank: 2,
     img: "user-2.png",
-    username: "Stanely",
+    username: "Vivian",
     xp: "0xp",
   },
   {

@@ -1,17 +1,15 @@
-import React from "react";
-
-import { useGlobalContext } from "../Context";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 const SingleVideo = ({ vid }) => {
-  const { setVideoDetailsModal, getVidDetails } = useGlobalContext();
+  const navigate = useNavigate();
 
-  const set = async () => {
-    await getVidDetails(vid._id);
-    setVideoDetailsModal(true);
+  const set = (id) => {
+    navigate(`/video/tasks/${id}`);
   };
 
   return (
-    <div className="video" onClick={set}>
+    <div className="video" onClick={() => set(vid._id)}>
       <div
         className="img"
         style={{

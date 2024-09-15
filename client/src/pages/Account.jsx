@@ -18,17 +18,14 @@ import ChangeAvatarModal from "../components/modals/ChangeAvatarModal";
 import Notification from "../components/Notification";
 import TaskBox from "../components/TaskBox";
 
-import { users } from "../data/users";
-import { tasks } from "../data/tasks";
-
 import { useGlobalContext } from "../Context";
+import UserModal from "../components/modals/UserModal";
 
 const Account = () => {
   const {
     setEditModal,
     setEditPassModal,
     setAvatarModal,
-    loggedIn,
     theme,
     setTheme,
     notification,
@@ -36,6 +33,7 @@ const Account = () => {
     signedIn,
     fetchTasks,
     allTasks,
+    currUser,
   } = useGlobalContext();
 
   useEffect(() => {
@@ -126,12 +124,13 @@ const Account = () => {
         <div className="tasks-sec">
           <h3>Your tasks...</h3>
           {filteredTasks.map((task, index) => {
-            return <TaskBox task={task} key={index} />;
+            return <TaskBox task={task} key={index} hideUsers={true} />;
           })}
         </div>
         <br />
         <Notification notification={notification} />
       </section>
+      <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
       <EditDetailsModal />

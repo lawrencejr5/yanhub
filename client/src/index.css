@@ -425,6 +425,23 @@ main {
   margin-left: 0.5rem;
 }
 
+/* TaskNav component styling */
+.task-nav {
+  width: 60%;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 0.5rem;
+}
+.task-nav .link {
+  text-decoration: none;
+  color: var(--text1);
+  font-weight: 600;
+}
+.task-nav .link.active {
+  border-bottom: 2px solid var(--primary);
+  color: var(--primary);
+  font-weight: 800;
+}
+
 /* SearchBox Component Styling */
 .search-box {
   margin: 1rem 0;

@@ -1,8 +1,18 @@
 import React from "react";
 import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
 
-const TaskBox = ({ task }) => {
-  const { show, ep, type, status, duration, createdAt } = task;
+import { useGlobalContext } from "../Context";
+
+const TaskBox = ({ task, hideUsers }) => {
+  const { allUsers, setCurrUser, setUserModal } = useGlobalContext();
+
+  const clickFunc = (user) => {
+    setUserModal(true);
+    const usr = allUsers.find((u) => u._id === user);
+    setCurrUser(usr);
+  };
+
+  const { show, ep, type, status, duration, createdAt, assignedTo } = task;
   return (
     <div className="task-box">
       <div className="header">
@@ -26,17 +36,18 @@ const TaskBox = ({ task }) => {
       </div>
       <div className="bottom">
         <div className="users">
-          {/* {usrs.map((usr, i) => {
-            const getUser = users.find((user) => usr === user.username);
+          {assignedTo.map((usr, i) => {
+            const getUser = allUsers.find((user) => usr === user._id);
+            if (hideUsers === true) return "";
             return (
               <img
-                src={`/imgs/user/${getUser.pic}`}
+                src={`/imgs/user-icons/${getUser.pic}`}
                 alt=""
                 key={i}
-                onClick={() => clickFunc(getUser.username)}
+                onClick={() => clickFunc(getUser._id)}
               />
             );
-          })} */}
+          })}
         </div>
         <button className="text-success">
           <FaRegCheckCircle />

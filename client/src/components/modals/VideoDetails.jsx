@@ -12,7 +12,7 @@ const VideoDetails = ({ open, show }) => {
   const { setVideoDetailsModal, currVid } = useGlobalContext();
 
   const func = () => {
-    navigate(`/task/${currVid._id}`);
+    navigate(`/shows/tasks/${currVid._id}`);
     setVideoDetailsModal(false);
   };
   return (

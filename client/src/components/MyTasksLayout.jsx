@@ -15,12 +15,12 @@ const MyTasksLayout = () => {
     <div className="tasks-layout">
       <h2>Your Tasks</h2>
       <br />
-      <table>
-        <tbody>
-          {filteredTasks.length === 0 ? (
-            <p>Them never assign any task give you yet</p>
-          ) : (
-            filteredTasks.map((task, i) => {
+      {filteredTasks.length === 0 ? (
+        <p>Them never assign any task give you yet</p>
+      ) : (
+        <table>
+          <tbody>
+            {filteredTasks.map((task, i) => {
               const { show, duration, ep, type, status } = task;
               return (
                 <tr key={i}>
@@ -31,10 +31,10 @@ const MyTasksLayout = () => {
                   <td>{status}</td>
                 </tr>
               );
-            })
-          )}
-        </tbody>
-      </table>
+            })}
+          </tbody>
+        </table>
+      )}
       <div className="link-container">
         {filteredTasks.length === 0 ? (
           <Link to={"/tasks"} className="link">

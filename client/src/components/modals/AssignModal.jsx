@@ -12,16 +12,11 @@ const AssignModal = () => {
     currVid,
     endpoint,
     token,
-    fetchUsers,
     allUsers,
     checked,
     setChecked,
     setNotification,
   } = useGlobalContext();
-
-  useEffect(() => {
-    fetchUsers();
-  }, []);
 
   const [userInp, setUserInp] = useState([]);
 

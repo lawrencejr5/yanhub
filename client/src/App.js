@@ -7,12 +7,13 @@ import Dashboard from "./pages/Dashboard";
 import Notfound from "./pages/Notfound";
 import Tasks from "./pages/Tasks";
 import TasksPersonal from "./pages/TasksPersonal";
-import Task from "./pages/Task";
+import AssignTask from "./pages/AssignTask";
 import Users from "./pages/Users";
 import User from "./pages/User";
 import Account from "./pages/Account";
 import Videos from "./pages/Videos";
 import Video from "./pages/Video";
+import ShowTasks from "./pages/ShowTasks";
 
 import { useGlobalContext } from "./Context";
 
@@ -46,7 +47,8 @@ const App = () => {
           <Route path="videos/:id" element={<Video />}></Route>
           <Route path="tasks" element={<Tasks />}></Route>
           <Route path="tasks/personal" element={<TasksPersonal />}></Route>
-          <Route path="task/:id" element={<Task />}></Route>
+          <Route path="video/assign/:id" element={<AssignTask />}></Route>
+          <Route path="video/tasks/:id" element={<ShowTasks />}></Route>
           <Route path="users" element={<Users />}></Route>
           <Route path="user/:id" element={<User />}></Route>
           <Route path="account" element={<Account />}></Route>

@@ -11,10 +11,11 @@ import TaskBox from "../components/TaskBox";
 
 import { useGlobalContext } from "../Context";
 import Loading from "../components/Loading";
+import UserModal from "../components/modals/UserModal";
 
 const Account = () => {
   const [user, setUser] = useState([]);
-  const { loading, setLoading, endpoint, fetchTasks, allTasks } =
+  const { loading, setLoading, endpoint, fetchTasks, allTasks, currUser } =
     useGlobalContext();
 
   useEffect(() => {
@@ -69,11 +70,12 @@ const Account = () => {
         <div className="tasks-sec">
           <h3>{`${username}'s tasks...`}</h3>
           {filteredTasks.map((task, index) => {
-            return <TaskBox task={task} key={index} />;
+            return <TaskBox task={task} hideUsers={true} key={index} />;
           })}
         </div>
       </section>
       <LeaderboardNav />
+      <UserModal currUser={currUser} />
       <Bell />
     </main>
   );

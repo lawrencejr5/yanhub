@@ -42,6 +42,9 @@ export const Context = ({ children }) => {
   const [allTasks, setAllTasks] = useState([]);
   const [userTasks, setUserTasks] = useState([]);
 
+  // User states
+  const [currUser, setCurrUser] = useState([]);
+
   // Video states
   const [currVid, setCurrVid] = useState({});
 
@@ -116,7 +119,7 @@ export const Context = ({ children }) => {
 
   const getVidDetails = async (id) => {
     try {
-      // setLoading(true);
+      setLoading(true);
       const { data } = await axios.get(
         `${endpoint}/videos/${id}?simplified=true`,
         {
@@ -124,7 +127,7 @@ export const Context = ({ children }) => {
         }
       );
       setCurrVid(data.simpVideos);
-      // setLoading(false);
+      setLoading(false);
     } catch (err) {
       const {
         response: { data },
@@ -194,6 +197,8 @@ export const Context = ({ children }) => {
         userTasks,
         setSignedIn,
         currVid,
+        currUser,
+        setCurrUser,
 
         currShow,
         assignTask,
