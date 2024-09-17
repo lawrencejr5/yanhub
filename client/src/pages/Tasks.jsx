@@ -14,7 +14,7 @@ import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 
 const Tasks = () => {
-  const { fetchTasks, fetchUsers, loading, allTasks, currUser } =
+  const { fetchTasks, fetchUsers, loading, allTasks, currUser, searchQuery } =
     useGlobalContext();
 
   useEffect(() => {
@@ -23,6 +23,9 @@ const Tasks = () => {
     fetchTasks();
   }, []);
 
+  useEffect(() => {
+    fetchTasks();
+  }, [searchQuery]);
   const navigate = useNavigate();
 
   if (loading) return <Loading />;

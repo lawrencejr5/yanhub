@@ -92,3 +92,41 @@ const CheckboxList = () => {
 };
 
 // export default CheckboxList;
+
+const express = require("express");
+const mongoose = require("mongoose");
+const app = express();
+
+// Connect to MongoDB
+mongoose.connect("mongodb://localhost:27017/searchDB", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Define a schema and model
+const itemSchema = new mongoose.Schema({
+  name: String,
+  age: Number,
+  city: String,
+});
+
+const Item = mongoose.model("Item", itemSchema);
+
+// Middleware to parse JSON
+app.use(express.json());
+
+// Search route
+app.get("/search", async (req, res) => {
+  const query = req.query.q;
+  try {
+    const results = await Item.find({ name: new RegExp(query, "i") });
+    res.json(results);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Start the server
+app.listen(3000, () => {
+  console.log("Server is running on port 3000");
+});

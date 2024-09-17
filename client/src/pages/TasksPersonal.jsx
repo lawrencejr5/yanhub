@@ -11,18 +11,25 @@ import TaskBox from "../components/TaskBox";
 import SearchBox from "../components/SearchBox";
 import Loading from "../components/Loading";
 import Empty from "../components/Empty";
+import UserModal from "../components/modals/UserModal";
 
 const TasksPersonal = () => {
-  const { allTasks, fetchTasks, loading } = useGlobalContext();
+  const { allTasks, fetchTasks, loading, currUser, searchQuery } =
+    useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
     fetchTasks();
   }, []);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [searchQuery]);
+
   const userId = localStorage.getItem("user");
-  const filteredTasks = allTasks.filter((task) =>
-    task.assignedTo.includes(userId)
-  );
+  const filteredTasks = allTasks.filter((task) => {
+    return task.assignedTo.some((usr) => usr._id === userId);
+  });
   const navigate = useNavigate();
 
   if (loading) return <Loading />;
@@ -59,6 +66,7 @@ const TasksPersonal = () => {
         </div>
       </section>
       <LeaderboardNav />
+      <UserModal currUser={currUser} />
       <Bell />
     </main>
   );

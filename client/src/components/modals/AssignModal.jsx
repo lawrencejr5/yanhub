@@ -32,7 +32,7 @@ const AssignModal = () => {
         `${endpoint}/tasks`,
         {
           type: assignTask,
-          vidId: currVid._id,
+          video: currVid._id,
           assignedTo: userInp,
         },
         { headers: { Authorization: `Bearer ${token}` } }

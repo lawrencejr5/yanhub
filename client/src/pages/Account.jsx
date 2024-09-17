@@ -65,7 +65,7 @@ const Account = () => {
   // Get personal tasks
   const { pic, username, fullname, bio } = signedIn;
   const filteredTasks = allTasks.filter((task) =>
-    task.assignedTo.includes(signedIn._id)
+    task.assignedTo.some((usr) => usr._id === signedIn._id)
   );
 
   return (

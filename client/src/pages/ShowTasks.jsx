@@ -24,7 +24,7 @@ const ShowTasks = () => {
     fetchTasks();
   }, []);
 
-  const filteredTasks = allTasks.filter((task) => task.vidId === id);
+  const filteredTasks = allTasks.filter((task) => task.video._id === id);
 
   if (loading) return <Loading />;
   return (

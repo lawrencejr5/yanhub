@@ -54,6 +54,7 @@ export const Context = ({ children }) => {
   // Tasks states
   const [personalTasks, setPersonalTasks] = useState({});
   const [checked, setChecked] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -90,10 +91,13 @@ export const Context = ({ children }) => {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${endpoint}/tasks?simplified=true`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAllTasks(data.task);
+      const { data } = await axios.get(
+        `${endpoint}/tasks?search=${searchQuery}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setAllTasks(data.tasks);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -199,7 +203,8 @@ export const Context = ({ children }) => {
         currVid,
         currUser,
         setCurrUser,
-
+        searchQuery,
+        setSearchQuery,
         currShow,
         assignTask,
         setAssignTask,

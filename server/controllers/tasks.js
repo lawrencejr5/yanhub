@@ -1,42 +1,43 @@
 const Task = require("../models/tasks");
 const Video = require("../models/videos");
-const User = require("../models/users");
-const Show = require("../models/shows");
 
 const getAllTasks = async (req, res) => {
   try {
-    const { simplified } = req.query;
-    const tasks = await Task.find({});
+    const { search } = req.query;
+    if (search) {
+      // $or: [{ name: new RegExp(query, "i") }, { city: new RegExp(query, "i") }];
+      const results = await Task.find()
+        .populate({
+          path: "video",
+          select: "ep duration",
+          populate: {
+            path: "show",
+            select: "show",
+          },
+        })
+        .populate("assignedTo", "username pic")
+        .exec();
+      const filteredResults = results.filter((task) => {
+        const epMatch = task.video.ep.match(new RegExp(search, "i"));
+        const showMatch =
+          task.video.show &&
+          task.video.show.show.match(new RegExp(search, "i"));
+        return epMatch || showMatch;
+      });
+      // const results = await Video.find({ ep: new RegExp(search, "i") });
+      return res.status(200).json({ msg: "Success", tasks: filteredResults });
+    }
 
-    const simpTasks = await Promise.all(
-      tasks.map(async (task) => {
-        const video = await Video.findOne({ _id: task.vidId });
-        const user = await User.findOne({ _id: task.assignedBy });
-        const show = await Show.findOne({ _id: video.show });
-
-        const users = await Promise.all(
-          task.assignedTo.map(async (user) => {
-            const usr = await User.findOne(
-              { _id: user },
-              { _id: 0, username: 1 }
-            );
-            return usr ? usr.username : "unknown";
-          })
-        );
-        const simpTask = {
-          ...task._doc,
-          show: show.show,
-          ep: video.ep,
-          duration: video.duration,
-          assignedBy: user.username,
-          assignedToNames: users,
-        };
-        return simpTask;
+    const tasks = await Task.find()
+      .populate({
+        path: "video",
+        select: "ep duration",
+        populate: {
+          path: "show",
+          select: "show",
+        },
       })
-    );
-
-    if (simplified)
-      return res.status(200).json({ msg: "Success", task: simpTasks });
+      .populate("assignedTo", "username pic");
 
     res.status(200).json({ msg: "Success", rowCount: tasks.length, tasks });
   } catch (err) {
@@ -48,34 +49,21 @@ const getTask = async (req, res) => {
   try {
     const {
       params: { id },
-      query: { simplified },
     } = req;
 
-    const task = await Task.find({ assignedTo: [id] });
-    const video = await Video.findOne({ _id: task.vidId });
-    const user = await User.findOne({ _id: task.assignedBy });
-
-    // Getting all usernames using their user ids
-    const users = await Promise.all(
-      task.assignedTo.map(async (user) => {
-        const usr = await User.findOne({ _id: user }, { _id: 0, username: 1 });
-        return usr ? usr.username : "unknown";
+    const task = await Task.find({ assignedTo: [id] })
+      .populate({
+        path: "video",
+        select: "ep duration",
+        populate: {
+          path: "show",
+          select: "show",
+        },
       })
-    );
+      .populate("assignedTo", "username pic")
+      .populate("assignedBy", "username");
 
     if (!task) return res.status(404).json({ msg: `No task with id: ${id}` });
-
-    // Creating a simplified task array
-    const simpTask = {
-      ...task._doc,
-      show: video.show,
-      ep: video.ep,
-      duration: video.duration,
-      assignedBy: user.username,
-      assignedTo: users,
-    };
-    if (simplified)
-      return res.status(200).json({ msg: "Success", task: simpTask });
 
     res.status(200).json({ msg: "Success", task });
   } catch (err) {
@@ -87,27 +75,27 @@ const setTask = async (req, res) => {
   try {
     const {
       user: { userId },
-      body: { type, vidId, assignedTo },
+      body: { type, video, assignedTo },
     } = req;
 
-    if (!type || !vidId || !assignedTo)
+    if (!type || !video || !assignedTo)
       return res.status(501).json({ msg: "Fill in required fields" });
 
-    const TaskExists = await Task.findOne({ vidId, type });
+    const TaskExists = await Task.findOne({ video, type });
     if (TaskExists) {
       const updatedTask = await Task.updateOne(
-        { vidId, type },
+        { video, type },
         { assignedTo },
         { new: true, runValidators: true }
       );
       return res.status(200).json({ msg: "Task was updated", updatedTask });
     }
 
-    const dataObj = { type, vidId, assignedTo, assignedBy: userId };
+    const dataObj = { type, video, assignedTo, assignedBy: userId };
     const createdTask = await Task.create({ ...dataObj });
 
     if (createdTask) {
-      await Video.findByIdAndUpdate(vidId, { status: "ongoing" });
+      await Video.findByIdAndUpdate(video, { status: "ongoing" });
     }
 
     res
@@ -123,10 +111,10 @@ const updateTask = async (req, res) => {
     const {
       params: { id },
       query: { complete },
-      body: { type, vidId, assignedTo, status: stat },
+      body: { type, video, assignedTo, status: stat },
     } = req;
 
-    if (!type && !vidId && !assignedTo && !stat)
+    if (!type && !video && !assignedTo && !stat)
       return res.status(500).json({ msg: "Wetin you come dey update??" });
 
     const updatedTask = await Task.findByIdAndUpdate(
@@ -142,7 +130,7 @@ const updateTask = async (req, res) => {
 
     if (complete === "true") {
       if (updatedTask.type === "finishing") {
-        await Video.findByIdAndUpdate(updatedTask.vidId, {
+        await Video.findByIdAndUpdate(updatedTask.video, {
           status: "completed",
         });
         return res

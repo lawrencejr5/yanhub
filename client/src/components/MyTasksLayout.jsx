@@ -1,15 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { tasks } from "../data/tasks";
-
 import { useGlobalContext } from "../Context";
 
 const MyTasksLayout = () => {
   const { allTasks } = useGlobalContext();
   const userId = localStorage.getItem("user");
   const filteredTasks = allTasks.filter((task) =>
-    task.assignedTo.includes(userId)
+    task.assignedTo.some((usr) => usr._id === userId)
   );
   return (
     <div className="tasks-layout">
@@ -21,7 +19,15 @@ const MyTasksLayout = () => {
         <table>
           <tbody>
             {filteredTasks.map((task, i) => {
-              const { show, duration, ep, type, status } = task;
+              const {
+                video: {
+                  duration,
+                  ep,
+                  show: { show },
+                },
+                type,
+                status,
+              } = task;
               return (
                 <tr key={i}>
                   <td>{show}</td>

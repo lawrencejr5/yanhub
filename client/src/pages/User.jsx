@@ -37,7 +37,9 @@ const Account = () => {
   };
   const { username, pic, bio, phone } = user;
 
-  const filteredTasks = allTasks.filter((task) => task.assignedTo.includes(id));
+  const filteredTasks = allTasks.filter((task) => {
+    return task.assignedTo.some((usr) => usr._id === id);
+  });
 
   if (loading) return <Loading />;
   return (

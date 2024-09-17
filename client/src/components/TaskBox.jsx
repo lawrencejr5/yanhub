@@ -21,12 +21,12 @@ const TaskBox = ({ task, hideUsers }) => {
     setCurrUser(usr);
   };
 
-  const complete = async (id, type, vidId) => {
+  const complete = async (id, type, video) => {
     try {
       setLoading(true);
       const { data } = await axios.patch(
         `${endpoint}/tasks/${id}?complete=true`,
-        { status: "completed", type, vidId },
+        { status: "completed", type, video },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       await fetchTasks();
@@ -40,12 +40,14 @@ const TaskBox = ({ task, hideUsers }) => {
   };
   const {
     _id: id,
-    show,
-    vidId,
-    ep,
+    video: {
+      _id: vidId,
+      ep,
+      duration,
+      show: { show },
+    },
     type,
     status,
-    duration,
     createdAt,
     assignedTo,
   } = task;
@@ -73,14 +75,13 @@ const TaskBox = ({ task, hideUsers }) => {
       <div className="bottom">
         <div className="users">
           {assignedTo.map((usr, i) => {
-            const getUser = allUsers.find((user) => usr === user._id);
             if (hideUsers === true) return "";
             return (
               <img
-                src={`/imgs/user-icons/${getUser.pic}`}
+                src={`/imgs/user-icons/${usr.pic}`}
                 alt=""
                 key={i}
-                onClick={() => clickFunc(getUser._id)}
+                onClick={() => clickFunc(usr._id)}
               />
             );
           })}

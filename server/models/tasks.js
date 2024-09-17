@@ -15,7 +15,7 @@ const taskSchema = new mongoose.Schema(
       ],
       required: true,
     },
-    vidId: {
+    video: {
       type: mongoose.Types.ObjectId,
       required: true,
       ref: "Videos",
