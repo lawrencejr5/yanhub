@@ -14,6 +14,7 @@ import VideoDetails from "../components/modals/VideoDetails";
 import CreateVideoForm from "../components/modals/CreateVideoForm";
 import Loading from "../components/Loading";
 import Notification from "../components/Notification";
+import SortNav from "../components/SortNav";
 
 const Video = () => {
   const {
@@ -75,6 +76,7 @@ const Video = () => {
             ></div>
           </div>
           <div className="videos-container">
+            <SortNav />
             {videos.map((vid, index) => {
               return <SingleVideo vid={vid} curr={showId} key={index} />;
             })}

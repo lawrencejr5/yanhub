@@ -45,11 +45,23 @@ const Dashboard = () => {
           </div>
           <div className="layout2">
             <h2>Latest Task</h2>
-            <h4>{latestTask.video.show.show}</h4>
-            <br />
-            <p>Ep: {latestTask.video.ep}</p>
-            <p>Type: {latestTask.type}</p>
-            <p>Duration: {latestTask.video.duration}</p>
+            {filteredTasks.length === 0 ? (
+              <>
+                <h4>-----</h4>
+                <br />
+                <p>Ep: ----</p>
+                <p>Type: ---</p>
+                <p>Duration: ---</p>
+              </>
+            ) : (
+              <>
+                <h4>{latestTask.video.show.show}</h4>
+                <br />
+                <p>Ep: {latestTask.video.ep}</p>
+                <p>Type: {latestTask.type}</p>
+                <p>Duration: {latestTask.video.duration}</p>
+              </>
+            )}
           </div>
         </div>
         <MyTasksLayout />

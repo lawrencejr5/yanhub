@@ -1,6 +1,4 @@
 const Video = require("../models/videos");
-const Show = require("../models/shows");
-const User = require("../models/users");
 
 const getAllVideos = async (req, res) => {
   try {

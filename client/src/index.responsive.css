@@ -119,6 +119,11 @@
   .vid-details-container .vid-details-modal {
     width: 100%;
   }
+
+  /* Sort nav */
+  .sort-nav {
+    padding: 0 1rem;
+  }
 }
 
 @media screen and (max-width: 450px) {

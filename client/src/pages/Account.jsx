@@ -27,7 +27,7 @@ const Account = () => {
     setEditPassModal,
     setAvatarModal,
     theme,
-    setTheme,
+    toggleTheme,
     notification,
     setNotification,
     signedIn,
@@ -40,27 +40,6 @@ const Account = () => {
     document.title = "Yanhub - My Account";
     fetchTasks();
   }, []);
-
-  // Dark/Light mode toggle function
-  const toggleTheme = () => {
-    setTheme((prev) => {
-      return prev === "light" ? "dark" : "light";
-    });
-    if (theme === "light") {
-      setNotification({
-        text: "Theme set to dark mode",
-        status: "true",
-        theme: "success",
-      });
-    }
-    if (theme === "dark") {
-      setNotification({
-        text: "Theme set to light mode",
-        status: "true",
-        theme: "success",
-      });
-    }
-  };
 
   // Get personal tasks
   const { pic, username, fullname, bio } = signedIn;

@@ -35,7 +35,7 @@ export const Context = ({ children }) => {
 
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
-  const [signedIn, setSignedIn] = useState({});
+  const [signedIn, setSignedIn] = useState([]);
 
   // All data
   const [allUsers, setAllUsers] = useState([]);
@@ -45,10 +45,10 @@ export const Context = ({ children }) => {
   const [currUser, setCurrUser] = useState([]);
 
   // Video states
-  const [currVid, setCurrVid] = useState({});
+  const [currVid, setCurrVid] = useState([]);
 
   // Shows states
-  const [currShow, setCurrShow] = useState({});
+  const [currShow, setCurrShow] = useState([]);
 
   // Tasks states
   const [checked, setChecked] = useState(null);
@@ -57,6 +57,26 @@ export const Context = ({ children }) => {
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") ? localStorage.getItem("theme") : "light"
   );
+  // Dark/Light mode toggle function
+  const toggleTheme = () => {
+    setTheme((prev) => {
+      return prev === "light" ? "dark" : "light";
+    });
+    if (theme === "light") {
+      setNotification({
+        text: "Theme set to dark mode",
+        status: "true",
+        theme: "success",
+      });
+    }
+    if (theme === "dark") {
+      setNotification({
+        text: "Theme set to light mode",
+        status: "true",
+        theme: "success",
+      });
+    }
+  };
 
   // Endpoint and token
   const endpoint = "http://localhost:5001/api/v1";
@@ -172,6 +192,7 @@ export const Context = ({ children }) => {
         token,
         theme,
         setTheme,
+        toggleTheme,
         mobileNav,
         setMobileNav,
         notification,

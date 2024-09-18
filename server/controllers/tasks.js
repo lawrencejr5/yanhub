@@ -3,7 +3,7 @@ const Video = require("../models/videos");
 
 const getAllTasks = async (req, res) => {
   try {
-    const { search } = req.query;
+    const { search, sort } = req.query;
     if (search) {
       const results = await Task.find()
         .populate({
@@ -24,6 +24,20 @@ const getAllTasks = async (req, res) => {
         return epMatch || showMatch;
       });
       return res.status(200).json({ msg: "Success", tasks: filteredResults });
+    }
+
+    if (sort) {
+      const tasks = await Task.find({ status: sort })
+        .populate({
+          path: "video",
+          select: "ep duration",
+          populate: {
+            path: "show",
+            select: "show",
+          },
+        })
+        .populate("assignedTo", "username pic");
+      return res.status(200).json({ msg: "Success", tasks: tasks });
     }
 
     const tasks = await Task.find()

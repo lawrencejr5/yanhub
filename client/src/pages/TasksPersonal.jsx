@@ -12,6 +12,7 @@ import SearchBox from "../components/SearchBox";
 import Loading from "../components/Loading";
 import Empty from "../components/Empty";
 import UserModal from "../components/modals/UserModal";
+import SortNav from "../components/SortNav";
 
 const TasksPersonal = () => {
   const { allTasks, fetchTasks, searchTasks, loading, currUser } =
@@ -49,7 +50,7 @@ const TasksPersonal = () => {
             queryFunc={setQuery}
           />
 
-          <div className="sort-nav">
+          <div className="tasks-nav">
             <button className="" onClick={() => navigate("/tasks")}>
               All
             </button>
@@ -60,6 +61,8 @@ const TasksPersonal = () => {
               Personal
             </button>
           </div>
+
+          <SortNav />
         </div>
         <div className="tasks-container">
           {filteredTasks.length === 0 ? (

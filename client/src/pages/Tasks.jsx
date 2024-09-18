@@ -11,6 +11,7 @@ import UserModal from "../components/modals/UserModal";
 import SearchBox from "../components/SearchBox";
 import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
+import SortNav from "../components/SortNav";
 
 const Tasks = () => {
   const { fetchTasks, searchTasks, fetchUsers, loading, allTasks, currUser } =
@@ -41,7 +42,7 @@ const Tasks = () => {
           <h2>Tasks</h2>
           <SearchBox what={"tasks"} query={query} queryFunc={setQuery} />
 
-          <div className="sort-nav">
+          <div className="tasks-nav">
             <button className="active" onClick={() => navigate("/tasks")}>
               All
             </button>
@@ -49,6 +50,8 @@ const Tasks = () => {
               Personal
             </button>
           </div>
+
+          <SortNav />
         </div>
         <div className="tasks-container">
           {allTasks.map((task, index) => {

@@ -1,10 +1,13 @@
 import React from "react";
-import { FaRegBell } from "react-icons/fa";
+import { FaRegBell, FaSun, FaMoon } from "react-icons/fa";
+
+import { useGlobalContext } from "../Context";
 
 const Bell = () => {
+  const { theme, toggleTheme } = useGlobalContext();
   return (
-    <div className="announcement">
-      <FaRegBell />
+    <div className="announcement" onClick={toggleTheme}>
+      {theme === "dark" ? <FaMoon /> : <FaSun />}
     </div>
   );
 };

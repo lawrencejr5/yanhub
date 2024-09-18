@@ -275,7 +275,7 @@ main {
   height: 60px;
 }
 .grid-body .small-nav .collapsed {
-  height: 60vh;
+  height: auto;
 }
 .grid-body .small-nav .nav-box .header {
   height: 60px;
@@ -342,6 +342,7 @@ main {
 }
 .grid-body .small-nav .logout {
   margin: 2rem 0rem;
+  margin-bottom: 0rem;
   display: flex;
   align-items: center;
   color: var(--primary);
@@ -467,6 +468,29 @@ main {
   /* width: 10%; */
   font-size: 20px;
   color: var(--text1);
+}
+
+/* SortNav component styling */
+.sort-nav {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  padding: 0 2rem;
+}
+.sort-nav button {
+  border: 1px solid var(--primary);
+  font-size: 10px;
+  margin: 0 0.2rem;
+  padding: 0.2rem 0.4rem;
+  border-radius: 5px;
+  background-color: var(--secondary2);
+}
+.sort-nav select {
+  border: 1px solid var(--text1);
+  padding: 0.2rem 0.4rem;
+  margin: 0 0.5rem;
+  outline: 0;
+  border-radius: 5px;
 }
 
 /* VideoDetails Component Styling */
@@ -1230,7 +1254,7 @@ main {
   display: flex;
   align-items: center;
 }
-.tasks-main .body .header .sort-nav {
+.tasks-main .body .header .tasks-nav {
   width: 97%;
   margin: 1.5rem 0;
   display: flex;
@@ -1240,7 +1264,7 @@ main {
   padding: 0.5rem;
   border-radius: 5px;
 }
-.tasks-main .body .header .sort-nav button {
+.tasks-main .body .header .tasks-nav button {
   color: var(--text1);
   width: 40%;
   padding: 0.5rem;
@@ -1250,7 +1274,7 @@ main {
   border-radius: 15px;
   background: transparent;
 }
-.tasks-main .body .header .sort-nav .active {
+.tasks-main .body .header .tasks-nav .active {
   background-color: var(--primary);
   color: var(--secondary2);
 }

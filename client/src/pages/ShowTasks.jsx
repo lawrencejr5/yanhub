@@ -22,6 +22,7 @@ const ShowTasks = () => {
     document.title = "Yanhub - Task";
     getVidDetails(id);
     fetchTasks();
+    console.log(currVid);
   }, []);
 
   const filteredTasks = allTasks.filter((task) => task.video._id === id);
@@ -31,7 +32,11 @@ const ShowTasks = () => {
     <main className="grid-body task-main">
       <Nav />
       <section className="body">
-        <Back text={`Tasks under ${currVid.ep}`} />
+        <Back
+          text={`Tasks under ${currVid.length === 0 ? "" : currVid.show.show}(${
+            currVid.ep
+          })`}
+        />
         <TaskNav currVid={currVid} />
         {filteredTasks.map((task, index) => {
           return <TaskBox task={task} key={index} />;
