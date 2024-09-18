@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
@@ -14,8 +13,10 @@ import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 
 const Tasks = () => {
-  const { fetchTasks, fetchUsers, loading, allTasks, currUser, searchQuery } =
+  const { fetchTasks, searchTasks, fetchUsers, loading, allTasks, currUser } =
     useGlobalContext();
+
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
@@ -24,8 +25,9 @@ const Tasks = () => {
   }, []);
 
   useEffect(() => {
-    fetchTasks();
-  }, [searchQuery]);
+    searchTasks(query);
+  }, [query]);
+
   const navigate = useNavigate();
 
   if (loading) return <Loading />;
@@ -37,7 +39,7 @@ const Tasks = () => {
         <div className="createTaskBtn"></div>
         <div className="header">
           <h2>Tasks</h2>
-          <SearchBox what={"tasks"} />
+          <SearchBox what={"tasks"} query={query} queryFunc={setQuery} />
 
           <div className="sort-nav">
             <button className="active" onClick={() => navigate("/tasks")}>

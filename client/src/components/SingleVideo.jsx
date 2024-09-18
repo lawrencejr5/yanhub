@@ -1,11 +1,16 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
+import { useGlobalContext } from "../Context";
+
 const SingleVideo = ({ vid }) => {
+  const { getVidDetails } = useGlobalContext();
+
   const navigate = useNavigate();
 
   const set = (id) => {
     navigate(`/video/tasks/${id}`);
+    getVidDetails(id);
   };
 
   return (
@@ -18,7 +23,7 @@ const SingleVideo = ({ vid }) => {
       ></div>
       <div className="details">
         <div className="header">
-          <strong>{`${vid.showName}(${vid.ep})`}</strong>
+          <strong>{`${vid.show.show}(${vid.ep})`}</strong>
           <span
             className={
               vid.status === "completed"

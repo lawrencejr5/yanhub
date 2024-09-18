@@ -12,6 +12,7 @@ const showSchema = new mongoose.Schema(
     },
     createdBy: {
       type: mongoose.Types.ObjectId,
+      ref: "Users",
     },
   },
   {

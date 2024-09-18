@@ -4,48 +4,16 @@ const User = require("../models/users");
 
 const getAllVideos = async (req, res) => {
   try {
-    const { show, simplified } = req.query;
+    const { show } = req.query;
 
-    // Function to get simplified videos
-    const getSimplifiedVids = async (videos) => {
-      const simpVid = await Promise.all(
-        videos.map(async (vid) => {
-          const show = await Show.findOne({ _id: vid.show });
-          const user = await User.findOne({ _id: vid.createdBy });
-          const dataObj = {
-            ...vid._doc,
-            showName: show.show,
-            createdByName: user.username,
-          };
-          return dataObj;
-        })
-      );
-      return simpVid;
-    };
-
-    // Checking if show query exists
     if (show) {
-      const videos = await Video.find({ show });
-      if (simplified) {
-        const simpVideos = await getSimplifiedVids(videos);
-        return res
-          .status(200)
-          .json({ msg: "success", rowCount: videos.length, simpVideos });
-      }
-      return res.status(200).json({
-        msg: `Videos with showId ${show}`,
-        rowCount: videos.length,
-        videos,
-      });
+      const videos = await Video.find({ show }).populate("show", "show");
+      return res
+        .status(200)
+        .json({ msg: "success", rowCount: videos.length, videos });
     }
 
-    const videos = await Video.find({});
-
-    // Checking if simplified query exists
-    if (simplified) {
-      const simpVideos = await getSimplifiedVids(videos);
-      return res.status(200).json({ msg: "success", simpVideos });
-    }
+    const videos = await Video.find({}).populate("show", "show");
 
     // If no query
     res.status(200).json({ msg: "Success", rowCount: videos.length, videos });
@@ -58,26 +26,12 @@ const getVideo = async (req, res) => {
   try {
     const {
       params: { id },
-      query: { simplified },
     } = req;
 
-    const video = await Video.findById(id);
-
-    const show = await Show.findOne({ _id: video.show });
-    const user = await User.findOne({ _id: video.createdBy });
+    const video = await Video.findById(id).populate("show", "show");
 
     if (!video)
       return res.status(404).json({ msg: `Video with id: ${id} not found` });
-
-    // Checking if simplified query exists
-    if (simplified) {
-      const simpVideos = {
-        ...video._doc,
-        showName: show.show,
-        createdByName: user.username,
-      };
-      return res.status(200).json({ msg: "Success", simpVideos });
-    }
 
     res.status(200).json({ msg: "Success", video });
   } catch (err) {

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { useGlobalContext } from "../Context";
@@ -14,8 +14,10 @@ import Empty from "../components/Empty";
 import UserModal from "../components/modals/UserModal";
 
 const TasksPersonal = () => {
-  const { allTasks, fetchTasks, loading, currUser, searchQuery } =
+  const { allTasks, fetchTasks, searchTasks, loading, currUser } =
     useGlobalContext();
+
+  const [query, setQuery] = useState("");
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
@@ -23,8 +25,8 @@ const TasksPersonal = () => {
   }, []);
 
   useEffect(() => {
-    fetchTasks();
-  }, [searchQuery]);
+    searchTasks(query);
+  }, [query]);
 
   const userId = localStorage.getItem("user");
   const filteredTasks = allTasks.filter((task) => {
@@ -41,7 +43,11 @@ const TasksPersonal = () => {
         <Greet />
         <div className="header">
           <h2>Tasks</h2>
-          <SearchBox what={"personal tasks"} />
+          <SearchBox
+            what={"personal tasks"}
+            query={query}
+            queryFunc={setQuery}
+          />
 
           <div className="sort-nav">
             <button className="" onClick={() => navigate("/tasks")}>

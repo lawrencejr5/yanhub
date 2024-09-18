@@ -9,8 +9,6 @@ import SearchBox from "../components/SearchBox";
 import UserModal from "../components/modals/UserModal";
 import Loading from "../components/Loading";
 
-import { users } from "../data/users";
-
 import { useGlobalContext } from "../Context";
 
 const Users = () => {
@@ -19,17 +17,23 @@ const Users = () => {
   const [allUsers, setAllUsers] = useState([]);
   const [currUser, setCurrUser] = useState([]);
 
+  const [query, setQuery] = useState([]);
+
+  const { endpoint, loading, setLoading, setUserModal } = useGlobalContext();
+
   useEffect(() => {
     document.title = "Yanhub - Users";
     fetchUsers();
   }, []);
 
-  const { endpoint, loading, setLoading, setUserModal } = useGlobalContext();
+  useEffect(() => {
+    fetchUsers();
+  }, [query]);
 
   const fetchUsers = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${endpoint}/users/`);
+      const { data } = await axios.get(`${endpoint}/users/?search=${query}`);
 
       const admins = data.users.filter((user) => user.admin === true);
       setAdmins(admins);
@@ -57,7 +61,7 @@ const Users = () => {
       <Nav />
       <section className="body">
         <Greet />
-        <SearchBox what={"users"} />
+        <SearchBox what={"users"} query={query} queryFunc={setQuery} />
 
         <h1>YanHub Users</h1>
         <div className="admins-container">

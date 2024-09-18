@@ -13,10 +13,10 @@ import { useGlobalContext } from "../Context";
 import TaskNav from "../components/TaskNav";
 
 const ShowTasks = () => {
+  const { id } = useParams();
+
   const { currVid, allTasks, fetchTasks, getVidDetails, loading, currUser } =
     useGlobalContext();
-
-  const { id } = useParams();
 
   useEffect(() => {
     document.title = "Yanhub - Task";
@@ -31,7 +31,7 @@ const ShowTasks = () => {
     <main className="grid-body task-main">
       <Nav />
       <section className="body">
-        <Back text={`Tasks under ${currVid.showName}(${currVid.ep})`} />
+        <Back text={`Tasks under ${currVid.ep}`} />
         <TaskNav currVid={currVid} />
         {filteredTasks.map((task, index) => {
           return <TaskBox task={task} key={index} />;

@@ -91,6 +91,15 @@ const login = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
+    const { search } = req.query;
+
+    if (search) {
+      const users = await User.find({ username: new RegExp(search, "i") });
+      return res
+        .status(200)
+        .json({ msg: "success", rowCount: users.length, users });
+    }
+
     const users = await User.find();
 
     res.status(200).json({ msg: "success", rowCount: users.length, users });

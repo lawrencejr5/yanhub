@@ -38,7 +38,7 @@ const AssignTask = () => {
     <main className="grid-body task-main">
       <Nav />
       <section className="body">
-        <Back text={`Assign tasks to ${currVid.showName}(${currVid.ep})`} />
+        <Back text={`Assign tasks to ${currVid.ep}`} />
         <TaskNav currVid={currVid} />
         <Notification notification={notification} />
         <div className="task-container">

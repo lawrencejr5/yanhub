@@ -42,14 +42,11 @@ const Video = () => {
   const getVideos = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `${endpoint}/videos?show=${showId}&simplified=true`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const { data } = await axios.get(`${endpoint}/videos?show=${showId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setLoading(false);
-      setVideos(data.simpVideos);
+      setVideos(data.videos);
     } catch (err) {
       console.log(err);
     }
@@ -78,14 +75,6 @@ const Video = () => {
             ></div>
           </div>
           <div className="videos-container">
-            {/* <div className="select">
-              <select name="" id="select">
-                <option value="all">Sort...</option>
-                <option value="completed">Completed</option>
-                <option value="editing">Ongoing</option>
-                <option value="undone">Undone</option>
-              </select>
-            </div> */}
             {videos.map((vid, index) => {
               return <SingleVideo vid={vid} curr={showId} key={index} />;
             })}

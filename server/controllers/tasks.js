@@ -5,7 +5,6 @@ const getAllTasks = async (req, res) => {
   try {
     const { search } = req.query;
     if (search) {
-      // $or: [{ name: new RegExp(query, "i") }, { city: new RegExp(query, "i") }];
       const results = await Task.find()
         .populate({
           path: "video",
@@ -24,7 +23,6 @@ const getAllTasks = async (req, res) => {
           task.video.show.show.match(new RegExp(search, "i"));
         return epMatch || showMatch;
       });
-      // const results = await Video.find({ ep: new RegExp(search, "i") });
       return res.status(200).json({ msg: "Success", tasks: filteredResults });
     }
 

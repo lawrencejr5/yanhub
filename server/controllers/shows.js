@@ -3,7 +3,7 @@ const Video = require("../models/videos");
 
 const getAllShows = async (req, res) => {
   try {
-    const allShows = await Show.find({});
+    const allShows = await Show.find({}).populate("createdBy", "username");
     const shows = await Promise.all(
       allShows.map(async (show) => {
         const videos = await Video.find({ show: show._id });

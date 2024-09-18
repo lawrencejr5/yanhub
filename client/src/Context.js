@@ -40,7 +40,6 @@ export const Context = ({ children }) => {
   // All data
   const [allUsers, setAllUsers] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
-  const [userTasks, setUserTasks] = useState([]);
 
   // User states
   const [currUser, setCurrUser] = useState([]);
@@ -52,9 +51,7 @@ export const Context = ({ children }) => {
   const [currShow, setCurrShow] = useState({});
 
   // Tasks states
-  const [personalTasks, setPersonalTasks] = useState({});
   const [checked, setChecked] = useState(null);
-  const [searchQuery, setSearchQuery] = useState("");
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -91,30 +88,22 @@ export const Context = ({ children }) => {
   const fetchTasks = async () => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `${endpoint}/tasks?search=${searchQuery}`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
+      const { data } = await axios.get(`${endpoint}/tasks`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setAllTasks(data.tasks);
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
-
-  const fetchTasksByUserId = async () => {
+  const searchTasks = async (query) => {
     try {
       setLoading(true);
-      const userId = localStorage.getItem("user");
-      const { data } = await axios.get(
-        `${endpoint}/tasks/${userId}?simplified=true`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setUserTasks(data.task);
+      const { data } = await axios.get(`${endpoint}/tasks?search=${query}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAllTasks(data.tasks);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -124,13 +113,10 @@ export const Context = ({ children }) => {
   const getVidDetails = async (id) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(
-        `${endpoint}/videos/${id}?simplified=true`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
-      );
-      setCurrVid(data.simpVideos);
+      const { data } = await axios.get(`${endpoint}/videos/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCurrVid(data.video);
       setLoading(false);
     } catch (err) {
       const {
@@ -198,13 +184,11 @@ export const Context = ({ children }) => {
         signedIn,
         allUsers,
         allTasks,
-        userTasks,
         setSignedIn,
         currVid,
         currUser,
         setCurrUser,
-        searchQuery,
-        setSearchQuery,
+        searchTasks,
         currShow,
         assignTask,
         setAssignTask,
