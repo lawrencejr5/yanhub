@@ -18,11 +18,11 @@ import SortNav from "../components/SortNav";
 
 const Video = () => {
   const {
-    endpoint,
-    token,
     notification,
     loading,
-    setLoading,
+    getVideos,
+    sortVideos,
+    videos,
     videoDetailsModal,
     openCreateVideoModal,
     setOpenCreateVideoModal,
@@ -32,26 +32,17 @@ const Video = () => {
 
   const { id: showId } = useParams();
 
+  const [sortVal, setSortVal] = useState("");
+
   useEffect(() => {
     document.title = "Yanhub - Videos";
     getShowById(showId);
-    getVideos();
+    getVideos(showId);
   }, []);
 
-  const [videos, setVideos] = useState([]);
-
-  const getVideos = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${endpoint}/videos?show=${showId}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setLoading(false);
-      setVideos(data.videos);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  useEffect(() => {
+    sortVideos(showId, sortVal);
+  }, [sortVal]);
 
   if (loading) return <Loading />;
   return (
@@ -76,7 +67,7 @@ const Video = () => {
             ></div>
           </div>
           <div className="videos-container">
-            <SortNav />
+            <SortNav sortVal={sortVal} setSortVal={setSortVal} />
             {videos.map((vid, index) => {
               return <SingleVideo vid={vid} curr={showId} key={index} />;
             })}

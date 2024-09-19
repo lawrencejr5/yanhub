@@ -2,9 +2,18 @@ const Video = require("../models/videos");
 
 const getAllVideos = async (req, res) => {
   try {
-    const { show } = req.query;
+    const { show, sort } = req.query;
 
     if (show) {
+      if (sort) {
+        const videos = await Video.find({ show, status: sort }).populate(
+          "show",
+          "show"
+        );
+        return res
+          .status(200)
+          .json({ msg: "success", rowCount: videos.length, videos });
+      }
       const videos = await Video.find({ show }).populate("show", "show");
       return res
         .status(200)

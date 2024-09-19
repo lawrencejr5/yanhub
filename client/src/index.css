@@ -478,12 +478,19 @@ main {
   padding: 0 2rem;
 }
 .sort-nav button {
-  border: 1px solid var(--primary);
-  font-size: 10px;
+  border: 2px solid var(--primary);
+  font-size: 12px;
+  /* font-weight: 600; */
   margin: 0 0.2rem;
   padding: 0.2rem 0.4rem;
   border-radius: 5px;
+  color: var(--text1);
   background-color: var(--secondary2);
+}
+.sort-nav button.active {
+  background-color: var(--primary);
+  color: white;
+  font-weight: 600;
 }
 .sort-nav select {
   border: 1px solid var(--text1);

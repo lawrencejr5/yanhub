@@ -40,6 +40,7 @@ export const Context = ({ children }) => {
   // All data
   const [allUsers, setAllUsers] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
+  const [videos, setVideos] = useState([]);
 
   // User states
   const [currUser, setCurrUser] = useState([]);
@@ -129,6 +130,47 @@ export const Context = ({ children }) => {
       console.log(err);
     }
   };
+  const sortTasks = async (sort) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/tasks?sort=${sort}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAllTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getVideos = async (show) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/videos?show=${show}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setVideos(data.videos);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const sortVideos = async (show, sort) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${endpoint}/videos?show=${show}&sort=${sort}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setVideos(data.videos);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const getVidDetails = async (id) => {
     try {
@@ -205,11 +247,11 @@ export const Context = ({ children }) => {
         signedIn,
         allUsers,
         allTasks,
+        videos,
         setSignedIn,
         currVid,
         currUser,
         setCurrUser,
-        searchTasks,
         currShow,
         assignTask,
         setAssignTask,
@@ -219,6 +261,10 @@ export const Context = ({ children }) => {
         fetchUser,
         fetchUsers,
         fetchTasks,
+        searchTasks,
+        sortTasks,
+        getVideos,
+        sortVideos,
         getVidDetails,
         getShowById,
       }}

@@ -20,9 +20,7 @@ const Dashboard = () => {
     task.assignedTo.some((usr) => usr._id === signedIn._id)
   );
 
-  const latestTask = filteredTasks[filteredTasks.length - 1]
-    ? filteredTasks[filteredTasks.length - 1]
-    : [];
+  const latestTask = filteredTasks[filteredTasks.length - 1];
 
   if (loading) return <Loading />;
 

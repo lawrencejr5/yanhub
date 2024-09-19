@@ -14,10 +14,18 @@ import TaskBox from "../components/TaskBox";
 import SortNav from "../components/SortNav";
 
 const Tasks = () => {
-  const { fetchTasks, searchTasks, fetchUsers, loading, allTasks, currUser } =
-    useGlobalContext();
+  const {
+    fetchTasks,
+    searchTasks,
+    sortTasks,
+    fetchUsers,
+    loading,
+    allTasks,
+    currUser,
+  } = useGlobalContext();
 
   const [query, setQuery] = useState("");
+  const [sortVal, setSortVal] = useState("");
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
@@ -28,6 +36,10 @@ const Tasks = () => {
   useEffect(() => {
     searchTasks(query);
   }, [query]);
+
+  useEffect(() => {
+    sortTasks(sortVal);
+  }, [sortVal]);
 
   const navigate = useNavigate();
 
@@ -51,7 +63,7 @@ const Tasks = () => {
             </button>
           </div>
 
-          <SortNav />
+          <SortNav sortVal={sortVal} setSortVal={setSortVal} />
         </div>
         <div className="tasks-container">
           {allTasks.map((task, index) => {
