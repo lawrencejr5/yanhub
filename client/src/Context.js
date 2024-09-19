@@ -53,6 +53,7 @@ export const Context = ({ children }) => {
 
   // Tasks states
   const [checked, setChecked] = useState(null);
+  const [numOfMonthTasks, setNumOfMonthTasks] = useState(0);
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -106,18 +107,22 @@ export const Context = ({ children }) => {
     }
   };
 
-  const fetchTasks = async () => {
+  const fetchTasks = async (limit) => {
     try {
       setLoading(true);
-      const { data } = await axios.get(`${endpoint}/tasks`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await axios.get(
+        `${endpoint}/tasks?limit=${limit || ""}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       setAllTasks(data.tasks);
       setLoading(false);
     } catch (err) {
       console.log(err);
     }
   };
+
   const searchTasks = async (query, status) => {
     try {
       setLoading(true);
@@ -128,6 +133,30 @@ export const Context = ({ children }) => {
         }
       );
       setAllTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getTasksCompletedPerMonth = async (userId) => {
+    const user = localStorage.getItem("user");
+
+    const d = new Date();
+    const monthVal = d.getMonth();
+    const month = monthVal < 10 ? `0${monthVal + 1}` : `${monthVal + 1}`;
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/tasks?status=completed`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      const monthTasksFilter = data.tasks.filter(
+        (task) => task.createdAt.split("-")[1] === month
+      );
+      const filteredTasks = monthTasksFilter.filter((task) =>
+        task.assignedTo.some((usr) => usr._id === userId)
+      );
+      setNumOfMonthTasks(filteredTasks.length);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -235,6 +264,9 @@ export const Context = ({ children }) => {
         setAssignTask,
         checked,
         setChecked,
+        //
+        getTasksCompletedPerMonth,
+        numOfMonthTasks,
         //
         fetchUser,
         fetchUsers,

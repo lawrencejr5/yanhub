@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaPhone, FaBirthdayCake, FaThumbsUp } from "react-icons/fa";
+import { FaPhone, FaBirthdayCake, FaBars } from "react-icons/fa";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
@@ -15,13 +15,22 @@ import UserModal from "../components/modals/UserModal";
 
 const Account = () => {
   const [user, setUser] = useState([]);
-  const { loading, setLoading, endpoint, fetchTasks, allTasks, currUser } =
-    useGlobalContext();
+  const {
+    loading,
+    setLoading,
+    endpoint,
+    fetchTasks,
+    allTasks,
+    currUser,
+    getTasksCompletedPerMonth,
+    numOfMonthTasks,
+  } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - My Account";
     getUser();
     fetchTasks();
+    getTasksCompletedPerMonth(currUser._id);
   }, []);
 
   const { id } = useParams();
@@ -62,7 +71,7 @@ const Account = () => {
               <FaBirthdayCake /> Born on -- --
             </span>
             <span>
-              <FaThumbsUp /> 0 project(s) completed this month
+              <FaBars /> {numOfMonthTasks} task(s) completed this month
             </span>
             <span>
               <FaPhone /> {phone || "--------"}

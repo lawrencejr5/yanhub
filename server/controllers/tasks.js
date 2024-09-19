@@ -3,7 +3,7 @@ const Video = require("../models/videos");
 
 const getAllTasks = async (req, res) => {
   try {
-    const { search, status } = req.query;
+    const { search, status, limit } = req.query;
 
     const queryObj = {};
     if (status) queryObj.status = status;
@@ -39,7 +39,8 @@ const getAllTasks = async (req, res) => {
           select: "show",
         },
       })
-      .populate("assignedTo", "username pic");
+      .populate("assignedTo", "username pic")
+      .limit(limit);
 
     res.status(200).json({ msg: "Success", rowCount: tasks.length, tasks });
   } catch (err) {

@@ -9,11 +9,19 @@ import Greet from "../components/Greet";
 
 import { useGlobalContext } from "../Context";
 const Dashboard = () => {
-  const { signedIn, loading, fetchTasks, allTasks } = useGlobalContext();
+  const {
+    signedIn,
+    loading,
+    fetchTasks,
+    allTasks,
+    getTasksCompletedPerMonth,
+    numOfMonthTasks,
+  } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Dashboard";
     fetchTasks();
+    getTasksCompletedPerMonth(signedIn._id);
   }, []);
 
   const filteredTasks = allTasks.filter((task) =>
@@ -33,8 +41,8 @@ const Dashboard = () => {
         <div className="layout">
           <div className="layout1">
             <div className="total-xp">
-              <h3>Total XP this month</h3>
-              <strong>{signedIn.xp}XP</strong>
+              <h3>No. of tasks completed this month</h3>
+              <strong>{numOfMonthTasks} Task(s)</strong>
             </div>
             <div className="position">
               <h3>Position</h3>

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import {
   FaPhone,
   FaBirthdayCake,
-  FaThumbsUp,
+  FaBars,
   FaMoon,
   FaSun,
   FaEdit,
@@ -17,6 +17,7 @@ import EditPasswordModal from "../components/modals/EditPasswordModal";
 import ChangeAvatarModal from "../components/modals/ChangeAvatarModal";
 import Notification from "../components/Notification";
 import TaskBox from "../components/TaskBox";
+import Loading from "../components/Loading";
 
 import { useGlobalContext } from "../Context";
 import UserModal from "../components/modals/UserModal";
@@ -29,16 +30,19 @@ const Account = () => {
     theme,
     toggleTheme,
     notification,
-    setNotification,
     signedIn,
     fetchTasks,
     allTasks,
     currUser,
+    loading,
+    getTasksCompletedPerMonth,
+    numOfMonthTasks,
   } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - My Account";
     fetchTasks();
+    getTasksCompletedPerMonth(signedIn._id);
   }, []);
 
   // Get personal tasks
@@ -47,6 +51,7 @@ const Account = () => {
     task.assignedTo.some((usr) => usr._id === signedIn._id)
   );
 
+  if (loading) return <Loading />;
   return (
     <main className="grid-body account-main">
       <Nav />
@@ -67,7 +72,7 @@ const Account = () => {
               <FaBirthdayCake /> Born on {signedIn.dob || "-- --"}
             </span>
             <span>
-              <FaThumbsUp /> 0 project(s) completed this month
+              <FaBars /> {numOfMonthTasks} tasks(s) completed this month
             </span>
             <span>
               <FaPhone /> {signedIn.phone || "--------"}
