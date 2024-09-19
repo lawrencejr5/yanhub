@@ -2,27 +2,15 @@ const Video = require("../models/videos");
 
 const getAllVideos = async (req, res) => {
   try {
-    const { show, sort } = req.query;
+    const { show, status } = req.query;
 
-    if (show) {
-      if (sort) {
-        const videos = await Video.find({ show, status: sort }).populate(
-          "show",
-          "show"
-        );
-        return res
-          .status(200)
-          .json({ msg: "success", rowCount: videos.length, videos });
-      }
-      const videos = await Video.find({ show }).populate("show", "show");
-      return res
-        .status(200)
-        .json({ msg: "success", rowCount: videos.length, videos });
-    }
+    const queryObj = {};
 
-    const videos = await Video.find({}).populate("show", "show");
+    if (show) queryObj.show = show;
 
-    // If no query
+    if (status) queryObj.status = status;
+
+    const videos = await Video.find(queryObj).populate("show", "show");
     res.status(200).json({ msg: "Success", rowCount: videos.length, videos });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });

@@ -118,49 +118,27 @@ export const Context = ({ children }) => {
       console.log(err);
     }
   };
-  const searchTasks = async (query) => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${endpoint}/tasks?search=${query}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAllTasks(data.tasks);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const sortTasks = async (sort) => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${endpoint}/tasks?sort=${sort}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setAllTasks(data.tasks);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const getVideos = async (show) => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${endpoint}/videos?show=${show}`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setVideos(data.videos);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const sortVideos = async (show, sort) => {
+  const searchTasks = async (query, status) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/videos?show=${show}&sort=${sort}`,
+        `${endpoint}/tasks?search=${query}&status=${status}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setAllTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getVideos = async (show, status) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${endpoint}/videos?show=${show}&status=${status}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -262,9 +240,7 @@ export const Context = ({ children }) => {
         fetchUsers,
         fetchTasks,
         searchTasks,
-        sortTasks,
         getVideos,
-        sortVideos,
         getVidDetails,
         getShowById,
       }}

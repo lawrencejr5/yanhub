@@ -14,15 +14,8 @@ import TaskBox from "../components/TaskBox";
 import SortNav from "../components/SortNav";
 
 const Tasks = () => {
-  const {
-    fetchTasks,
-    searchTasks,
-    sortTasks,
-    fetchUsers,
-    loading,
-    allTasks,
-    currUser,
-  } = useGlobalContext();
+  const { fetchTasks, searchTasks, fetchUsers, loading, allTasks, currUser } =
+    useGlobalContext();
 
   const [query, setQuery] = useState("");
   const [sortVal, setSortVal] = useState("");
@@ -34,12 +27,8 @@ const Tasks = () => {
   }, []);
 
   useEffect(() => {
-    searchTasks(query);
-  }, [query]);
-
-  useEffect(() => {
-    sortTasks(sortVal);
-  }, [sortVal]);
+    searchTasks(query, sortVal);
+  }, [query, sortVal]);
 
   const navigate = useNavigate();
 

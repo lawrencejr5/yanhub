@@ -21,7 +21,6 @@ const Video = () => {
     notification,
     loading,
     getVideos,
-    sortVideos,
     videos,
     videoDetailsModal,
     openCreateVideoModal,
@@ -41,7 +40,7 @@ const Video = () => {
   }, []);
 
   useEffect(() => {
-    sortVideos(showId, sortVal);
+    getVideos(showId, sortVal);
   }, [sortVal]);
 
   if (loading) return <Loading />;

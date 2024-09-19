@@ -19,6 +19,7 @@ const TasksPersonal = () => {
     useGlobalContext();
 
   const [query, setQuery] = useState("");
+  const [sortVal, setSortVal] = useState("");
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
@@ -26,8 +27,8 @@ const TasksPersonal = () => {
   }, []);
 
   useEffect(() => {
-    searchTasks(query);
-  }, [query]);
+    searchTasks(query, sortVal);
+  }, [query, sortVal]);
 
   const userId = localStorage.getItem("user");
   const filteredTasks = allTasks.filter((task) => {
@@ -62,7 +63,7 @@ const TasksPersonal = () => {
             </button>
           </div>
 
-          <SortNav />
+          <SortNav sortVal={sortVal} setSortVal={setSortVal} />
         </div>
         <div className="tasks-container">
           {filteredTasks.length === 0 ? (
