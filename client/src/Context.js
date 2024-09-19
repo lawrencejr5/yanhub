@@ -140,8 +140,6 @@ export const Context = ({ children }) => {
   };
 
   const getTasksCompletedPerMonth = async (userId) => {
-    const user = localStorage.getItem("user");
-
     const d = new Date();
     const monthVal = d.getMonth();
     const month = monthVal < 10 ? `0${monthVal + 1}` : `${monthVal + 1}`;

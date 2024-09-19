@@ -46,10 +46,12 @@ const Account = () => {
   }, []);
 
   // Get personal tasks
-  const { pic, username, fullname, bio } = signedIn;
+  const { pic, username, fullname, bio, phone, dob } = signedIn;
   const filteredTasks = allTasks.filter((task) =>
     task.assignedTo.some((usr) => usr._id === signedIn._id)
   );
+
+  const newDob = !dob ? "" : dob.split("T")[0];
 
   if (loading) return <Loading />;
   return (
@@ -69,13 +71,13 @@ const Account = () => {
           <h3>User details...</h3>
           <div className="details">
             <span>
-              <FaBirthdayCake /> Born on {signedIn.dob || "-- --"}
+              <FaBirthdayCake /> Born on {newDob || "-- --"}
             </span>
             <span>
               <FaBars /> {numOfMonthTasks} tasks(s) completed this month
             </span>
             <span>
-              <FaPhone /> {signedIn.phone || "--------"}
+              <FaPhone /> {phone || "--------"}
             </span>
             <div className="btn-holder">
               <button onClick={() => setEditModal(true)}>

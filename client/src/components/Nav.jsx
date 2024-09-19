@@ -1,6 +1,6 @@
 // modules
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaPowerOff, FaBars } from "react-icons/fa";
 
 // components
@@ -8,7 +8,6 @@ import Logo from "./Logo";
 
 // data
 import { navList } from "../data/nav";
-import { users } from "../data/users";
 
 // custom hooks
 import { useGlobalContext } from "../Context";
@@ -17,6 +16,16 @@ const Nav = () => {
   const { mobileNav, setMobileNav, signedIn } = useGlobalContext();
 
   const { pathname } = useLocation();
+
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    setMobileNav(false);
+    navigate("/login");
+  };
+
   return (
     // <>
     <nav className="relative">
@@ -54,9 +63,9 @@ const Nav = () => {
         </div>
         <div className="logout">
           <FaPowerOff />
-          <Link to="/login" className="link">
+          <button onClick={logout} className="link">
             Logout
-          </Link>
+          </button>
         </div>
       </div>
       <div className="small-nav">
@@ -105,9 +114,9 @@ const Nav = () => {
             </ul>
             <div className="logout">
               <FaPowerOff />
-              <Link to="/login" className="link">
+              <button onClick={logout} className="link">
                 Logout
-              </Link>
+              </button>
             </div>
           </div>
         </div>

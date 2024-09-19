@@ -8,12 +8,12 @@ import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Back from "../components/Back";
 import TaskBox from "../components/TaskBox";
-
-import { useGlobalContext } from "../Context";
 import Loading from "../components/Loading";
 import UserModal from "../components/modals/UserModal";
 
-const Account = () => {
+import { useGlobalContext } from "../Context";
+
+const User = () => {
   const [user, setUser] = useState([]);
   const {
     loading,
@@ -27,7 +27,7 @@ const Account = () => {
   } = useGlobalContext();
 
   useEffect(() => {
-    document.title = "Yanhub - My Account";
+    document.title = `Yanhub - ${user.username}`;
     getUser();
     fetchTasks();
     getTasksCompletedPerMonth(currUser._id);
@@ -44,7 +44,9 @@ const Account = () => {
       console.log(err);
     }
   };
-  const { username, pic, bio, phone } = user;
+  const { username, pic, bio, phone, dob } = user;
+
+  const newDob = !dob ? "" : dob.split("T")[0];
 
   const filteredTasks = allTasks.filter((task) => {
     return task.assignedTo.some((usr) => usr._id === id);
@@ -68,7 +70,7 @@ const Account = () => {
           <h3>User details...</h3>
           <div className="details">
             <span>
-              <FaBirthdayCake /> Born on -- --
+              <FaBirthdayCake /> Born on {newDob || "-- --"}
             </span>
             <span>
               <FaBars /> {numOfMonthTasks} task(s) completed this month
@@ -92,4 +94,4 @@ const Account = () => {
   );
 };
 
-export default Account;
+export default User;

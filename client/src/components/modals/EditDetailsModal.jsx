@@ -18,11 +18,13 @@ const EditDetailsModal = () => {
 
   const { username, fullname, phone, bio, dob } = signedIn;
 
+  const newDob = !dob ? "" : dob.split("T")[0];
+
   const [input, setInput] = useState({
     username: username || "",
     fullname: fullname || "",
     phone: phone || "",
-    dob: dob || "",
+    dob: newDob || "",
     bio: bio || "",
   });
 
@@ -31,7 +33,7 @@ const EditDetailsModal = () => {
       username: username || "",
       fullname: fullname || "",
       phone: phone || "",
-      dob: dob || "",
+      dob: newDob || "",
       bio: bio || "",
     });
   }, [signedIn]);
@@ -142,7 +144,7 @@ const EditDetailsModal = () => {
             </div>
           </div>
           <div className="btn-holder">
-            <button>Save changes</button>
+            <button>{btnLoad ? `Saving...` : `Save changes`}</button>
           </div>
         </form>
       </div>
