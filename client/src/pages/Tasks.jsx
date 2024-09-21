@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 import SortNav from "../components/SortNav";
 import Pagination from "../components/Pagination";
+import LoadingContainer from "../components/LoadingContainer";
 
 const Tasks = () => {
   const {
@@ -51,7 +52,7 @@ const Tasks = () => {
 
   const navigate = useNavigate();
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
   return (
     <main className="grid-body tasks-main">
       <Nav />
@@ -73,21 +74,26 @@ const Tasks = () => {
 
           <SortNav sortVal={sortVal} setSortVal={setSortVal} />
         </div>
-        <div className="tasks-container">
-          {query ? (
-            <strong>Search results for {query}</strong>
-          ) : sortVal ? (
-            <strong>
-              All {sortVal} tasks ({tasks.length})
-            </strong>
-          ) : (
-            <strong>Page {page}</strong>
-          )}
+        {loading ? (
+          <LoadingContainer />
+        ) : (
+          <div className="tasks-container">
+            {query ? (
+              <strong>Search results for {query}</strong>
+            ) : sortVal ? (
+              <strong>
+                All {sortVal} tasks ({tasks.length})
+              </strong>
+            ) : (
+              <strong>Page {page}</strong>
+            )}
 
-          {tasks.map((task, index) => {
-            return <TaskBox task={task} key={index} />;
-          })}
-        </div>
+            {tasks.map((task, index) => {
+              return <TaskBox task={task} key={index} />;
+            })}
+          </div>
+        )}
+
         {sortVal || query ? "" : <Pagination />}
       </section>
       <UserModal currUser={currUser} />

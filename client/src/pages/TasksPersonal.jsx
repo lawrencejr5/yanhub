@@ -14,6 +14,7 @@ import Empty from "../components/Empty";
 import UserModal from "../components/modals/UserModal";
 import SortNav from "../components/SortNav";
 import Pagination from "../components/Pagination";
+import LoadingContainer from "../components/LoadingContainer";
 
 const TasksPersonal = () => {
   const { allTasks, fetchTasks, searchPersonalTasks, loading, currUser } =
@@ -37,7 +38,7 @@ const TasksPersonal = () => {
   });
   const navigate = useNavigate();
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <main className="grid-body tasks-main">
@@ -66,15 +67,19 @@ const TasksPersonal = () => {
 
           <SortNav sortVal={sortVal} setSortVal={setSortVal} />
         </div>
-        <div className="tasks-container">
-          {filteredTasks.length === 0 ? (
-            <Empty />
-          ) : (
-            filteredTasks.map((task, index) => {
-              return <TaskBox task={task} key={index} />;
-            })
-          )}
-        </div>
+        {loading ? (
+          <LoadingContainer />
+        ) : (
+          <div className="tasks-container">
+            {filteredTasks.length === 0 ? (
+              <Empty />
+            ) : (
+              filteredTasks.map((task, index) => {
+                return <TaskBox task={task} key={index} />;
+              })
+            )}
+          </div>
+        )}
       </section>
       <LeaderboardNav />
       <UserModal currUser={currUser} />

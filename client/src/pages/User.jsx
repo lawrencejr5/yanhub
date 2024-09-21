@@ -33,7 +33,6 @@ const User = () => {
     getUser();
     fetchTasks();
     getTasksCompletedPerMonth(currUser._id);
-    console.log(currUser, user);
   }, []);
 
   const { id } = useParams();
@@ -74,9 +73,9 @@ const User = () => {
             <span>
               <FaBirthdayCake /> Born on {newDob || "-- --"}
             </span>
-            <span>
+            {/* <span>
               <FaBars /> {numOfMonthTasks} task(s) completed this month
-            </span>
+            </span> */}
             <span>
               <FaPhone /> {phone || "--------"}
             </span>

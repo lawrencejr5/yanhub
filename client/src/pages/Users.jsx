@@ -8,6 +8,7 @@ import Greet from "../components/Greet";
 import SearchBox from "../components/SearchBox";
 import UserModal from "../components/modals/UserModal";
 import Loading from "../components/Loading";
+import LoadingContainer from "../components/LoadingContainer";
 
 import { useGlobalContext } from "../Context";
 
@@ -55,7 +56,7 @@ const Users = () => {
     setCurrUser(usr);
   };
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
   return (
     <main className="grid-body users-main">
       <Nav />
@@ -64,42 +65,51 @@ const Users = () => {
         <SearchBox what={"users"} query={query} queryFunc={setQuery} />
 
         <h1>YanHub Users</h1>
-        <div className="admins-container">
-          <h3>Admins</h3>
-          {admins.map((admin, index) => {
-            const { _id: userId, username, pic, role } = admin;
-            return (
-              <div
-                className="user-box"
-                id="admin"
-                key={index}
-                onClick={() => clickFunc(userId)}
-              >
-                <img src={`/imgs/user-icons/${pic}`} alt="" />
-                <p>{username}</p>
-                <small>{role}</small>
-              </div>
-            );
-          })}
-        </div>
-        <div className="admins-container">
-          <h3>Editors</h3>
-          {editors.map((editor, index) => {
-            const { _id: userId, username, pic, role } = editor;
-            return (
-              <div
-                className="user-box"
-                id="editor"
-                key={index}
-                onClick={() => clickFunc(userId)}
-              >
-                <img src={`/imgs/user-icons/${pic}`} alt="" />
-                <p>{username}</p>
-                <small>{role}</small>
-              </div>
-            );
-          })}
-        </div>
+        {loading ? (
+          <LoadingContainer />
+        ) : (
+          <div className="admins-container">
+            <h3>Admins</h3>
+            {admins.map((admin, index) => {
+              const { _id: userId, username, pic, role } = admin;
+              return (
+                <div
+                  className="user-box"
+                  id="admin"
+                  key={index}
+                  onClick={() => clickFunc(userId)}
+                >
+                  <img src={`/imgs/user-icons/${pic}`} alt="" />
+                  <p>{username}</p>
+                  <small>{role}</small>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {loading ? (
+          <LoadingContainer />
+        ) : (
+          <div className="admins-container">
+            <h3>Editors</h3>
+            {editors.map((editor, index) => {
+              const { _id: userId, username, pic, role } = editor;
+              return (
+                <div
+                  className="user-box"
+                  id="editor"
+                  key={index}
+                  onClick={() => clickFunc(userId)}
+                >
+                  <img src={`/imgs/user-icons/${pic}`} alt="" />
+                  <p>{username}</p>
+                  <small>{role}</small>
+                </div>
+              );
+            })}
+          </div>
+        )}
       </section>
       <UserModal currUser={currUser} />
       <LeaderboardNav />

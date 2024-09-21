@@ -22,7 +22,6 @@ const ShowTasks = () => {
     document.title = "Yanhub - Task";
     getVidDetails(id);
     fetchTasks();
-    console.log(currVid);
   }, []);
 
   const filteredTasks = allTasks.filter((task) => task.video._id === id);

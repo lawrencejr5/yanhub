@@ -111,7 +111,7 @@ main {
 }
 
 /* Loading component */
-.loading-container {
+.loading-container-full {
   width: 100%;
   height: 100vh;
   background-color: var(--secondary2);
@@ -120,7 +120,13 @@ main {
   display: grid;
   place-items: center;
 }
-.loading-container .loading {
+.loading-container-middle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+}
+.loading {
   width: 80px;
   height: 80px;
   border-radius: 50%;
@@ -149,7 +155,7 @@ main {
   display: flex;
   justify-content: center;
   transition: 5s;
-  z-index: 3;
+  z-index: 9999999999999999999;
 }
 .notification-container .notification {
   background-color: var(--secondary2);
