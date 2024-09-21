@@ -13,9 +13,10 @@ import Loading from "../components/Loading";
 import Empty from "../components/Empty";
 import UserModal from "../components/modals/UserModal";
 import SortNav from "../components/SortNav";
+import Pagination from "../components/Pagination";
 
 const TasksPersonal = () => {
-  const { allTasks, fetchTasks, searchTasks, loading, currUser } =
+  const { allTasks, fetchTasks, searchPersonalTasks, loading, currUser } =
     useGlobalContext();
 
   const [query, setQuery] = useState("");
@@ -27,7 +28,7 @@ const TasksPersonal = () => {
   }, []);
 
   useEffect(() => {
-    searchTasks(query, sortVal);
+    searchPersonalTasks(query, sortVal);
   }, [query, sortVal]);
 
   const userId = localStorage.getItem("user");

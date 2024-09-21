@@ -3,13 +3,17 @@ const Video = require("../models/videos");
 
 const getAllTasks = async (req, res) => {
   try {
-    const { search, status, limit } = req.query;
+    const { search, status } = req.query;
 
     const queryObj = {};
     if (status) queryObj.status = status;
 
+    const page = Number(req.query.page);
+    const limit = Number(req.query.limit);
+    const skip = (page - 1) * limit;
+
     if (search) {
-      const results = await Task.find(queryObj)
+      let tempTasks = Task.find(queryObj)
         .populate({
           path: "video",
           select: "ep duration",
@@ -19,7 +23,12 @@ const getAllTasks = async (req, res) => {
           },
         })
         .populate("assignedTo", "username pic")
-        .exec();
+        .sort("-createdAt");
+
+      if (page && limit) tempTasks = tempTasks.limit(limit).skip(skip);
+      if (limit) tempTasks = tempTasks.limit(limit);
+
+      const results = await tempTasks;
       const filteredResults = results.filter((task) => {
         const epMatch = task.video.ep.match(new RegExp(search, "i"));
         const showMatch =
@@ -30,7 +39,7 @@ const getAllTasks = async (req, res) => {
       return res.status(200).json({ msg: "Success", tasks: filteredResults });
     }
 
-    const tasks = await Task.find(queryObj)
+    let tempTasks = Task.find(queryObj)
       .populate({
         path: "video",
         select: "ep duration",
@@ -40,7 +49,12 @@ const getAllTasks = async (req, res) => {
         },
       })
       .populate("assignedTo", "username pic")
-      .limit(limit);
+      .sort("-createdAt");
+
+    if (page && limit) tempTasks = tempTasks.limit(limit).skip(skip);
+    if (limit) tempTasks = tempTasks.limit(limit);
+
+    const tasks = await tempTasks;
 
     res.status(200).json({ msg: "Success", rowCount: tasks.length, tasks });
   } catch (err) {

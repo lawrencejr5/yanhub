@@ -42,7 +42,7 @@ const Account = () => {
   useEffect(() => {
     document.title = "Yanhub - My Account";
     fetchTasks();
-    getTasksCompletedPerMonth(signedIn._id);
+    getTasksCompletedPerMonth(localStorage.getItem("user"));
   }, []);
 
   // Get personal tasks

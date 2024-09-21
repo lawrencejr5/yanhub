@@ -52,8 +52,11 @@ export const Context = ({ children }) => {
   const [currShow, setCurrShow] = useState([]);
 
   // Tasks states
+  const [tasks, setTasks] = useState([]);
   const [checked, setChecked] = useState(null);
   const [numOfMonthTasks, setNumOfMonthTasks] = useState(0);
+  const [page, setPage] = useState(1);
+  const limit = 15;
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -107,15 +110,28 @@ export const Context = ({ children }) => {
     }
   };
 
-  const fetchTasks = async (limit) => {
+  const fetchTasksByPage = async (limit, page) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/tasks?limit=${limit || ""}`,
+        `${endpoint}/tasks?limit=${limit}&page=${page}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      setTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchTasks = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/tasks`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setAllTasks(data.tasks);
       setLoading(false);
     } catch (err) {
@@ -124,6 +140,22 @@ export const Context = ({ children }) => {
   };
 
   const searchTasks = async (query, status) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        `${endpoint}/tasks?search=${query}&status=${status}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const searchPersonalTasks = async (query, status) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
@@ -165,7 +197,7 @@ export const Context = ({ children }) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/videos?show=${show}&status=${status}`,
+        `${endpoint}/videos?show=${show}&status=${status || ""}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -210,7 +242,7 @@ export const Context = ({ children }) => {
   useEffect(() => {
     fetchUser();
     fetchUsers();
-    fetchTasks();
+    fetchTasksByPage(limit, page);
   }, []);
 
   return (
@@ -251,7 +283,11 @@ export const Context = ({ children }) => {
         //
         signedIn,
         allUsers,
+        //
         allTasks,
+        tasks,
+        setTasks,
+        //
         videos,
         setSignedIn,
         currVid,
@@ -260,6 +296,11 @@ export const Context = ({ children }) => {
         currShow,
         assignTask,
         setAssignTask,
+        //
+        limit,
+        page,
+        setPage,
+        //
         checked,
         setChecked,
         //
@@ -269,7 +310,9 @@ export const Context = ({ children }) => {
         fetchUser,
         fetchUsers,
         fetchTasks,
+        fetchTasksByPage,
         searchTasks,
+        searchPersonalTasks,
         getVideos,
         getVidDetails,
         getShowById,

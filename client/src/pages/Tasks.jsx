@@ -12,10 +12,20 @@ import SearchBox from "../components/SearchBox";
 import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 import SortNav from "../components/SortNav";
+import Pagination from "../components/Pagination";
 
 const Tasks = () => {
-  const { fetchTasks, searchTasks, fetchUsers, loading, allTasks, currUser } =
-    useGlobalContext();
+  const {
+    fetchTasks,
+    fetchTasksByPage,
+    tasks,
+    searchTasks,
+    fetchUsers,
+    loading,
+    limit,
+    page,
+    currUser,
+  } = useGlobalContext();
 
   const [query, setQuery] = useState("");
   const [sortVal, setSortVal] = useState("");
@@ -24,10 +34,19 @@ const Tasks = () => {
     document.title = "Yanhub - Tasks";
     fetchUsers();
     fetchTasks();
+    fetchTasksByPage(limit, page);
   }, []);
 
   useEffect(() => {
-    searchTasks(query, sortVal);
+    fetchTasksByPage(limit, page);
+  }, [page]);
+
+  useEffect(() => {
+    if (!query && !sortVal) {
+      fetchTasksByPage(limit, page);
+    } else {
+      searchTasks(query, sortVal);
+    }
   }, [query, sortVal]);
 
   const navigate = useNavigate();
@@ -55,10 +74,21 @@ const Tasks = () => {
           <SortNav sortVal={sortVal} setSortVal={setSortVal} />
         </div>
         <div className="tasks-container">
-          {allTasks.map((task, index) => {
+          {query ? (
+            <strong>Search results for {query}</strong>
+          ) : sortVal ? (
+            <strong>
+              All {sortVal} tasks ({tasks.length})
+            </strong>
+          ) : (
+            <strong>Page {page}</strong>
+          )}
+
+          {tasks.map((task, index) => {
             return <TaskBox task={task} key={index} />;
           })}
         </div>
+        {sortVal || query ? "" : <Pagination />}
       </section>
       <UserModal currUser={currUser} />
       <LeaderboardNav />

@@ -15,6 +15,8 @@ import { useGlobalContext } from "../Context";
 
 const User = () => {
   const [user, setUser] = useState([]);
+  const { username, pic, bio, phone, dob } = user;
+
   const {
     loading,
     setLoading,
@@ -27,10 +29,11 @@ const User = () => {
   } = useGlobalContext();
 
   useEffect(() => {
-    document.title = `Yanhub - ${user.username}`;
+    document.title = `Yanhub - ${username}`;
     getUser();
     fetchTasks();
     getTasksCompletedPerMonth(currUser._id);
+    console.log(currUser, user);
   }, []);
 
   const { id } = useParams();
@@ -44,7 +47,6 @@ const User = () => {
       console.log(err);
     }
   };
-  const { username, pic, bio, phone, dob } = user;
 
   const newDob = !dob ? "" : dob.split("T")[0];
 

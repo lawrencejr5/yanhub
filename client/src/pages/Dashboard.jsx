@@ -21,7 +21,8 @@ const Dashboard = () => {
   useEffect(() => {
     document.title = "Yanhub - Dashboard";
     fetchTasks();
-    getTasksCompletedPerMonth(signedIn._id);
+    const userId = localStorage.getItem("user");
+    getTasksCompletedPerMonth(userId);
   }, []);
 
   const filteredTasks = allTasks.filter((task) =>

@@ -4,7 +4,7 @@ import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
-const CreateVideoForm = ({ open, showId, currShow, getVideos }) => {
+const CreateVideoForm = ({ open, showId, currShow }) => {
   const {
     endpoint,
     token,
@@ -12,6 +12,7 @@ const CreateVideoForm = ({ open, showId, currShow, getVideos }) => {
     setBtnLoad,
     setNotification,
     setOpenCreateVideoModal,
+    getVideos,
   } = useGlobalContext();
 
   const [ep, setEp] = useState("");
@@ -27,9 +28,9 @@ const CreateVideoForm = ({ open, showId, currShow, getVideos }) => {
         { showId, ep },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      getVideos();
       setBtnLoad(false);
       setEp("");
+      await getVideos(showId);
       setOpenCreateVideoModal(false);
       setNotification({ text: data.msg, theme: "success", status: true });
     } catch (err) {
