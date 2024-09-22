@@ -11,14 +11,14 @@ const MyTasksLayout = () => {
   );
   return (
     <div className="tasks-layout">
-      <h2>Your Tasks</h2>
+      <h2>Your last 3 tasks</h2>
       <br />
       {filteredTasks.length === 0 ? (
         <p>Them never assign any task give you yet</p>
       ) : (
         <table>
           <tbody>
-            {filteredTasks.map((task, i) => {
+            {filteredTasks.slice(0, 3).map((task, i) => {
               const {
                 video: {
                   duration,

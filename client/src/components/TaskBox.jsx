@@ -13,6 +13,9 @@ const TaskBox = ({ task, hideUsers }) => {
     token,
     setLoading,
     fetchTasks,
+    fetchTasksByPage,
+    limit,
+    page,
   } = useGlobalContext();
 
   const clickFunc = (user) => {
@@ -30,6 +33,7 @@ const TaskBox = ({ task, hideUsers }) => {
         { headers: { Authorization: `Bearer ${token}` } }
       );
       await fetchTasks();
+      await fetchTasksByPage(limit, page);
       setLoading(false);
     } catch (err) {
       const {

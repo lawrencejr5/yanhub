@@ -8,6 +8,7 @@ const {
   login,
   updatePassword,
   getAllUsers,
+  getLeaderBoard,
   getUser,
   updatePic,
   editUser,
@@ -18,6 +19,7 @@ router.post("/login", login);
 router.post("/register", register);
 router.patch("/pass", auth, updatePassword);
 router.get("/", getAllUsers);
+router.get("/leaderboard", getLeaderBoard);
 router.get("/:id", getUser);
 router.patch("/avatar", auth, updatePic);
 router.patch("/:id", editUser);

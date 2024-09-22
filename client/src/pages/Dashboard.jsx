@@ -11,6 +11,7 @@ import { useGlobalContext } from "../Context";
 const Dashboard = () => {
   const {
     signedIn,
+    leaderboard,
     loading,
     fetchTasks,
     allTasks,
@@ -42,13 +43,19 @@ const Dashboard = () => {
         <div className="layout">
           <div className="layout1">
             <div className="total-xp">
-              <h3>No. of tasks completed this month</h3>
+              <h3>Tasks completed this month</h3>
+              <br />
               <strong>{numOfMonthTasks} Task(s)</strong>
             </div>
-            <div className="position">
-              <h3>Position</h3>
-              <strong>...</strong>
-            </div>
+            {leaderboard.map((users, index) => {
+              if (users.userId === localStorage.getItem("user"))
+                return (
+                  <div className="position" key={index}>
+                    <h3>Position</h3>
+                    <strong>#{index + 1}</strong>
+                  </div>
+                );
+            })}
           </div>
           <div className="layout2">
             <h2>Latest Task</h2>

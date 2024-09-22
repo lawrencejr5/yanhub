@@ -1,4 +1,5 @@
 const User = require("../models/users");
+const Task = require("../models/tasks");
 
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
@@ -89,6 +90,8 @@ const login = async (req, res) => {
   }
 };
 
+// *********USER DATA*********
+
 const getAllUsers = async (req, res) => {
   try {
     const { search } = req.query;
@@ -105,6 +108,51 @@ const getAllUsers = async (req, res) => {
     res.status(200).json({ msg: "success", rowCount: users.length, users });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
+  }
+};
+
+// const getLeaderBoard = async (req, res) => {
+//   try {
+//     const users = await User.find().select("_id");
+//     const userRankings = await Promise.all(
+//       users.map(async (user) => {
+//         const tasks = await Task.find({
+//           status: "completed",
+//           assignedTo: { $in: [user._id] },
+//         });
+//         return [{ user: user._id, completed: tasks.length }];
+//       })
+//     );
+//     res.status(200).json({ msg: "Success", userRankings });
+//   } catch (err) {
+//     res.status(500).json({ msg: "An error occured", err });
+//   }
+// };
+
+const getLeaderBoard = async (req, res) => {
+  try {
+    const taskCounts = await Task.aggregate([
+      { $match: { status: "completed" } }, // Filter to only completed tasks
+      { $unwind: "$assignedTo" }, // Deconstruct the assignedTo array
+      { $group: { _id: "$assignedTo", taskCount: { $sum: 1 } } }, // Group by userId and count tasks
+    ]);
+
+    const users = await User.find({}, "_id username"); // Fetch all users
+
+    const rankings = users.map((user) => {
+      const taskCount = taskCounts.find((tc) => tc._id.equals(user._id));
+      return {
+        userId: user._id,
+        name: user.username,
+        taskCount: taskCount ? taskCount.taskCount : 0,
+      };
+    });
+
+    rankings.sort((a, b) => b.taskCount - a.taskCount); // Sort by task count in descending order
+
+    res.status(200).json({ msg: "Success", rankings });
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -220,6 +268,7 @@ module.exports = {
   login,
   getAllUsers,
   getUser,
+  getLeaderBoard,
   updatePic,
   editUser,
   delUser,

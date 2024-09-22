@@ -33,9 +33,13 @@ export const Context = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [btnLoad, setBtnLoad] = useState(false);
 
+  // Leaderboard
+  const [leaderboard, setLeaderbord] = useState([]);
+
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
   const [signedIn, setSignedIn] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // All data
   const [allUsers, setAllUsers] = useState([]);
@@ -105,6 +109,17 @@ export const Context = ({ children }) => {
       const { data } = await axios.get(`${endpoint}/users`);
       setAllUsers(data.users);
       setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const getLeaderBoardRanking = async () => {
+    try {
+      // setLoading(true);
+      const { data } = await axios.get(`${endpoint}/users/leaderboard`);
+      setLeaderbord(data.rankings);
+      // setLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -245,6 +260,10 @@ export const Context = ({ children }) => {
     fetchTasksByPage(limit, page);
   }, []);
 
+  useEffect(() => {
+    getLeaderBoardRanking();
+  }, [tasks]);
+
   return (
     <ContextApp.Provider
       value={{
@@ -283,6 +302,7 @@ export const Context = ({ children }) => {
         //
         signedIn,
         allUsers,
+        leaderboard,
         //
         allTasks,
         tasks,
