@@ -97,6 +97,7 @@ export const Context = ({ children }) => {
       setLoading(true);
       const { data } = await axios.get(`${endpoint}/users/${userId}`);
       setSignedIn(data.user);
+      setIsAdmin(data.user.admin);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -302,6 +303,7 @@ export const Context = ({ children }) => {
         //
         signedIn,
         allUsers,
+        isAdmin,
         leaderboard,
         //
         allTasks,

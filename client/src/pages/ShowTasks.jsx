@@ -8,6 +8,7 @@ import Bell from "../components/Bell";
 import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 import UserModal from "../components/modals/UserModal";
+import Empty from "../components/Empty";
 
 import { useGlobalContext } from "../Context";
 import TaskNav from "../components/TaskNav";
@@ -15,8 +16,15 @@ import TaskNav from "../components/TaskNav";
 const ShowTasks = () => {
   const { id } = useParams();
 
-  const { currVid, allTasks, fetchTasks, getVidDetails, loading, currUser } =
-    useGlobalContext();
+  const {
+    currVid,
+    allTasks,
+    fetchTasks,
+    getVidDetails,
+    loading,
+    currUser,
+    isAdmin,
+  } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Task";
@@ -36,10 +44,15 @@ const ShowTasks = () => {
             currVid.ep
           })`}
         />
-        <TaskNav currVid={currVid} />
-        {filteredTasks.map((task, index) => {
-          return <TaskBox task={task} key={index} />;
-        })}
+        {!isAdmin ? "" : <TaskNav currVid={currVid} />}
+
+        {filteredTasks.length === 0 ? (
+          <Empty />
+        ) : (
+          filteredTasks.map((task, index) => {
+            return <TaskBox task={task} key={index} />;
+          })
+        )}
       </section>
       <UserModal currUser={currUser} />
       <LeaderboardNav />

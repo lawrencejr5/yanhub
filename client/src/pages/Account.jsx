@@ -7,6 +7,7 @@ import {
   FaSun,
   FaEdit,
 } from "react-icons/fa";
+import { format } from "date-fns";
 
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
@@ -51,7 +52,12 @@ const Account = () => {
     task.assignedTo.some((usr) => usr._id === signedIn._id)
   );
 
-  const newDob = !dob ? "" : dob.split("T")[0];
+  // Formatting date
+  let newDob;
+  const date = new Date(dob);
+  if (!isNaN(date)) {
+    newDob = format(date, "MMMM do");
+  }
 
   if (loading) return <Loading />;
   return (

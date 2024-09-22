@@ -1,6 +1,7 @@
 import React from "react";
 import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
 import axios from "axios";
+import { format } from "date-fns";
 
 import { useGlobalContext } from "../Context";
 
@@ -9,6 +10,7 @@ const TaskBox = ({ task, hideUsers }) => {
     allUsers,
     setCurrUser,
     setUserModal,
+    isAdmin,
     endpoint,
     token,
     setLoading,
@@ -55,10 +57,12 @@ const TaskBox = ({ task, hideUsers }) => {
     createdAt,
     assignedTo,
   } = task;
+
+  const dateTime = format(createdAt, "PPpp");
   return (
     <div className="task-box">
       <div className="header">
-        <small>{createdAt}</small>
+        <small>{dateTime}</small>
         <small
           id="status"
           className={
@@ -90,13 +94,17 @@ const TaskBox = ({ task, hideUsers }) => {
             );
           })}
         </div>
-        <button className="text-success">
-          {status !== "completed" ? (
-            <FaRegCheckCircle onClick={() => complete(id, type, vidId)} />
-          ) : (
-            <FaCheckCircle />
-          )}
-        </button>
+        {!isAdmin ? (
+          ""
+        ) : (
+          <button className="text-success">
+            {status !== "completed" ? (
+              <FaRegCheckCircle onClick={() => complete(id, type, vidId)} />
+            ) : (
+              <FaCheckCircle />
+            )}
+          </button>
+        )}
       </div>
     </div>
   );

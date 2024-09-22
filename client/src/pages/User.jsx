@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaPhone, FaBirthdayCake, FaBars } from "react-icons/fa";
 import { useParams } from "react-router-dom";
+import { format } from "date-fns";
 import axios from "axios";
 
 import Nav from "../components/Nav";
@@ -47,7 +48,11 @@ const User = () => {
     }
   };
 
-  const newDob = !dob ? "" : dob.split("T")[0];
+  let newDob;
+  const date = new Date(dob);
+  if (!isNaN(date)) {
+    newDob = format(date, "MMMM do");
+  }
 
   const filteredTasks = allTasks.filter((task) => {
     return task.assignedTo.some((usr) => usr._id === id);

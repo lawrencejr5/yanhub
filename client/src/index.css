@@ -155,7 +155,7 @@ main {
   display: flex;
   justify-content: center;
   transition: 5s;
-  z-index: 9999999999999999999;
+  z-index: 9;
 }
 .notification-container .notification {
   background-color: var(--secondary2);
@@ -212,7 +212,7 @@ main {
 }
 
 /* Bell Component Styling */
-.announcement {
+.theme-div {
   position: fixed;
   right: 0;
   bottom: 0;
@@ -257,6 +257,68 @@ main {
   height: 100vh;
   background-color: transparent;
   padding: 1rem;
+}
+
+/* Announcements */
+.announcement-layout {
+  width: 95%;
+  height: auto;
+  background-color: var(--secondary2);
+  color: var(--text1);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow2);
+  padding: 1rem;
+  margin: 1rem;
+}
+.announcement-layout .btn-holder {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 0.5rem 0.3rem 0;
+}
+.announcement-layout .btn-holder button {
+  margin: 0 0.3rem;
+  border: none;
+  outline: none;
+  border-radius: 3px;
+  padding: 0.2rem 0.4rem;
+  color: white;
+}
+.announcement-layout .btn-holder button#add {
+  background-color: var(--primary);
+}
+.announcement-layout .btn-holder button#more {
+  background-color: var(--blue);
+}
+
+/* Tasks Layout Componenet styling */
+.tasks-layout {
+  background-color: var(--secondary2);
+  color: var(--text1);
+  box-shadow: var(--box-shadow2);
+  width: 95%;
+  padding: 1rem;
+  margin: 1rem;
+  border-radius: 10px;
+  overflow-x: auto;
+}
+.tasks-layout table {
+  width: 100%;
+  text-align: left;
+}
+.tasks-layout table td {
+  padding: 1rem 1.5rem;
+}
+.tasks-layout .link-container {
+  width: 100%;
+}
+.tasks-layout .link-container .link {
+  display: block;
+  text-align: right;
+  color: blue;
+  text-decoration: none;
+  font-weight: 600;
 }
 
 /* Nav Component Styling */
@@ -1219,33 +1281,7 @@ main {
   margin: 1rem;
   border-left: 3px solid var(--primary);
 }
-.dashboard-main .body .tasks-layout {
-  background-color: var(--secondary2);
-  color: var(--text1);
-  box-shadow: var(--box-shadow2);
-  width: 100%;
-  padding: 1rem;
-  border-radius: 10px;
-  margin: 1rem;
-  overflow-x: auto;
-}
-.dashboard-main .body .tasks-layout table {
-  width: 100%;
-  text-align: left;
-}
-.dashboard-main .body .tasks-layout table td {
-  padding: 1rem 1.5rem;
-}
-.dashboard-main .body .tasks-layout .link-container {
-  width: 100%;
-}
-.dashboard-main .body .tasks-layout .link-container .link {
-  display: block;
-  text-align: right;
-  color: blue;
-  text-decoration: none;
-  font-weight: 600;
-}
+
 .dashboard-main .body .user-highlights {
   margin: 3rem 0rem;
   max-width: 800px;

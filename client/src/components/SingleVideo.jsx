@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { format } from "date-fns";
 
 import { useGlobalContext } from "../Context";
 
@@ -38,7 +39,7 @@ const SingleVideo = ({ vid }) => {
         </div>
         <div className="info">
           <span className="dur">{vid.duration}</span> {" . "}
-          <span className="date">{vid.createdAt}</span>
+          <span className="date">{format(vid.createdAt, "PPpp")}</span>
         </div>
       </div>
     </div>

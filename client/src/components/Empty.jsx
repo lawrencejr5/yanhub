@@ -4,7 +4,7 @@ const Empty = () => {
   return (
     <div className="center">
       <div className="empty">
-        <strong> E dey lonely for here....</strong>
+        <strong> Nothing dey for here....</strong>
         <img src="/imgs/not-found.png" width={"100%"} height={"auto"} />
       </div>
     </div>

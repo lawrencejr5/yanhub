@@ -6,6 +6,7 @@ import Bell from "../components/Bell";
 import MyTasksLayout from "../components/MyTasksLayout";
 import Loading from "../components/Loading";
 import Greet from "../components/Greet";
+import Announcements from "../components/Announcements";
 
 import { useGlobalContext } from "../Context";
 const Dashboard = () => {
@@ -78,7 +79,10 @@ const Dashboard = () => {
             )}
           </div>
         </div>
+        <Announcements />
         <MyTasksLayout />
+        <br />
+        <br />
         <br />
       </section>
       <LeaderboardNav />
