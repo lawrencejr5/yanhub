@@ -39,7 +39,7 @@ const register = async (req, res) => {
       { userId: user._id, username },
       process.env.JWT_SECRET,
       {
-        expiresIn: process.env.JWT_LIFETIME,
+        expiresIn: "30s",
       }
     );
 
