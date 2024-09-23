@@ -1,5 +1,5 @@
 import React from "react";
-import { FaRegCheckCircle, FaCheckCircle } from "react-icons/fa";
+import { FaRegCheckCircle, FaCheckCircle, FaEllipsisV } from "react-icons/fa";
 import axios from "axios";
 import { format } from "date-fns";
 
@@ -75,6 +75,7 @@ const TaskBox = ({ task, hideUsers }) => {
         >
           {status}
         </small>
+        {/* <FaEllipsisV /> */}
       </div>
       <strong>{`${show}(${ep})`}</strong>
       <div className="info">

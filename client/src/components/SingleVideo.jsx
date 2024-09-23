@@ -39,7 +39,7 @@ const SingleVideo = ({ vid }) => {
         </div>
         <div className="info">
           <span className="dur">{vid.duration}</span> {" . "}
-          <span className="date">{format(vid.createdAt, "PPpp")}</span>
+          <span className="date">{format(vid.createdAt, "PP")}</span>
         </div>
       </div>
     </div>
