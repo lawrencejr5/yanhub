@@ -101,7 +101,6 @@ const Tasks = () => {
       <LeaderboardNav />
       <Bell />
       <TasksOptions />
-      {/* <TaskComments /> */}
     </main>
   );
 };

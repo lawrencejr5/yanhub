@@ -15,6 +15,7 @@ import UserModal from "../components/modals/UserModal";
 import SortNav from "../components/SortNav";
 import Pagination from "../components/Pagination";
 import LoadingContainer from "../components/LoadingContainer";
+import TasksOptions from "../components/options/TasksOptions";
 
 const TasksPersonal = () => {
   const { allTasks, fetchTasks, searchPersonalTasks, loading, currUser } =
@@ -84,6 +85,7 @@ const TasksPersonal = () => {
       <LeaderboardNav />
       <UserModal currUser={currUser} />
       <Bell />
+      <TasksOptions />
     </main>
   );
 };

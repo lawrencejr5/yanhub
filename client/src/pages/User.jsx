@@ -13,6 +13,7 @@ import Loading from "../components/Loading";
 import UserModal from "../components/modals/UserModal";
 
 import { useGlobalContext } from "../Context";
+import TasksOptions from "../components/options/TasksOptions";
 
 const User = () => {
   const [user, setUser] = useState([]);
@@ -92,10 +93,14 @@ const User = () => {
             return <TaskBox task={task} hideUsers={true} key={index} />;
           })}
         </div>
+        <br />
+        <br />
+        <br />
       </section>
       <LeaderboardNav />
       <UserModal currUser={currUser} />
       <Bell />
+      <TasksOptions />
     </main>
   );
 };

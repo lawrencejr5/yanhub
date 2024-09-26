@@ -9,6 +9,7 @@ import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 import UserModal from "../components/modals/UserModal";
 import Empty from "../components/Empty";
+import TasksOptions from "../components/options/TasksOptions";
 
 import { useGlobalContext } from "../Context";
 import TaskNav from "../components/TaskNav";
@@ -57,6 +58,7 @@ const ShowTasks = () => {
       <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
+      <TasksOptions />
     </main>
   );
 };

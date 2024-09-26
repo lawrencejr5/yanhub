@@ -44,11 +44,9 @@ const CreateShowForm = ({ open, getShows }) => {
   };
   return (
     <div
-      className={
-        open
-          ? "create-video-container"
-          : "create-video-container create-video-container-hide"
-      }
+      className={`create-video-container ${
+        open ? "" : "create-video-container-hide"
+      }`}
     >
       <form action="" onSubmit={createShow}>
         <div className="header">

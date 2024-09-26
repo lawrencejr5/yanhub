@@ -16,6 +16,11 @@ export const Context = ({ children }) => {
 
   const [assignTask, setAssignTask] = useState("");
 
+  // Options
+  const [showOptions, setShowOptions] = useState(false);
+  const [videoOptions, setVideoOptions] = useState(false);
+  const [taskOptions, setTaskOptions] = useState(false);
+
   //Notification
   const [notification, setNotification] = useState({
     text: "",
@@ -284,6 +289,13 @@ export const Context = ({ children }) => {
         setEditPassModal,
         avatarModal,
         setAvatarModal,
+        //
+        showOptions,
+        setShowOptions,
+        videoOptions,
+        setVideoOptions,
+        taskOptions,
+        setTaskOptions,
         //
         loggedIn,
         setLoggedIn,

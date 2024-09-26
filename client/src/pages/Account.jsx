@@ -22,6 +22,7 @@ import Loading from "../components/Loading";
 
 import { useGlobalContext } from "../Context";
 import UserModal from "../components/modals/UserModal";
+import TasksOptions from "../components/options/TasksOptions";
 
 const Account = () => {
   const {
@@ -120,6 +121,8 @@ const Account = () => {
           })}
         </div>
         <br />
+        <br />
+        <br />
         <Notification notification={notification} />
       </section>
       <UserModal currUser={currUser} />
@@ -128,6 +131,7 @@ const Account = () => {
       <EditDetailsModal />
       <EditPasswordModal />
       <ChangeAvatarModal />
+      <TasksOptions />
     </main>
   );
 };

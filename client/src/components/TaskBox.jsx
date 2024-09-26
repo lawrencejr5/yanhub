@@ -1,5 +1,5 @@
 import React from "react";
-import { FaRegCheckCircle, FaCheckCircle, FaEllipsisV } from "react-icons/fa";
+import { FaRegCheckCircle, FaCheckCircle, FaEllipsisH } from "react-icons/fa";
 import axios from "axios";
 import { format } from "date-fns";
 
@@ -19,6 +19,7 @@ const TaskBox = ({ task, hideUsers }) => {
     fetchTasksByPage,
     limit,
     page,
+    setTaskOptions,
   } = useGlobalContext();
 
   const clickFunc = (user) => {
@@ -76,7 +77,6 @@ const TaskBox = ({ task, hideUsers }) => {
         >
           {status}
         </small>
-        {/* <FaEllipsisV /> */}
       </div>
       <strong>{`${show}(${ep})`}</strong>
       <div className="info">
@@ -99,13 +99,17 @@ const TaskBox = ({ task, hideUsers }) => {
         {!isAdmin ? (
           ""
         ) : (
-          <button className="text-success">
-            {status !== "completed" ? (
-              <FaRegCheckCircle onClick={() => complete(id, type, vidId)} />
-            ) : (
-              <FaCheckCircle />
-            )}
-          </button>
+          <div>
+            <button className="text-success">
+              {status !== "completed" ? (
+                <FaRegCheckCircle onClick={() => complete(id, type, vidId)} />
+              ) : (
+                <FaCheckCircle />
+              )}
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <FaEllipsisH onClick={() => setTaskOptions(true)} />
+          </div>
         )}
       </div>
     </div>

@@ -71,6 +71,9 @@ const Video = () => {
               return <SingleVideo vid={vid} curr={showId} key={index} />;
             })}
           </div>
+          <br />
+          <br />
+          <br />
         </div>
       </section>
       <LeaderboardNav />

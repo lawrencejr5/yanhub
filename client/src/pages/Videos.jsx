@@ -75,8 +75,8 @@ const Videos = () => {
       </section>
       <LeaderboardNav />
       <CreateShowForm open={openCreateVideoModal} getShows={getShows} />
-      <ShowsOptions />
       <Bell />
+      <ShowsOptions />
     </main>
   );
 };
