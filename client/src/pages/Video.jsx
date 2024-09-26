@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
 import { useParams } from "react-router-dom";
-import axios from "axios";
 
 import { useGlobalContext } from "../Context";
 
@@ -15,6 +14,7 @@ import CreateVideoForm from "../components/modals/CreateVideoForm";
 import Loading from "../components/Loading";
 import Notification from "../components/Notification";
 import SortNav from "../components/SortNav";
+import VidOptions from "../components/options/VidOptions";
 
 const Video = () => {
   const {
@@ -80,8 +80,9 @@ const Video = () => {
         showId={showId}
         currShow={currShow}
       />
-      <Bell />
       <VideoDetails open={videoDetailsModal} show={currShow.show} />
+      <VidOptions />
+      <Bell />
     </main>
   );
 };

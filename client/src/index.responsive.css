@@ -129,7 +129,6 @@
   .pagination-container {
     bottom: 0;
   }
-
   .pagination-container button {
     background-color: var(--secondary2);
     border: 2px solid var(--primary);
@@ -138,6 +137,11 @@
     border-radius: 5px;
     outline: 0;
     color: var(--text1);
+  }
+
+  /* Options */
+  .options .edit-sec input {
+    width: 100%;
   }
 }
 

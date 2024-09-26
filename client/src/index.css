@@ -77,6 +77,10 @@ main {
   background-color: var(--warning);
   color: #ffffff;
 }
+.secondary {
+  background-color: var(--secondary);
+  color: #ffffff;
+}
 .text-danger {
   color: var(--danger);
 }
@@ -319,6 +323,187 @@ main {
   color: blue;
   text-decoration: none;
   font-weight: 600;
+}
+
+/* Options */
+/* Shows Options component styling */
+.options-container {
+  transition: 0.5s;
+  width: 100%;
+  height: 100vh;
+  backdrop-filter: blur(0);
+  visibility: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+.options-container.blur {
+  backdrop-filter: blur(50px);
+  visibility: visible;
+}
+.options {
+  transition: 0.5s;
+  height: auto;
+  width: 500px;
+  max-width: 500px;
+  background-color: var(--secondary2);
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  box-shadow: var(--box-shadow);
+  transform: translateY(110%);
+  padding: 1rem;
+}
+.options.up {
+  transform: translateY(0%);
+}
+.options .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.options .edit-sec {
+  width: 100%;
+  box-shadow: var(--box-shadow);
+  height: auto;
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+.options .edit-sec input {
+  width: 350px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text1);
+}
+.options .edit-sec.dur input {
+  width: 50px;
+  padding: 0.3rem;
+  border: var(--border);
+  margin-right: 0.5rem;
+}
+.options .edit-sec.from-to {
+  display: block;
+}
+.options .edit-sec.from-to input {
+  width: 100%;
+  padding: 0.3rem;
+  margin: 0.5rem;
+}
+.options .edit-sec.from-to .btn-holder {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.options .edit-sec button {
+  color: #fff;
+  border: 0;
+  outline: 0;
+  font-weight: 600;
+  padding: 0.3rem;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.options .del-sec {
+  width: 100%;
+  box-shadow: var(--box-shadow);
+  height: auto;
+  padding: 1rem;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.options .del-sec small {
+  margin-right: 0.3rem;
+}
+.options .del-sec button {
+  /* background-color: var(--primary); */
+  color: #fff;
+  border: 0;
+  outline: 0;
+  font-weight: 600;
+  padding: 0.3rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.options .del-sec.hide {
+  display: none;
+}
+
+/* Tasks Comments Component */
+.tasks-comments-container {
+  height: 100vh;
+  width: 100%;
+  /* background-color: #000; */
+  backdrop-filter: blur(20px);
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.tasks-comments-container .tasks-comments {
+  width: 500px;
+  max-width: 500px;
+  background-color: var(--secondary2);
+  /* background-color: #000; */
+  height: 85vh;
+  box-shadow: var(--box-shadow2);
+  padding: 1rem;
+  border-radius: 10px;
+}
+.tasks-comments .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+.tasks-comments .chats {
+  margin: 1rem 0;
+}
+.tasks-comments .chats .chat {
+  /* background-color: rgb(249, 203, 203); */
+  background-color: #f4eaea;
+  margin: 0.5rem 0.5rem 1rem;
+  /* color: #fff; */
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  padding: 0.5rem;
+}
+.tasks-comments .chats .chat small {
+  font-size: 10px;
+  display: table;
+  margin-bottom: 0.5rem;
+}
+.tasks-comments .chats .chat p {
+  font-weight: 600;
+}
+
+.tasks-comments .footer {
+  position: fixed;
+  bottom: 1rem;
+}
+.tasks-comments .footer .inp-holder {
+  background-color: var(--secondary2);
+  width: 400px;
+  max-width: 300px;
+  padding: 0.5rem;
+  border-radius: 3px;
+  box-shadow: var(--box-shadow2);
 }
 
 /* Nav Component Styling */

@@ -12,6 +12,7 @@ import CreateShowForm from "../components/modals/CreateShowForm";
 import Loading from "../components/Loading";
 import Notification from "../components/Notification";
 import Empty from "../components/Empty";
+import ShowsOptions from "../components/options/ShowsOptions";
 
 const Videos = () => {
   useEffect(() => {
@@ -62,12 +63,7 @@ const Videos = () => {
             <h2>Shows</h2>
           </div>
           {!shows.length ? (
-            <>
-              <br />
-              <h1 className="text-danger">
-                Opps! No shows have been created yet...
-              </h1>
-            </>
+            <Empty />
           ) : (
             <div className="videos-container">
               {shows.map((shws, index) => {
@@ -79,6 +75,7 @@ const Videos = () => {
       </section>
       <LeaderboardNav />
       <CreateShowForm open={openCreateVideoModal} getShows={getShows} />
+      <ShowsOptions />
       <Bell />
     </main>
   );

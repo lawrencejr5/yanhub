@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEllipsisV } from "react-icons/fa";
 
 import { useGlobalContext } from "../Context";
 
@@ -17,8 +18,10 @@ const SingleShow = ({ shws }) => {
         <img src={`/imgs/icons/${bgImg}`} alt="" />
       </div>
       <div className="vid-details">
-        <strong>{`${show}`}</strong>
-        <br />
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <strong>{`${show}`}</strong>
+          <FaEllipsisV />
+        </div>
         <small>{rowCount} Videos</small>
       </div>
     </div>

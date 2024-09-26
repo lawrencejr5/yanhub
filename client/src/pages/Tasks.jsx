@@ -9,11 +9,12 @@ import Bell from "../components/Bell";
 import Greet from "../components/Greet";
 import UserModal from "../components/modals/UserModal";
 import SearchBox from "../components/SearchBox";
-import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 import SortNav from "../components/SortNav";
 import Pagination from "../components/Pagination";
 import LoadingContainer from "../components/LoadingContainer";
+import TasksOptions from "../components/options/TasksOptions";
+import TaskComments from "../components/TaskComments";
 
 const Tasks = () => {
   const {
@@ -99,6 +100,8 @@ const Tasks = () => {
       <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
+      <TasksOptions />
+      {/* <TaskComments /> */}
     </main>
   );
 };
