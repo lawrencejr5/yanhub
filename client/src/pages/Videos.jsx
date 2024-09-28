@@ -12,6 +12,7 @@ import Loading from "../components/Loading";
 import Notification from "../components/Notification";
 import Empty from "../components/Empty";
 import ShowsOptions from "../components/options/ShowsOptions";
+import LoadingContainer from "../components/LoadingContainer";
 
 const Videos = () => {
   useEffect(() => {
@@ -26,26 +27,31 @@ const Videos = () => {
     notification,
     openCreateVideoModal,
     setOpenCreateVideoModal,
+    isAdmin,
   } = useGlobalContext();
 
-  if (loading) return <Loading />;
   return (
     <main className="videos-main grid-body">
       <Nav />
       <section className="body">
         <Notification notification={notification} />
         <Greet />
-        <div className="createVideoBtn">
-          <button onClick={() => setOpenCreateVideoModal(true)}>
-            New show &nbsp;
-            <FaPlusCircle />
-          </button>
-        </div>
+        {isAdmin && (
+          <div className="createVideoBtn">
+            <button onClick={() => setOpenCreateVideoModal(true)}>
+              New show &nbsp;
+              <FaPlusCircle />
+            </button>
+          </div>
+        )}
+
         <div className="videos">
           <div className="header">
             <h2>Shows</h2>
           </div>
-          {!allShows.length ? (
+          {loading ? (
+            <LoadingContainer />
+          ) : !allShows.length ? (
             <Empty />
           ) : (
             <div className="videos-container">

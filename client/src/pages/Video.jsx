@@ -9,12 +9,13 @@ import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
 import Back from "../components/Back";
 import SingleVideo from "../components/SingleVideo";
-import VideoDetails from "../components/modals/VideoDetails";
 import CreateVideoForm from "../components/modals/CreateVideoForm";
 import Loading from "../components/Loading";
 import Notification from "../components/Notification";
 import SortNav from "../components/SortNav";
 import VidOptions from "../components/options/VidOptions";
+import Empty from "../components/Empty";
+import LoadingContainer from "../components/LoadingContainer";
 
 const Video = () => {
   const {
@@ -26,6 +27,7 @@ const Video = () => {
     setOpenCreateVideoModal,
     getShowById,
     currShow,
+    isAdmin,
   } = useGlobalContext();
 
   const { id: showId } = useParams();
@@ -42,19 +44,21 @@ const Video = () => {
     getVideos(showId, sortVal);
   }, [sortVal]);
 
-  if (loading) return <Loading />;
   return (
     <main className="video-main grid-body">
       <Nav />
       <section className="body">
         <Back text={`${currShow.show} videos`} />
         <Notification notification={notification} />
-        <div className="createVideoBtn">
-          <button onClick={() => setOpenCreateVideoModal(true)}>
-            New Video &nbsp;
-            <FaPlusCircle />
-          </button>
-        </div>
+        {isAdmin && (
+          <div className="createVideoBtn">
+            <button onClick={() => setOpenCreateVideoModal(true)}>
+              New Video &nbsp;
+              <FaPlusCircle />
+            </button>
+          </div>
+        )}
+
         <div className="videos">
           <div className="header">
             <div
@@ -66,9 +70,18 @@ const Video = () => {
           </div>
           <div className="videos-container">
             <SortNav sortVal={sortVal} setSortVal={setSortVal} />
-            {videos.map((vid, index) => {
-              return <SingleVideo vid={vid} curr={showId} key={index} />;
-            })}
+            {loading ? (
+              <LoadingContainer />
+            ) : !videos.length ? (
+              <>
+                <br />
+                <Empty />
+              </>
+            ) : (
+              videos.map((vid, index) => {
+                return <SingleVideo vid={vid} curr={showId} key={index} />;
+              })
+            )}
           </div>
           <br />
           <br />

@@ -10,8 +10,15 @@ import axios from "axios";
 import { useGlobalContext } from "../../Context";
 
 const ShowsOptions = () => {
-  const { showOptions, setShowOptions, currShow, token, endpoint, fetchShows } =
-    useGlobalContext();
+  const {
+    showOptions,
+    setShowOptions,
+    currShow,
+    token,
+    endpoint,
+    fetchShows,
+    setNotification,
+  } = useGlobalContext();
 
   const [del, setDel] = useState(false);
 
@@ -31,13 +38,14 @@ const ShowsOptions = () => {
         { show },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log(data.msg);
-      fetchShows();
       setShowOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
+      fetchShows();
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };
@@ -47,10 +55,14 @@ const ShowsOptions = () => {
       const { data } = await axios.delete(`${endpoint}/shows/${showId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      console.log(data.msg);
-      fetchShows();
       setShowOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
+      fetchShows();
     } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(err);
     }
   };

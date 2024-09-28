@@ -7,7 +7,7 @@ import { useGlobalContext } from "../Context";
 const SingleShow = ({ shws }) => {
   const { _id: id, show, bgImg, rowCount } = shws;
 
-  const { setShowOptions, getShowById } = useGlobalContext();
+  const { setShowOptions, getShowById, isAdmin } = useGlobalContext();
 
   const navigate = useNavigate();
   const setCurr = () => {
@@ -27,7 +27,7 @@ const SingleShow = ({ shws }) => {
       <div className="vid-details">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
           <strong onClick={() => navigate(`/videos/${id}`)}>{`${show}`}</strong>
-          <FaEllipsisV onClick={setCurr} />
+          {isAdmin && <FaEllipsisV onClick={setCurr} />}
         </div>
         <small>{rowCount} Videos</small>
       </div>

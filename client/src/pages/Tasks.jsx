@@ -14,19 +14,23 @@ import SortNav from "../components/SortNav";
 import Pagination from "../components/Pagination";
 import LoadingContainer from "../components/LoadingContainer";
 import TasksOptions from "../components/options/TasksOptions";
-import TaskComments from "../components/TaskComments";
+// import TaskComments from "../components/TaskComments";
+import Notification from "../components/Notification";
+import Empty from "../components/Empty";
 
 const Tasks = () => {
   const {
     fetchTasks,
     fetchTasksByPage,
     tasks,
+    allTasks,
     searchTasks,
     fetchUsers,
     loading,
     limit,
     page,
     currUser,
+    notification,
   } = useGlobalContext();
 
   const [query, setQuery] = useState("");
@@ -53,12 +57,12 @@ const Tasks = () => {
 
   const navigate = useNavigate();
 
-  // if (loading) return <Loading />;
   return (
     <main className="grid-body tasks-main">
       <Nav />
       <section className="body">
         <Greet />
+        <Notification notification={notification} />
         <div className="createTaskBtn"></div>
         <div className="header">
           <h2>Tasks</h2>
@@ -85,13 +89,23 @@ const Tasks = () => {
               <strong>
                 All {sortVal} tasks ({tasks.length})
               </strong>
-            ) : (
+            ) : allTasks.length > limit ? (
               <strong>Page {page}</strong>
+            ) : (
+              ""
             )}
 
-            {tasks.map((task, index) => {
-              return <TaskBox task={task} key={index} />;
-            })}
+            {!tasks.length ? (
+              <>
+                <br />
+                <br />
+                <Empty />
+              </>
+            ) : (
+              tasks.map((task, index) => {
+                return <TaskBox task={task} key={index} />;
+              })
+            )}
           </div>
         )}
 

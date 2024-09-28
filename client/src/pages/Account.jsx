@@ -23,6 +23,7 @@ import Loading from "../components/Loading";
 import { useGlobalContext } from "../Context";
 import UserModal from "../components/modals/UserModal";
 import TasksOptions from "../components/options/TasksOptions";
+import Empty from "../components/Empty";
 
 const Account = () => {
   const {
@@ -65,6 +66,7 @@ const Account = () => {
     <main className="grid-body account-main">
       <Nav />
       <section className="body">
+        <Notification notification={notification} />
         <Greet />
         <div className="banner">
           <img src={`/imgs/user-icons/${pic}`} alt="" />
@@ -116,14 +118,20 @@ const Account = () => {
         </div>
         <div className="tasks-sec">
           <h3>Your tasks...</h3>
-          {filteredTasks.map((task, index) => {
-            return <TaskBox task={task} key={index} hideUsers={true} />;
-          })}
+          {!filteredTasks.length ? (
+            <>
+              <br />
+              <Empty />
+            </>
+          ) : (
+            filteredTasks.map((task, index) => {
+              return <TaskBox task={task} key={index} hideUsers={true} />;
+            })
+          )}
         </div>
         <br />
         <br />
         <br />
-        <Notification notification={notification} />
       </section>
       <UserModal currUser={currUser} />
       <LeaderboardNav />

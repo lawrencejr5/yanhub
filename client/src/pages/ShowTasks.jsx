@@ -10,9 +10,11 @@ import TaskBox from "../components/TaskBox";
 import UserModal from "../components/modals/UserModal";
 import Empty from "../components/Empty";
 import TasksOptions from "../components/options/TasksOptions";
+import Notification from "../components/Notification";
+import LoadingContainer from "../components/LoadingContainer";
+import TaskNav from "../components/TaskNav";
 
 import { useGlobalContext } from "../Context";
-import TaskNav from "../components/TaskNav";
 
 const ShowTasks = () => {
   const { id } = useParams();
@@ -25,6 +27,7 @@ const ShowTasks = () => {
     loading,
     currUser,
     isAdmin,
+    notification,
   } = useGlobalContext();
 
   useEffect(() => {
@@ -35,11 +38,11 @@ const ShowTasks = () => {
 
   const filteredTasks = allTasks.filter((task) => task.video._id === id);
 
-  if (loading) return <Loading />;
   return (
     <main className="grid-body task-main">
       <Nav />
       <section className="body">
+        <Notification notification={notification} />
         <Back
           text={`Tasks under ${currVid.length === 0 ? "" : currVid.show.show}(${
             currVid.ep
@@ -47,8 +50,14 @@ const ShowTasks = () => {
         />
         {!isAdmin ? "" : <TaskNav currVid={currVid} />}
 
-        {filteredTasks.length === 0 ? (
-          <Empty />
+        {loading ? (
+          <LoadingContainer />
+        ) : filteredTasks.length === 0 ? (
+          <>
+            <br />
+            <br />
+            <Empty />
+          </>
         ) : (
           filteredTasks.map((task, index) => {
             return <TaskBox task={task} key={index} />;

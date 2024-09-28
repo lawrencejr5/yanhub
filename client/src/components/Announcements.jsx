@@ -3,14 +3,13 @@ import React from "react";
 const Announcements = () => {
   return (
     <div className="announcement-layout">
-      <h3>Latest Announcement</h3>
+      <h3>From the developer</h3>
+      <br />
       <div className="annunc">
-        <small>10th Sep, 2024</small>
-        <br />
-        <p>We'll be having a shoot tommorow</p>
-        <div className="btn-holder">
-          <button id="more">more...</button>
-        </div>
+        <p>
+          Expect an update v1.1 which will focus on fixing bugs and issues with
+          the app
+        </p>
       </div>
     </div>
   );

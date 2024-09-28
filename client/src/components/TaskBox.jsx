@@ -20,6 +20,7 @@ const TaskBox = ({ task, hideUsers }) => {
     limit,
     page,
     setTaskOptions,
+    setNotification,
   } = useGlobalContext();
 
   const clickFunc = (user) => {
@@ -43,11 +44,14 @@ const TaskBox = ({ task, hideUsers }) => {
       );
       await fetchTasks();
       await fetchTasksByPage(limit, page);
+      setNotification({ text: data.msg, theme: "success", status: true });
       setLoading(false);
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setLoading(false);
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };

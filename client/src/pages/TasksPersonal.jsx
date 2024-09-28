@@ -16,10 +16,17 @@ import SortNav from "../components/SortNav";
 import Pagination from "../components/Pagination";
 import LoadingContainer from "../components/LoadingContainer";
 import TasksOptions from "../components/options/TasksOptions";
+import Notification from "../components/Notification";
 
 const TasksPersonal = () => {
-  const { allTasks, fetchTasks, searchPersonalTasks, loading, currUser } =
-    useGlobalContext();
+  const {
+    allTasks,
+    fetchTasks,
+    searchPersonalTasks,
+    loading,
+    currUser,
+    notification,
+  } = useGlobalContext();
 
   const [query, setQuery] = useState("");
   const [sortVal, setSortVal] = useState("");
@@ -46,6 +53,7 @@ const TasksPersonal = () => {
       <Nav />
       <section className="body">
         <Greet />
+        <Notification notification={notification} />
         <div className="header">
           <h2>Tasks</h2>
           <SearchBox

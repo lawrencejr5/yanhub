@@ -159,7 +159,6 @@ main {
   display: flex;
   justify-content: center;
   transition: 5s;
-  z-index: 9;
 }
 .notification-container .notification {
   background-color: var(--secondary2);
@@ -176,6 +175,7 @@ main {
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
   transition: 0.5s;
+  z-index: 9;
 }
 .notification-container .down {
   transform: translateY(0);

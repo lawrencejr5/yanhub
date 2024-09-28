@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { useGlobalContext } from "../Context";
 
 const SingleVideo = ({ vid }) => {
-  const { getVidDetails, setVideoOptions } = useGlobalContext();
+  const { getVidDetails, setVideoOptions, isAdmin } = useGlobalContext();
 
   const navigate = useNavigate();
 
@@ -49,7 +49,7 @@ const SingleVideo = ({ vid }) => {
               {vid.status}
             </span>
             &nbsp;&nbsp;
-            <FaEllipsisV onClick={openOptions} />
+            {isAdmin && <FaEllipsisV onClick={openOptions} />}
           </div>
         </div>
         <div className="info">

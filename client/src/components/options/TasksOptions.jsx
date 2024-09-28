@@ -21,6 +21,7 @@ const TasksOptions = () => {
     currTask,
     endpoint,
     token,
+    setNotification,
   } = useGlobalContext();
 
   const [started, setStarted] = useState(currTask.started);
@@ -43,11 +44,13 @@ const TasksOptions = () => {
       setTaskOptions(false);
       fetchTasks();
       fetchTasksByPage(limit, page);
+      setNotification({ text: data.msg, theme: "success", status: true });
       console.log(data);
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };
@@ -63,6 +66,7 @@ const TasksOptions = () => {
         }
       );
       setTaskOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
       fetchTasks();
       fetchTasksByPage(limit, page);
       console.log(data);
@@ -70,6 +74,7 @@ const TasksOptions = () => {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };
@@ -77,18 +82,20 @@ const TasksOptions = () => {
   const updateStat = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(
+      const { data } = await axios.patch(
         `${endpoint}/tasks/${currTask._id}`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setTaskOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
       fetchTasks();
       fetchTasksByPage(limit, page);
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };

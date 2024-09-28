@@ -11,6 +11,7 @@ import Back from "../components/Back";
 import TaskBox from "../components/TaskBox";
 import Loading from "../components/Loading";
 import UserModal from "../components/modals/UserModal";
+import Notification from "../components/Notification";
 
 import { useGlobalContext } from "../Context";
 import TasksOptions from "../components/options/TasksOptions";
@@ -22,6 +23,7 @@ const User = () => {
   const {
     loading,
     setLoading,
+    notification,
     endpoint,
     fetchTasks,
     allTasks,
@@ -64,6 +66,7 @@ const User = () => {
     <main className="grid-body account-main">
       <Nav />
       <section className="body">
+        <Notification notification={notification} />
         <Back text={`@${username}`} />
         <div className="banner">
           <img src={`/imgs/user-icons/${pic}`} alt="" />

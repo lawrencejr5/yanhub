@@ -10,8 +10,15 @@ import axios from "axios";
 import { useGlobalContext } from "../../Context";
 
 const VidOptions = () => {
-  const { videoOptions, setVideoOptions, getVideos, currVid, endpoint, token } =
-    useGlobalContext();
+  const {
+    videoOptions,
+    setVideoOptions,
+    getVideos,
+    currVid,
+    endpoint,
+    token,
+    setNotification,
+  } = useGlobalContext();
 
   const [del, setDel] = useState(false);
 
@@ -28,40 +35,43 @@ const VidOptions = () => {
     setStatus(currVid.status);
     setHrs(hours);
     setMins(minutes);
-    // console.log(currVid);
   }, [currVid]);
 
   const updateEp = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(
+      const { data } = await axios.patch(
         `${endpoint}/videos/${currVid._id}`,
         { ep },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setVideoOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
       getVideos(currVid.show._id);
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };
   const updateStat = async (e) => {
     e.preventDefault();
     try {
-      await axios.patch(
+      const { data } = await axios.patch(
         `${endpoint}/videos/${currVid._id}`,
         { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setVideoOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
       getVideos(currVid.show._id);
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };
@@ -69,17 +79,19 @@ const VidOptions = () => {
     e.preventDefault();
     try {
       const duration = `${hrs}:${mins}`;
-      await axios.patch(
+      const { data } = await axios.patch(
         `${endpoint}/videos/${currVid._id}`,
         { duration },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      setNotification({ text: data.msg, theme: "success", status: true });
       setVideoOptions(false);
       getVideos(currVid.show._id);
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };
@@ -89,12 +101,14 @@ const VidOptions = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setVideoOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
       getVideos(currVid.show._id);
       console.log(data);
     } catch (err) {
       const {
         response: { data },
       } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
       console.log(data);
     }
   };
