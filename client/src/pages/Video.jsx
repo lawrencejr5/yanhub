@@ -22,7 +22,6 @@ const Video = () => {
     loading,
     getVideos,
     videos,
-    videoDetailsModal,
     openCreateVideoModal,
     setOpenCreateVideoModal,
     getShowById,
@@ -83,7 +82,6 @@ const Video = () => {
         showId={showId}
         currShow={currShow}
       />
-      <VideoDetails open={videoDetailsModal} show={currShow.show} />
       <VidOptions />
       <Bell />
     </main>

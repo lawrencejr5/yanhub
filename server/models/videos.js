@@ -13,7 +13,7 @@ const videoSchema = new mongoose.Schema(
     },
     duration: {
       type: String,
-      default: "--_--",
+      default: "00:00",
     },
     status: {
       type: String,

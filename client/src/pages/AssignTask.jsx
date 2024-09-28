@@ -39,7 +39,7 @@ const AssignTask = () => {
       <Nav />
       <section className="body">
         <Back text={`Assign tasks to ${currVid.ep}`} />
-        <TaskNav currVid={currVid} />
+        {/* <TaskNav currVid={currVid} /> */}
         <Notification notification={notification} />
         <div className="task-container">
           {taskTypes.map((task, index) => {

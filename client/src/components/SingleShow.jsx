@@ -7,22 +7,27 @@ import { useGlobalContext } from "../Context";
 const SingleShow = ({ shws }) => {
   const { _id: id, show, bgImg, rowCount } = shws;
 
-  const { setShowOptions } = useGlobalContext();
+  const { setShowOptions, getShowById } = useGlobalContext();
 
   const navigate = useNavigate();
-  const setVid = async () => {
-    navigate(`/videos/${id}`);
+  const setCurr = () => {
+    getShowById(id);
+    setShowOptions(true);
   };
 
   return (
     <div className="video">
       <div className="vid-icon">
-        <img src={`/imgs/icons/${bgImg}`} alt="" onClick={setVid} />
+        <img
+          src={`/imgs/icons/${bgImg}`}
+          alt=""
+          onClick={() => navigate(`/videos/${id}`)}
+        />
       </div>
       <div className="vid-details">
         <div style={{ display: "flex", justifyContent: "space-between" }}>
-          <strong onClick={setVid}>{`${show}`}</strong>
-          <FaEllipsisV onClick={() => setShowOptions(true)} />
+          <strong onClick={() => navigate(`/videos/${id}`)}>{`${show}`}</strong>
+          <FaEllipsisV onClick={setCurr} />
         </div>
         <small>{rowCount} Videos</small>
       </div>

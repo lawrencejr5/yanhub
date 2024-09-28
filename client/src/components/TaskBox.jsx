@@ -4,7 +4,6 @@ import axios from "axios";
 import { format } from "date-fns";
 
 import { useGlobalContext } from "../Context";
-import { Link } from "react-router-dom";
 
 const TaskBox = ({ task, hideUsers }) => {
   const {
@@ -16,6 +15,7 @@ const TaskBox = ({ task, hideUsers }) => {
     token,
     setLoading,
     fetchTasks,
+    fetchTask,
     fetchTasksByPage,
     limit,
     page,
@@ -26,6 +26,11 @@ const TaskBox = ({ task, hideUsers }) => {
     setUserModal(true);
     const usr = allUsers.find((u) => u._id === user);
     setCurrUser(usr);
+  };
+
+  const openTaskOptions = () => {
+    setTaskOptions(true);
+    fetchTask(task._id);
   };
 
   const complete = async (id, type, video) => {
@@ -60,6 +65,9 @@ const TaskBox = ({ task, hideUsers }) => {
     assignedTo,
   } = task;
 
+  const hrs = duration.split(":")[0];
+  const mins = duration.split(":")[1];
+
   const dateTime = format(createdAt, "PPpp");
   return (
     <div className="task-box">
@@ -80,7 +88,7 @@ const TaskBox = ({ task, hideUsers }) => {
       </div>
       <strong>{`${show}(${ep})`}</strong>
       <div className="info">
-        <span>{duration}</span> . <span>{type}</span>
+        <span>{`${hrs}h ${mins}m`}</span> . <span>{type}</span>
       </div>
       <div className="bottom">
         <div className="users">
@@ -108,7 +116,7 @@ const TaskBox = ({ task, hideUsers }) => {
               )}
             </button>
             &nbsp;&nbsp;&nbsp;
-            <FaEllipsisH onClick={() => setTaskOptions(true)} />
+            <FaEllipsisH onClick={openTaskOptions} />
           </div>
         )}
       </div>

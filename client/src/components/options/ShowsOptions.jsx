@@ -1,17 +1,59 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaChevronDown,
   FaTrash,
   FaRegCheckCircle,
   FaTimes,
 } from "react-icons/fa";
+import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
 const ShowsOptions = () => {
-  const { showOptions, setShowOptions } = useGlobalContext();
+  const { showOptions, setShowOptions, currShow, token, endpoint, fetchShows } =
+    useGlobalContext();
 
   const [del, setDel] = useState(false);
+
+  const [show, setShow] = useState(currShow.show);
+  const [showId, setShowId] = useState(currShow._id);
+
+  useEffect(() => {
+    setShow(currShow.show);
+    setShowId(currShow._id);
+  }, [currShow]);
+
+  const updateShow = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.patch(
+        `${endpoint}/shows/${showId}`,
+        { show },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log(data.msg);
+      fetchShows();
+      setShowOptions(false);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+
+  const delShow = async () => {
+    try {
+      const { data } = await axios.delete(`${endpoint}/shows/${showId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      console.log(data.msg);
+      fetchShows();
+      setShowOptions(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div className={`options-container ${showOptions ? "blur" : ""}`}>
@@ -20,9 +62,13 @@ const ShowsOptions = () => {
           <h3>Options</h3>
           <FaChevronDown onClick={() => setShowOptions(false)} />
         </div>
-        <form action="" className="edit-sec">
+        <form action="" className="edit-sec" onSubmit={updateShow}>
           <div className="inp-holder">
-            <input type="text" />
+            <input
+              type="text"
+              value={show}
+              onChange={(e) => setShow(e.target.value)}
+            />
           </div>
           <button className="success">
             update&nbsp;
@@ -46,7 +92,7 @@ const ShowsOptions = () => {
             <FaTimes />
           </button>
           &nbsp;
-          <button className="danger">
+          <button className="danger" onClick={delShow}>
             Yes
             <FaTrash />
           </button>

@@ -15,6 +15,13 @@ const SingleVideo = ({ vid }) => {
     getVidDetails(id);
   };
 
+  const openOptions = () => {
+    setVideoOptions(true);
+    getVidDetails(vid._id);
+  };
+
+  const hrs = vid.duration.split(":")[0];
+  const mins = vid.duration.split(":")[1];
   return (
     <div className="video">
       <div
@@ -42,11 +49,11 @@ const SingleVideo = ({ vid }) => {
               {vid.status}
             </span>
             &nbsp;&nbsp;
-            <FaEllipsisV onClick={() => setVideoOptions(true)} />
+            <FaEllipsisV onClick={openOptions} />
           </div>
         </div>
         <div className="info">
-          <span className="dur">{vid.duration}</span> {" . "}
+          <span className="dur">{`${hrs}h ${mins}m`}</span> {" . "}
           <span className="date">{format(vid.createdAt, "PP")}</span>
         </div>
       </div>

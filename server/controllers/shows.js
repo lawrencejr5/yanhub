@@ -1,5 +1,6 @@
 const Show = require("../models/shows");
 const Video = require("../models/videos");
+const Task = require("../models/tasks");
 
 const getAllShows = async (req, res) => {
   try {
@@ -95,6 +96,20 @@ const delShow = async (req, res) => {
     const { id } = req.params;
 
     const deletedShow = await Show.findByIdAndDelete(id);
+    // const tasks = await Task.find().populate("video", "_id");
+    if (deletedShow) {
+      await Video.deleteMany({ show: id });
+      await Task.find({})
+        .populate({
+          path: "video",
+          select: "ep duration",
+          populate: {
+            path: "show",
+            select: "show",
+          },
+        })
+        .deleteMany({ show: id });
+    }
     if (!deletedShow)
       return res.status(400).json({ msg: `No show with id: ${id}` });
 

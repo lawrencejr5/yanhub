@@ -1,17 +1,81 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   FaChevronDown,
   FaTrash,
   FaRegCheckCircle,
   FaTimes,
 } from "react-icons/fa";
+import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
 const VidOptions = () => {
-  const { videoOptions, setVideoOptions } = useGlobalContext();
+  const { videoOptions, setVideoOptions, getVideos, currVid, endpoint, token } =
+    useGlobalContext();
 
   const [del, setDel] = useState(false);
+
+  const [ep, setEp] = useState(currVid.ep);
+  const [hrs, setHrs] = useState(0);
+  const [mins, setMins] = useState(0);
+
+  useEffect(() => {
+    setEp(currVid.ep);
+    setHrs(0);
+    setMins(0);
+    // console.log(currVid);
+  }, [currVid]);
+
+  const updateEp = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.patch(
+        `${endpoint}/videos/${currVid._id}`,
+        { ep },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setVideoOptions(false);
+      getVideos(currVid.show._id);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+  const updateDur = async (e) => {
+    e.preventDefault();
+    try {
+      const duration = `${hrs}:${mins}`;
+      await axios.patch(
+        `${endpoint}/videos/${currVid._id}`,
+        { duration },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setVideoOptions(false);
+      getVideos(currVid.show._id);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+  const delVideo = async (e) => {
+    try {
+      const { data } = await axios.delete(`${endpoint}/videos/${currVid._id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setVideoOptions(false);
+      getVideos(currVid.show._id);
+      console.log(data);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
 
   return (
     <div className={`options-container ${videoOptions ? "blur" : ""}`}>
@@ -20,22 +84,34 @@ const VidOptions = () => {
           <h3>Options</h3>
           <FaChevronDown onClick={() => setVideoOptions(false)} />
         </div>
-        <form action="" className="edit-sec">
+        <form action="" className="edit-sec" onSubmit={updateEp}>
           <div className="inp-holder">
-            <input type="text" />
+            <input
+              type="text"
+              value={ep}
+              onChange={(e) => setEp(e.target.value)}
+            />
           </div>
           <button className="success">
             update&nbsp;
             <FaRegCheckCircle />
           </button>
         </form>
-        <form action="" className="edit-sec dur">
+        <form action="" className="edit-sec dur" onSubmit={updateDur}>
           <div className="inp-holder">
-            <input type="number" />
+            <input
+              type="number"
+              value={hrs}
+              onChange={(e) => setHrs(e.target.value)}
+            />
             <label htmlFor="">hr(s)</label>
           </div>
           <div className="inp-holder">
-            <input type="number" />
+            <input
+              type="number"
+              value={mins}
+              onChange={(e) => setMins(e.target.value)}
+            />
             <label htmlFor="">min(s)</label>
           </div>
           <button className="success">
@@ -60,7 +136,7 @@ const VidOptions = () => {
             <FaTimes />
           </button>
           &nbsp;
-          <button className="danger">
+          <button className="danger" onClick={delVideo}>
             Yes
             <FaTrash />
           </button>

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { FaPlusCircle } from "react-icons/fa";
-import axios from "axios";
 import { useGlobalContext } from "../Context";
 
 import Nav from "../components/Nav";
@@ -17,33 +16,17 @@ import ShowsOptions from "../components/options/ShowsOptions";
 const Videos = () => {
   useEffect(() => {
     document.title = "Yanhub - Shows";
-    getShows();
+    fetchShows();
   }, []);
 
   const {
-    endpoint,
-    token,
+    allShows,
+    fetchShows,
     loading,
-    setLoading,
     notification,
     openCreateVideoModal,
     setOpenCreateVideoModal,
   } = useGlobalContext();
-
-  const [shows, setShows] = useState([]);
-
-  const getShows = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${endpoint}/shows`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      setShows(data.shows);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   if (loading) return <Loading />;
   return (
@@ -62,11 +45,11 @@ const Videos = () => {
           <div className="header">
             <h2>Shows</h2>
           </div>
-          {!shows.length ? (
+          {!allShows.length ? (
             <Empty />
           ) : (
             <div className="videos-container">
-              {shows.map((shws, index) => {
+              {allShows.map((shws, index) => {
                 return <SingleShow key={index} shws={shws} />;
               })}
             </div>
@@ -74,7 +57,7 @@ const Videos = () => {
         </div>
       </section>
       <LeaderboardNav />
-      <CreateShowForm open={openCreateVideoModal} getShows={getShows} />
+      <CreateShowForm open={openCreateVideoModal} getShows={fetchShows} />
       <Bell />
       <ShowsOptions />
     </main>

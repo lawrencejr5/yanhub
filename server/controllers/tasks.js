@@ -68,7 +68,7 @@ const getTask = async (req, res) => {
       params: { id },
     } = req;
 
-    const task = await Task.find({ assignedTo: [id] })
+    const task = await Task.findById(id)
       .populate({
         path: "video",
         select: "ep duration",
@@ -128,10 +128,10 @@ const updateTask = async (req, res) => {
     const {
       params: { id },
       query: { complete },
-      body: { type, video, assignedTo, status: stat },
+      body: { type, video, assignedTo, started, ended, status: stat },
     } = req;
 
-    if (!type && !video && !assignedTo && !stat)
+    if (!type && !video && !assignedTo && !stat && !started && !ended)
       return res.status(500).json({ msg: "Wetin you come dey update??" });
 
     const updatedTask = await Task.findByIdAndUpdate(

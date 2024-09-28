@@ -1,4 +1,5 @@
 const Video = require("../models/videos");
+const Task = require("../models/tasks");
 
 const getAllVideos = async (req, res) => {
   try {
@@ -84,6 +85,9 @@ const delVideo = async (req, res) => {
     const { id } = req.params;
 
     const deletedVideo = await Video.findByIdAndDelete(id);
+    if (deletedVideo) {
+      await Task.deleteMany({ video: id });
+    }
     if (!deletedVideo)
       return res.status(400).json({ msg: `No show with id: ${id}` });
 

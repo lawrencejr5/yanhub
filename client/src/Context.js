@@ -49,6 +49,7 @@ export const Context = ({ children }) => {
   // All data
   const [allUsers, setAllUsers] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
+  const [allShows, setAllShows] = useState([]);
   const [videos, setVideos] = useState([]);
 
   // User states
@@ -62,6 +63,7 @@ export const Context = ({ children }) => {
 
   // Tasks states
   const [tasks, setTasks] = useState([]);
+  const [currTask, setCurrTask] = useState([]);
   const [checked, setChecked] = useState(null);
   const [numOfMonthTasks, setNumOfMonthTasks] = useState(0);
   const [page, setPage] = useState(1);
@@ -160,6 +162,19 @@ export const Context = ({ children }) => {
     }
   };
 
+  const fetchTask = async (id) => {
+    try {
+      // setLoading(true);
+      const { data } = await axios.get(`${endpoint}/tasks/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCurrTask(data.task);
+      // setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const searchTasks = async (query, status) => {
     try {
       setLoading(true);
@@ -232,17 +247,30 @@ export const Context = ({ children }) => {
 
   const getVidDetails = async (id) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const { data } = await axios.get(`${endpoint}/videos/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCurrVid(data.video);
-      setLoading(false);
+      // setLoading(false);
     } catch (err) {
       const {
         response: { data },
       } = err;
       console.log(data);
+    }
+  };
+
+  const fetchShows = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/shows`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAllShows(data.shows);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -252,6 +280,7 @@ export const Context = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCurrShow(data.shows);
+      // console.log(currShow);
     } catch (err) {
       const {
         response: { data },
@@ -263,6 +292,7 @@ export const Context = ({ children }) => {
   useEffect(() => {
     fetchUser();
     fetchUsers();
+    fetchShows();
     fetchTasksByPage(limit, page);
   }, []);
 
@@ -322,12 +352,15 @@ export const Context = ({ children }) => {
         tasks,
         setTasks,
         //
+        allShows,
+        //
         videos,
         setSignedIn,
         currVid,
         currUser,
         setCurrUser,
         currShow,
+        currTask,
         assignTask,
         setAssignTask,
         //
@@ -344,9 +377,11 @@ export const Context = ({ children }) => {
         fetchUser,
         fetchUsers,
         fetchTasks,
+        fetchTask,
         fetchTasksByPage,
         searchTasks,
         searchPersonalTasks,
+        fetchShows,
         getVideos,
         getVidDetails,
         getShowById,
