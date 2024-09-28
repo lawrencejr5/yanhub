@@ -382,6 +382,14 @@ main {
   background: transparent;
   color: var(--text1);
 }
+.options .edit-sec select {
+  width: 250px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text1);
+  font-size: 16px;
+}
 .options .edit-sec.dur input {
   width: 50px;
   padding: 0.3rem;

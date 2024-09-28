@@ -25,12 +25,14 @@ const TasksOptions = () => {
 
   const [started, setStarted] = useState(currTask.started);
   const [ended, setEnded] = useState(currTask.ended);
+  const [status, setStatus] = useState(currTask.status);
 
   const newStarted = !currTask.started ? "" : currTask.started.split("T")[0];
   const newEnded = !currTask.ended ? "" : currTask.ended.split("T")[0];
   useEffect(() => {
     setStarted(newStarted);
     setEnded(newEnded);
+    setStatus(currTask.status);
   }, [currTask]);
 
   const delTask = async () => {
@@ -72,6 +74,25 @@ const TasksOptions = () => {
     }
   };
 
+  const updateStat = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.patch(
+        `${endpoint}/tasks/${currTask._id}`,
+        { status },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setTaskOptions(false);
+      fetchTasks();
+      fetchTasksByPage(limit, page);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+
   return (
     <div className={`options-container ${taskOptions ? "blur" : ""}`}>
       <div className={`options ${taskOptions ? "up" : ""}`}>
@@ -89,7 +110,26 @@ const TasksOptions = () => {
             <span>{currTask.type} </span>
           </div>
         )}
-
+        <form action="" className="edit-sec" onSubmit={updateStat}>
+          <div className="inp-holder">
+            <strong htmlFor="">Mark as: </strong>
+            <select
+              name=""
+              id=""
+              value={status}
+              defaultValue={currTask.status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="undone">undone</option>
+              <option value="ongoing">ongoing</option>
+              <option value="completed">completed</option>
+            </select>
+          </div>
+          <button className="success">
+            update&nbsp;
+            <FaRegCheckCircle />
+          </button>
+        </form>
         <form action="" className="edit-sec from-to" onSubmit={updateTask}>
           <div className="inp-holder">
             <label htmlFor="">From:</label>

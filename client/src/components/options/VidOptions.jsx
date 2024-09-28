@@ -16,13 +16,18 @@ const VidOptions = () => {
   const [del, setDel] = useState(false);
 
   const [ep, setEp] = useState(currVid.ep);
+  const [status, setStatus] = useState(currVid.status);
   const [hrs, setHrs] = useState(0);
   const [mins, setMins] = useState(0);
 
+  const hours = !currVid.duration ? "" : currVid.duration.split(":")[0];
+  const minutes = !currVid.duration ? "" : currVid.duration.split(":")[1];
+
   useEffect(() => {
     setEp(currVid.ep);
-    setHrs(0);
-    setMins(0);
+    setStatus(currVid.status);
+    setHrs(hours);
+    setMins(minutes);
     // console.log(currVid);
   }, [currVid]);
 
@@ -32,6 +37,23 @@ const VidOptions = () => {
       await axios.patch(
         `${endpoint}/videos/${currVid._id}`,
         { ep },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setVideoOptions(false);
+      getVideos(currVid.show._id);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      console.log(data);
+    }
+  };
+  const updateStat = async (e) => {
+    e.preventDefault();
+    try {
+      await axios.patch(
+        `${endpoint}/videos/${currVid._id}`,
+        { status },
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setVideoOptions(false);
@@ -61,7 +83,7 @@ const VidOptions = () => {
       console.log(data);
     }
   };
-  const delVideo = async (e) => {
+  const delVideo = async () => {
     try {
       const { data } = await axios.delete(`${endpoint}/videos/${currVid._id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -91,6 +113,26 @@ const VidOptions = () => {
               value={ep}
               onChange={(e) => setEp(e.target.value)}
             />
+          </div>
+          <button className="success">
+            update&nbsp;
+            <FaRegCheckCircle />
+          </button>
+        </form>
+        <form action="" className="edit-sec" onSubmit={updateStat}>
+          <div className="inp-holder">
+            <strong htmlFor="">Mark as: </strong>
+            <select
+              name=""
+              id=""
+              value={status}
+              defaultValue={currVid.status}
+              onChange={(e) => setStatus(e.target.value)}
+            >
+              <option value="undone">undone</option>
+              <option value="ongoing">ongoing</option>
+              <option value="completed">completed</option>
+            </select>
           </div>
           <button className="success">
             update&nbsp;

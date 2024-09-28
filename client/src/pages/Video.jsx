@@ -82,8 +82,8 @@ const Video = () => {
         showId={showId}
         currShow={currShow}
       />
-      <VidOptions />
       <Bell />
+      <VidOptions />
     </main>
   );
 };
