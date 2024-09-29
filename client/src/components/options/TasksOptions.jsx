@@ -7,8 +7,9 @@ import {
   FaTimes,
 } from "react-icons/fa";
 import { useGlobalContext } from "../../Context";
+import { currMonth, currYear } from "../../data/date";
 
-const TasksOptions = () => {
+const TasksOptions = ({ checkMonth }) => {
   const [del, setDel] = useState(false);
 
   const {
@@ -36,14 +37,23 @@ const TasksOptions = () => {
     setStatus(currTask.status);
   }, [currTask]);
 
+  const thisMonth = localStorage.getItem("tmsrt") === "true";
+
   const delTask = async () => {
     try {
       const { data } = await axios.delete(`${endpoint}/tasks/${currTask._id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setTaskOptions(false);
-      fetchTasks();
-      fetchTasksByPage(limit, page);
+      if (checkMonth) {
+        thisMonth ? fetchTasks(currMonth, currYear) : fetchTasks();
+        thisMonth
+          ? fetchTasksByPage(limit, page, currMonth, currYear)
+          : fetchTasksByPage(limit, page);
+      } else {
+        fetchTasks();
+        fetchTasksByPage(limit, page);
+      }
       setNotification({ text: data.msg, theme: "success", status: true });
       console.log(data);
     } catch (err) {
@@ -67,9 +77,15 @@ const TasksOptions = () => {
       );
       setTaskOptions(false);
       setNotification({ text: data.msg, theme: "success", status: true });
-      fetchTasks();
-      fetchTasksByPage(limit, page);
-      console.log(data);
+      if (checkMonth) {
+        thisMonth ? fetchTasks(currMonth, currYear) : fetchTasks();
+        thisMonth
+          ? fetchTasksByPage(limit, page, currMonth, currYear)
+          : fetchTasksByPage(limit, page);
+      } else {
+        fetchTasks();
+        fetchTasksByPage(limit, page);
+      }
     } catch (err) {
       const {
         response: { data },
@@ -89,8 +105,16 @@ const TasksOptions = () => {
       );
       setTaskOptions(false);
       setNotification({ text: data.msg, theme: "success", status: true });
-      fetchTasks();
-      fetchTasksByPage(limit, page);
+      if (checkMonth) {
+        thisMonth ? fetchTasks(currMonth, currYear) : fetchTasks();
+        thisMonth
+          ? fetchTasksByPage(limit, page, currMonth, currYear)
+          : fetchTasksByPage(limit, page);
+      } else {
+        fetchTasks();
+        fetchTasksByPage(limit, page);
+      }
+      setNotification({ text: data.msg, theme: "success", status: true });
     } catch (err) {
       const {
         response: { data },

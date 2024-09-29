@@ -135,7 +135,7 @@ const Tasks = () => {
               </>
             ) : (
               tasks.map((task, index) => {
-                return <TaskBox task={task} key={index} />;
+                return <TaskBox task={task} checkMonth={true} key={index} />;
               })
             )}
           </div>
@@ -146,7 +146,7 @@ const Tasks = () => {
       <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
-      <TasksOptions />
+      <TasksOptions checkMonth={true} />
     </main>
   );
 };

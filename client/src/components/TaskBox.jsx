@@ -4,8 +4,9 @@ import axios from "axios";
 import { format } from "date-fns";
 
 import { useGlobalContext } from "../Context";
+import { currMonth, currYear } from "../data/date";
 
-const TaskBox = ({ task, hideUsers, personal }) => {
+const TaskBox = ({ task, hideUsers, personal, checkMonth }) => {
   const {
     allUsers,
     setCurrUser,
@@ -22,6 +23,8 @@ const TaskBox = ({ task, hideUsers, personal }) => {
     setTaskOptions,
     setNotification,
   } = useGlobalContext();
+
+  const thisMonth = localStorage.getItem("tmsrt") === "true";
 
   const {
     _id: id,
@@ -56,8 +59,15 @@ const TaskBox = ({ task, hideUsers, personal }) => {
         { status: "completed", type, video },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      await fetchTasks();
-      await fetchTasksByPage(limit, page);
+      if (checkMonth) {
+        thisMonth ? fetchTasks(currMonth, currYear) : fetchTasks();
+        thisMonth
+          ? fetchTasksByPage(limit, page, currMonth, currYear)
+          : fetchTasksByPage(limit, page);
+      } else {
+        fetchTasks();
+        fetchTasksByPage(limit, page);
+      }
       setNotification({ text: data.msg, theme: "success", status: true });
       setLoading(false);
     } catch (err) {
@@ -77,10 +87,16 @@ const TaskBox = ({ task, hideUsers, personal }) => {
         { status: e.target.value },
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      setTaskOptions(false);
       setNotification({ text: data.msg, theme: "success", status: true });
-      fetchTasks();
-      fetchTasksByPage(limit, page);
+      if (checkMonth) {
+        thisMonth ? fetchTasks(currMonth, currYear) : fetchTasks();
+        thisMonth
+          ? fetchTasksByPage(limit, page, currMonth, currYear)
+          : fetchTasksByPage(limit, page);
+      } else {
+        fetchTasks();
+        fetchTasksByPage(limit, page);
+      }
     } catch (err) {
       const {
         response: { data },

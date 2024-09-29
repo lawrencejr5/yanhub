@@ -106,7 +106,14 @@ const TasksPersonal = () => {
               <Empty />
             ) : (
               filteredTasks.map((task, index) => {
-                return <TaskBox task={task} personal={true} key={index} />;
+                return (
+                  <TaskBox
+                    task={task}
+                    personal={true}
+                    checkMonth={true}
+                    key={index}
+                  />
+                );
               })
             )}
           </div>
@@ -115,7 +122,7 @@ const TasksPersonal = () => {
       <LeaderboardNav />
       <UserModal currUser={currUser} />
       <Bell />
-      <TasksOptions />
+      <TasksOptions checkMonth={true} />
     </main>
   );
 };
