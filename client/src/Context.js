@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
+import { currMonth, currYear } from "./data/date";
+
 const ContextApp = createContext();
 export const Context = ({ children }) => {
   // Modals & nav
@@ -67,7 +69,7 @@ export const Context = ({ children }) => {
   const [checked, setChecked] = useState(null);
   const [numOfMonthTasks, setNumOfMonthTasks] = useState(0);
   const [page, setPage] = useState(1);
-  const limit = 15;
+  const limit = 10;
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -125,7 +127,9 @@ export const Context = ({ children }) => {
   const getLeaderBoardRanking = async () => {
     try {
       // setLoading(true);
-      const { data } = await axios.get(`${endpoint}/users/leaderboard`);
+      const { data } = await axios.get(
+        `${endpoint}/users/leaderboard/?month=${currMonth}&year=${currYear}`
+      );
       setLeaderbord(data.rankings);
       // setLoading(false);
     } catch (err) {
@@ -133,28 +137,17 @@ export const Context = ({ children }) => {
     }
   };
 
-  const fetchTasksByPage = async (limit, page) => {
+  const fetchTasks = async (month, year) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/tasks?limit=${limit}&page=${page}`,
+        month && year
+          ? `${endpoint}/tasks/?month=${month}&year=${year}`
+          : `${endpoint}/tasks`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      setTasks(data.tasks);
-      setLoading(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const fetchTasks = async () => {
-    try {
-      setLoading(true);
-      const { data } = await axios.get(`${endpoint}/tasks`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
       setAllTasks(data.tasks);
       setLoading(false);
     } catch (err) {
@@ -175,11 +168,13 @@ export const Context = ({ children }) => {
     }
   };
 
-  const searchTasks = async (query, status) => {
+  const fetchTasksByPage = async (limit, pages, month, year) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/tasks?search=${query}&status=${status}`,
+        month && year
+          ? `${endpoint}/tasks?limit=${limit}&page=${pages}&month=${month}&year=${year}`
+          : `${endpoint}/tasks?limit=${limit}&page=${pages}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -191,11 +186,31 @@ export const Context = ({ children }) => {
     }
   };
 
-  const searchPersonalTasks = async (query, status) => {
+  const searchTasks = async (query, status, month, year) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/tasks?search=${query}&status=${status}`,
+        month && year
+          ? `${endpoint}/tasks?search=${query}&status=${status}&month=${month}&year=${year}`
+          : `${endpoint}/tasks?search=${query}&status=${status}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const searchPersonalTasks = async (query, status, month, year) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        month && year
+          ? `${endpoint}/tasks?search=${query}&status=${status}&month=${month}&year=${year}`
+          : `${endpoint}/tasks?search=${query}&status=${status}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -293,7 +308,6 @@ export const Context = ({ children }) => {
     fetchUser();
     fetchUsers();
     fetchShows();
-    fetchTasksByPage(limit, page);
   }, []);
 
   useEffect(() => {

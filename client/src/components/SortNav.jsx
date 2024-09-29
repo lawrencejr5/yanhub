@@ -3,12 +3,6 @@ import React from "react";
 const SortNav = ({ sortVal, setSortVal }) => {
   return (
     <div className="sort-nav">
-      {/* <select name="" id="">
-        <option value="">sort...</option>
-        <option value="undone">undone</option>
-        <option value="ongoing">ongoing</option>
-        <option value="completed">completed</option>
-          </select> */}
       <button
         className={sortVal === "" ? "active" : ""}
         onClick={() => setSortVal("")}

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { useGlobalContext } from "../Context";
+import { currMonth } from "../data/date";
 
 const MyTasksLayout = () => {
   const { allTasks } = useGlobalContext();
@@ -11,7 +12,7 @@ const MyTasksLayout = () => {
   );
   return (
     <div className="tasks-layout">
-      <h2>Your last 3 tasks</h2>
+      <h2>Your {currMonth} tasks</h2>
       <br />
       {filteredTasks.length === 0 ? (
         <p>Them never assign any task give you yet</p>

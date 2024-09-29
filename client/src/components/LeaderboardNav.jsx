@@ -1,12 +1,12 @@
 import React from "react";
 
-import { month } from "../data/date";
+import { months } from "../data/date";
 
 import { useGlobalContext } from "../Context";
 const LeaderboardNav = () => {
   const { leaderboard } = useGlobalContext();
   const d = new Date();
-  const currMonth = month[d.getMonth()];
+  const currMonth = months[d.getMonth()];
   return (
     <aside className="relative">
       <div className="sticky">

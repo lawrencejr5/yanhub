@@ -27,6 +27,14 @@ const taskSchema = new mongoose.Schema(
     ended: {
       type: Date,
     },
+    month: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["undone", "ongoing", "completed"],

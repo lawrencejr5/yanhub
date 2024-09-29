@@ -98,17 +98,15 @@ const delShow = async (req, res) => {
     const deletedShow = await Show.findByIdAndDelete(id);
     // const tasks = await Task.find().populate("video", "_id");
     if (deletedShow) {
+      const videos = await Video.find({ show: id });
+
+      // Delete all tasks related to each video
+      for (const video of videos) {
+        await Task.deleteMany({ video: video._id });
+      }
+
+      // Delete all videos related to each video
       await Video.deleteMany({ show: id });
-      await Task.find({})
-        .populate({
-          path: "video",
-          select: "ep duration",
-          populate: {
-            path: "show",
-            select: "show",
-          },
-        })
-        .deleteMany({ show: id });
     }
     if (!deletedShow)
       return res.status(400).json({ msg: `No show with id: ${id}` });

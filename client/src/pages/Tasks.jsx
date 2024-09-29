@@ -18,6 +18,8 @@ import TasksOptions from "../components/options/TasksOptions";
 import Notification from "../components/Notification";
 import Empty from "../components/Empty";
 
+import { currMonth, currYear } from "../data/date";
+
 const Tasks = () => {
   const {
     fetchTasks,
@@ -35,26 +37,43 @@ const Tasks = () => {
 
   const [query, setQuery] = useState("");
   const [sortVal, setSortVal] = useState("");
+  const [thisMonth, setThisMonth] = useState(
+    localStorage.getItem("tmsrt") === "true"
+  );
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
-    fetchUsers();
-    fetchTasks();
-    fetchTasksByPage(limit, page);
   }, []);
 
   useEffect(() => {
-    fetchTasksByPage(limit, page);
-  }, [page]);
+    fetchUsers();
+    if (thisMonth) {
+      searchTasks(currMonth, currYear);
+      fetchTasks(currMonth, currYear);
+      fetchTasksByPage(limit, page, currMonth, currYear);
+    } else {
+      fetchTasks();
+      fetchTasksByPage(limit, page);
+    }
+  }, [thisMonth, limit, page]);
 
   useEffect(() => {
-    if (!query && !sortVal) {
+    fetchTasksByPage(limit, page);
+  }, [page, limit]);
+
+  useEffect(() => {
+    if (thisMonth) {
+      searchTasks(query, sortVal, currMonth, currYear);
+    } else if (!query && !sortVal) {
       fetchTasksByPage(limit, page);
     } else {
       searchTasks(query, sortVal);
     }
-  }, [query, sortVal]);
+  }, [query, sortVal, thisMonth, limit, page]);
 
+  useEffect(() => {
+    localStorage.setItem("tmsrt", thisMonth);
+  }, [thisMonth]);
   const navigate = useNavigate();
 
   return (
@@ -63,9 +82,19 @@ const Tasks = () => {
       <section className="body">
         <Greet />
         <Notification notification={notification} />
-        <div className="createTaskBtn"></div>
-        <div className="header">
-          <h2>Tasks</h2>
+        <div className="task-header">
+          <div className="separate">
+            <h2>Tasks</h2>
+            <div className="inp-holder tm-sort">
+              <label htmlFor="">{currMonth} alone</label>&nbsp;&nbsp;
+              <input
+                type="checkbox"
+                checked={thisMonth}
+                onChange={() => setThisMonth((prev) => !prev)}
+              />
+            </div>
+          </div>
+
           <SearchBox what={"tasks"} query={query} queryFunc={setQuery} />
 
           <div className="tasks-nav">
@@ -79,6 +108,7 @@ const Tasks = () => {
 
           <SortNav sortVal={sortVal} setSortVal={setSortVal} />
         </div>
+
         {loading ? (
           <LoadingContainer />
         ) : (

@@ -8,6 +8,8 @@ import Loading from "../components/Loading";
 import Greet from "../components/Greet";
 import Announcements from "../components/Announcements";
 
+import { currMonth, currYear } from "../data/date";
+
 import { useGlobalContext } from "../Context";
 const Dashboard = () => {
   const {
@@ -22,7 +24,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     document.title = "Yanhub - Dashboard";
-    fetchTasks();
+    fetchTasks(currMonth, currYear);
     const userId = localStorage.getItem("user");
     getTasksCompletedPerMonth(userId);
   }, []);

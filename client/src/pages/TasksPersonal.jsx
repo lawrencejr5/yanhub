@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useGlobalContext } from "../Context";
 
+import { currMonth, currYear } from "../data/date";
+
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
@@ -30,15 +32,25 @@ const TasksPersonal = () => {
 
   const [query, setQuery] = useState("");
   const [sortVal, setSortVal] = useState("");
+  const [thisMonth, setThisMonth] = useState(
+    localStorage.getItem("tmsrt") === "true"
+  );
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
-    fetchTasks();
   }, []);
 
   useEffect(() => {
-    searchPersonalTasks(query, sortVal);
-  }, [query, sortVal]);
+    if (thisMonth) {
+      searchPersonalTasks(query, sortVal, currMonth, currYear);
+    } else {
+      searchPersonalTasks(query, sortVal);
+    }
+  }, [query, sortVal, thisMonth]);
+
+  useEffect(() => {
+    localStorage.setItem("tmsrt", thisMonth);
+  }, [thisMonth]);
 
   const userId = localStorage.getItem("user");
   const filteredTasks = allTasks.filter((task) => {
@@ -54,8 +66,18 @@ const TasksPersonal = () => {
       <section className="body">
         <Greet />
         <Notification notification={notification} />
-        <div className="header">
-          <h2>Tasks</h2>
+        <div className="task-header">
+          <div className="separate">
+            <h2>Tasks</h2>
+            <div className="inp-holder tm-sort">
+              <label htmlFor="">{currMonth} alone</label>&nbsp;&nbsp;
+              <input
+                type="checkbox"
+                checked={thisMonth}
+                onChange={() => setThisMonth((prev) => !prev)}
+              />
+            </div>
+          </div>
           <SearchBox
             what={"personal tasks"}
             query={query}

@@ -130,9 +130,10 @@ const getAllUsers = async (req, res) => {
 // };
 
 const getLeaderBoard = async (req, res) => {
+  const { month, year } = req.query;
   try {
     const taskCounts = await Task.aggregate([
-      { $match: { status: "completed" } }, // Filter to only completed tasks
+      { $match: { status: "completed", month, year } }, // Filter to only completed tasks
       { $unwind: "$assignedTo" }, // Deconstruct the assignedTo array
       { $group: { _id: "$assignedTo", taskCount: { $sum: 1 } } }, // Group by userId and count tasks
     ]);

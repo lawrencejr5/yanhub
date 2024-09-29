@@ -3,10 +3,12 @@ const Video = require("../models/videos");
 
 const getAllTasks = async (req, res) => {
   try {
-    const { search, status } = req.query;
+    const { search, status, month, year } = req.query;
 
     const queryObj = {};
     if (status) queryObj.status = status;
+    if (month) queryObj.month = month;
+    if (year) queryObj.year = year;
 
     const page = Number(req.query.page);
     const limit = Number(req.query.limit);
@@ -92,10 +94,10 @@ const setTask = async (req, res) => {
   try {
     const {
       user: { userId },
-      body: { type, video, assignedTo },
+      body: { type, video, assignedTo, month, year },
     } = req;
 
-    if (!type || !video || !assignedTo)
+    if (!type || !video || !assignedTo || !month || !year)
       return res.status(501).json({ msg: "Fill in required fields" });
 
     const TaskExists = await Task.findOne({ video, type });
@@ -108,7 +110,14 @@ const setTask = async (req, res) => {
       return res.status(200).json({ msg: "Task was updated", updatedTask });
     }
 
-    const dataObj = { type, video, assignedTo, assignedBy: userId };
+    const dataObj = {
+      type,
+      video,
+      assignedTo,
+      month,
+      year,
+      assignedBy: userId,
+    };
     const createdTask = await Task.create({ ...dataObj });
 
     if (createdTask) {

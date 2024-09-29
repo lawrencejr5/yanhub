@@ -114,6 +114,16 @@ main {
   background: var(--secondary2);
 }
 
+.separate {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tm-sort {
+  display: flex;
+  align-items: center;
+}
+
 /* Loading component */
 .loading-container-full {
   width: 100%;
@@ -181,7 +191,7 @@ main {
   transform: translateY(0);
 }
 .notification-container .up {
-  transform: translateY(-100%);
+  transform: translateY(-150%);
 }
 
 /* Logo Component Styling */
@@ -682,6 +692,7 @@ main {
   display: flex;
   align-items: center;
   color: var(--primary);
+  z-index: 3;
 }
 .grid-body .big-nav .logout button {
   color: var(--primary);
@@ -1169,11 +1180,11 @@ main {
   width: 100%;
   height: 100vh;
   transition: 0.5s;
+  visibility: visible;
   backdrop-filter: blur(50px);
   display: flex;
   justify-content: center;
   align-items: center;
-  visibility: visible;
 }
 
 .create-video-container-hide {
@@ -1182,7 +1193,7 @@ main {
 }
 
 .create-video-container form {
-  background-color: white;
+  background-color: var(--secondary2);
   box-shadow: var(--box-shadow);
   width: 500px;
   padding: 1rem;
@@ -1210,6 +1221,7 @@ main {
   outline: none;
   width: 100%;
   padding: 0.5rem;
+  color: var(--text1);
 }
 .create-video-container form .btn-handler {
   width: 100%;
@@ -1510,24 +1522,12 @@ main {
 .tasks-main .body {
   padding: 1rem;
 }
-.tasks-main .body .createTaskBtn {
-  width: 100%;
-  padding: 0.5rem;
-  display: flex;
-  justify-content: flex-end;
+
+.tasks-main .body .task-header {
+  margin-top: 2rem;
 }
-.tasks-main .body .createTaskBtn button {
-  background-color: var(--primary);
-  color: var(--secondary2);
-  border: none;
-  outline: none;
-  padding: 0.3rem 0.5rem;
-  border-radius: 2px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-}
-.tasks-main .body .header .tasks-nav {
+
+.tasks-main .body .task-header .tasks-nav {
   width: 97%;
   margin: 1.5rem 0;
   display: flex;
@@ -1537,7 +1537,7 @@ main {
   padding: 0.5rem;
   border-radius: 5px;
 }
-.tasks-main .body .header .tasks-nav button {
+.tasks-main .body .task-header .tasks-nav button {
   color: var(--text1);
   width: 40%;
   padding: 0.5rem;
@@ -1547,48 +1547,13 @@ main {
   border-radius: 15px;
   background: transparent;
 }
-.tasks-main .body .header .tasks-nav .active {
+.tasks-main .body .task-header .tasks-nav .active {
   background-color: var(--primary);
   color: var(--secondary2);
 }
 
 .tasks-main .body .tasks-container {
   margin: 1rem 0.5rem 4rem;
-  /* display: grid;
-  grid-template-columns: 1fr; */
-}
-.tasks-main .body .tasks-container .task-box {
-  background-color: var(--secondary2);
-  /* border-left: 5px solid var(--primary); */
-  width: 96%;
-  height: auto;
-  border-radius: 10px;
-  box-shadow: var(--box-shadow2);
-  margin: 1rem;
-  margin-left: 0;
-  padding: 0.5rem 1.5rem;
-}
-.tasks-main .body .tasks-container .task-box .header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
-}
-.tasks-main .body .tasks-container .task-box .header #status {
-  padding: 0.2rem;
-  font-size: 10px;
-  border-radius: 4px;
-  color: var(--secondary2);
-}
-.tasks-main .body .tasks-container .task-box .users {
-  display: flex;
-  justify-content: flex-start;
-}
-.tasks-main .body .tasks-container .task-box .users img {
-  border: 3px solid var(--secondary2);
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
 }
 
 .task-form-container {

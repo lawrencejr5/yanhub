@@ -4,6 +4,8 @@ import axios from "axios";
 
 import { useGlobalContext } from "../../Context";
 
+import { months } from "../../data/date";
+
 const AssignModal = () => {
   const {
     assignModal,
@@ -28,12 +30,18 @@ const AssignModal = () => {
   const handleAssignment = async (e) => {
     e.preventDefault();
     try {
+      const d = new Date();
+      const month = months[d.getMonth()];
+      const year = d.getFullYear();
+
       const { data } = await axios.post(
         `${endpoint}/tasks`,
         {
           type: assignTask,
           video: currVid._id,
           assignedTo: userInp,
+          month,
+          year,
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
