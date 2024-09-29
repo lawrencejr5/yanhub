@@ -14,6 +14,7 @@ import UserModal from "../components/modals/UserModal";
 import Notification from "../components/Notification";
 import TasksOptions from "../components/options/TasksOptions";
 import Empty from "../components/Empty";
+import LoadingContaier from "../components/LoadingContainer";
 
 import { useGlobalContext } from "../Context";
 
@@ -64,52 +65,56 @@ const User = () => {
     return task.assignedTo.some((usr) => usr._id === id);
   });
 
-  if (loading) return <Loading />;
   return (
     <main className="grid-body account-main">
       <Nav />
-      <section className="body">
-        <Notification notification={notification} />
-        <Back text={`@${username}`} />
-        <div className="banner">
-          <img src={`/imgs/user-icons/${pic}`} alt="" />
-        </div>
-        <div className="name-sec">
-          <h3>{user.fullname}</h3>
-          <small>{`@${username}`}</small>
-          <p>{bio}</p>
-        </div>
-        <div className="details-sec">
-          <h3>User details...</h3>
-          <div className="details">
-            <span>
-              <FaBirthdayCake /> Born on {newDob || "-- --"}
-            </span>
-            {/* <span>
+      {loading ? (
+        <LoadingContaier />
+      ) : (
+        <section className="body">
+          <Notification notification={notification} />
+          <Back text={`@${username}`} />
+          <div className="banner">
+            <img src={`/imgs/user-icons/${pic}`} alt="" />
+          </div>
+          <div className="name-sec">
+            <h3>{user.fullname}</h3>
+            <small>{`@${username}`}</small>
+            <p>{bio}</p>
+          </div>
+          <div className="details-sec">
+            <h3>User details...</h3>
+            <div className="details">
+              <span>
+                <FaBirthdayCake /> Born on {newDob || "-- --"}
+              </span>
+              {/* <span>
               <FaBars /> {numOfMonthTasks} task(s) completed this month
             </span> */}
-            <span>
-              <FaPhone /> {phone || "--------"}
-            </span>
+              <span>
+                <FaPhone /> {phone || "--------"}
+              </span>
+            </div>
           </div>
-        </div>
-        <div className="tasks-sec">
-          <h3>{`${username}'s ${currMonth} tasks...`}</h3>
-          {!filteredTasks.length ? (
-            <>
-              <br />
-              <Empty />
-            </>
-          ) : (
-            filteredTasks.map((task, index) => {
-              return <TaskBox task={task} hideUsers={true} key={index} />;
-            })
-          )}
-        </div>
-        <br />
-        <br />
-        <br />
-      </section>
+          <div className="tasks-sec">
+            <h3>{`${username}'s ${currMonth} tasks...`}</h3>
+            {!filteredTasks.length ? (
+              <>
+                <br />
+                <Empty />
+              </>
+            ) : (
+              filteredTasks.map((task, index) => {
+                return <TaskBox task={task} hideUsers={true} key={index} />;
+              })
+            )}
+          </div>
+          <br />
+          <br />
+          <br />
+        </section>
+      )}
+
       <LeaderboardNav />
       <UserModal currUser={currUser} />
       <Bell />

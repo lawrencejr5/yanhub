@@ -5,6 +5,9 @@ const express = require("express");
 const app = express();
 // Security
 const cors = require("cors");
+const xss = require("xss-clean");
+const helmet = require("helmet");
+const rateLimiter = require("express-rate-limit");
 // Routers
 const usersRouter = require("./routes/users");
 const tasksRouter = require("./routes/tasks");
@@ -17,7 +20,16 @@ const authMiddleware = require("./middlewares/auth");
 const connectDb = require("./config/conn");
 
 // Middlewares
+app.set("trust proxy", 1);
+app.use(
+  rateLimiter({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // limit each IP to 100 requests per windowMs
+  })
+);
 app.use(cors());
+app.use(helmet());
+app.use(xss());
 app.use(express.json());
 
 // Routes

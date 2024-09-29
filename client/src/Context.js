@@ -97,7 +97,7 @@ export const Context = ({ children }) => {
   };
 
   // Endpoint and token
-  const endpoint = "http://localhost:5000/api/v1";
+  const endpoint = "https://yanhub.onrender.com/api/v1";
   const token = localStorage.getItem("token");
 
   const fetchUser = async () => {

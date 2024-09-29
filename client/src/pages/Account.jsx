@@ -26,6 +26,7 @@ import Empty from "../components/Empty";
 import { useGlobalContext } from "../Context";
 
 import { currMonth, currYear } from "../data/date";
+import LoadingContainer from "../components/LoadingContainer";
 
 const Account = () => {
   const {
@@ -63,78 +64,82 @@ const Account = () => {
     newDob = format(date, "MMMM do");
   }
 
-  if (loading) return <Loading />;
   return (
     <main className="grid-body account-main">
       <Nav />
-      <section className="body">
-        <Notification notification={notification} />
-        <Greet />
-        <div className="banner">
-          <img src={`/imgs/user-icons/${pic}`} alt="" />
-        </div>
-        <div className="name-sec">
-          <h3>{fullname}</h3>
-          <small>@{username}</small>
-          <p>{bio}</p>
-        </div>
-        <div className="details-sec">
-          <h3>User details...</h3>
-          <div className="details">
-            <span>
-              <FaBirthdayCake /> Born on {newDob || "-- --"}
-            </span>
-            <span>
-              <FaBars /> {numOfMonthTasks} tasks(s) completed this month
-            </span>
-            <span>
-              <FaPhone /> {phone || "--------"}
-            </span>
-            <div className="btn-holder">
-              <button onClick={() => setEditModal(true)}>
-                Edit details...
+      {loading ? (
+        <LoadingContainer />
+      ) : (
+        <section className="body">
+          <Notification notification={notification} />
+          <Greet />
+          <div className="banner">
+            <img src={`/imgs/user-icons/${pic}`} alt="" />
+          </div>
+          <div className="name-sec">
+            <h3>{fullname}</h3>
+            <small>@{username}</small>
+            <p>{bio}</p>
+          </div>
+          <div className="details-sec">
+            <h3>User details...</h3>
+            <div className="details">
+              <span>
+                <FaBirthdayCake /> Born on {newDob || "-- --"}
+              </span>
+              <span>
+                <FaBars /> {numOfMonthTasks} tasks(s) completed this month
+              </span>
+              <span>
+                <FaPhone /> {phone || "--------"}
+              </span>
+              <div className="btn-holder">
+                <button onClick={() => setEditModal(true)}>
+                  Edit details...
+                </button>
+              </div>
+            </div>
+          </div>
+          <div className="set-sec">
+            <h3>Settings...</h3>
+            <div className="set-item">
+              <span>Set theme</span>
+              <button onClick={toggleTheme}>
+                {theme === "dark" ? <FaMoon /> : <FaSun />}
+              </button>
+            </div>
+            <div className="set-item">
+              <span>Change password</span>
+              <button onClick={() => setEditPassModal(true)}>
+                <FaEdit />
+              </button>
+            </div>
+            <div className="set-item">
+              <span>Change avatar</span>
+              <button onClick={() => setAvatarModal(true)}>
+                <FaEdit />
               </button>
             </div>
           </div>
-        </div>
-        <div className="set-sec">
-          <h3>Settings...</h3>
-          <div className="set-item">
-            <span>Set theme</span>
-            <button onClick={toggleTheme}>
-              {theme === "dark" ? <FaMoon /> : <FaSun />}
-            </button>
+          <div className="tasks-sec">
+            <h3>Your {currMonth} tasks...</h3>
+            {!filteredTasks.length ? (
+              <>
+                <br />
+                <Empty />
+              </>
+            ) : (
+              filteredTasks.map((task, index) => {
+                return <TaskBox task={task} key={index} hideUsers={true} />;
+              })
+            )}
           </div>
-          <div className="set-item">
-            <span>Change password</span>
-            <button onClick={() => setEditPassModal(true)}>
-              <FaEdit />
-            </button>
-          </div>
-          <div className="set-item">
-            <span>Change avatar</span>
-            <button onClick={() => setAvatarModal(true)}>
-              <FaEdit />
-            </button>
-          </div>
-        </div>
-        <div className="tasks-sec">
-          <h3>Your {currMonth} tasks...</h3>
-          {!filteredTasks.length ? (
-            <>
-              <br />
-              <Empty />
-            </>
-          ) : (
-            filteredTasks.map((task, index) => {
-              return <TaskBox task={task} key={index} hideUsers={true} />;
-            })
-          )}
-        </div>
-        <br />
-        <br />
-        <br />
-      </section>
+          <br />
+          <br />
+          <br />
+        </section>
+      )}
+
       <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
