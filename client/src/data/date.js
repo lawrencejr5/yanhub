@@ -17,6 +17,7 @@ const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
 
 const d = new Date();
 const currMonth = months[d.getMonth()];
+// const currMonth = "October";
 const currYear = d.getFullYear();
 
 export { months, days, currMonth, currYear };

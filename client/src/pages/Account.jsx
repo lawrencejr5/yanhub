@@ -19,11 +19,13 @@ import ChangeAvatarModal from "../components/modals/ChangeAvatarModal";
 import Notification from "../components/Notification";
 import TaskBox from "../components/TaskBox";
 import Loading from "../components/Loading";
-
-import { useGlobalContext } from "../Context";
 import UserModal from "../components/modals/UserModal";
 import TasksOptions from "../components/options/TasksOptions";
 import Empty from "../components/Empty";
+
+import { useGlobalContext } from "../Context";
+
+import { currMonth, currYear } from "../data/date";
 
 const Account = () => {
   const {
@@ -44,7 +46,7 @@ const Account = () => {
 
   useEffect(() => {
     document.title = "Yanhub - My Account";
-    fetchTasks();
+    fetchTasks(currMonth, currYear);
     getTasksCompletedPerMonth(localStorage.getItem("user"));
   }, []);
 
@@ -117,7 +119,7 @@ const Account = () => {
           </div>
         </div>
         <div className="tasks-sec">
-          <h3>Your tasks...</h3>
+          <h3>Your {currMonth} tasks...</h3>
           {!filteredTasks.length ? (
             <>
               <br />

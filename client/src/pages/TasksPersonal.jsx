@@ -106,7 +106,7 @@ const TasksPersonal = () => {
               <Empty />
             ) : (
               filteredTasks.map((task, index) => {
-                return <TaskBox task={task} key={index} />;
+                return <TaskBox task={task} personal={true} key={index} />;
               })
             )}
           </div>

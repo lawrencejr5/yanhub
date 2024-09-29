@@ -1,6 +1,25 @@
 const Task = require("../models/tasks");
 const Video = require("../models/videos");
 
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const d = new Date();
+const currMonth = months[d.getMonth()];
+const currYear = d.getFullYear();
+
+// all tasks
 const getAllTasks = async (req, res) => {
   try {
     const { search, status, month, year } = req.query;
@@ -142,6 +161,32 @@ const updateTask = async (req, res) => {
 
     if (!type && !video && !assignedTo && !stat && !started && !ended)
       return res.status(500).json({ msg: "Wetin you come dey update??" });
+
+    if (stat === "undone") {
+      await Task.findByIdAndUpdate(
+        id,
+        { ...req.body, started: "", ended: "" },
+        { new: true, runValidators: true }
+      );
+    } else if (stat === "ongoing") {
+      await Task.findByIdAndUpdate(
+        id,
+        {
+          ...req.body,
+          started: new Date(),
+          ended: "",
+          month: currMonth,
+          year: currYear,
+        },
+        { new: true, runValidators: true }
+      );
+    } else if (stat === "completed") {
+      await Task.findByIdAndUpdate(
+        id,
+        { ...req.body, ended: new Date() },
+        { new: true, runValidators: true }
+      );
+    }
 
     const updatedTask = await Task.findByIdAndUpdate(
       id,

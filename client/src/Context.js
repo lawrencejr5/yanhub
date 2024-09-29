@@ -69,7 +69,7 @@ export const Context = ({ children }) => {
   const [checked, setChecked] = useState(null);
   const [numOfMonthTasks, setNumOfMonthTasks] = useState(0);
   const [page, setPage] = useState(1);
-  const limit = 10;
+  const limit = 15;
 
   // Dark mode
   const [theme, setTheme] = useState(

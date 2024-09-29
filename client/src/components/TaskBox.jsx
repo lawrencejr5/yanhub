@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaRegCheckCircle, FaCheckCircle, FaEllipsisH } from "react-icons/fa";
 import axios from "axios";
 import { format } from "date-fns";
 
 import { useGlobalContext } from "../Context";
 
-const TaskBox = ({ task, hideUsers }) => {
+const TaskBox = ({ task, hideUsers, personal }) => {
   const {
     allUsers,
     setCurrUser,
@@ -22,6 +22,20 @@ const TaskBox = ({ task, hideUsers }) => {
     setTaskOptions,
     setNotification,
   } = useGlobalContext();
+
+  const {
+    _id: id,
+    video: {
+      _id: vidId,
+      ep,
+      duration,
+      show: { show },
+    },
+    type,
+    status,
+    createdAt,
+    assignedTo,
+  } = task;
 
   const clickFunc = (user) => {
     setUserModal(true);
@@ -55,19 +69,26 @@ const TaskBox = ({ task, hideUsers }) => {
       console.log(data);
     }
   };
-  const {
-    _id: id,
-    video: {
-      _id: vidId,
-      ep,
-      duration,
-      show: { show },
-    },
-    type,
-    status,
-    createdAt,
-    assignedTo,
-  } = task;
+
+  const updateStat = async (e) => {
+    try {
+      const { data } = await axios.patch(
+        `${endpoint}/tasks/${id}`,
+        { status: e.target.value },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      setTaskOptions(false);
+      setNotification({ text: data.msg, theme: "success", status: true });
+      fetchTasks();
+      fetchTasksByPage(limit, page);
+    } catch (err) {
+      const {
+        response: { data },
+      } = err;
+      setNotification({ text: data.msg, theme: "danger", status: true });
+      console.log(data);
+    }
+  };
 
   const hrs = duration.split(":")[0];
   const mins = duration.split(":")[1];
@@ -108,7 +129,18 @@ const TaskBox = ({ task, hideUsers }) => {
             );
           })}
         </div>
-        {!isAdmin ? (
+        {personal ? (
+          <select
+            name=""
+            className="up-select"
+            defaultValue={status}
+            onChange={updateStat}
+          >
+            <option value="undone">not started</option>
+            <option value="ongoing">started</option>
+            <option value="completed">finished</option>
+          </select>
+        ) : !isAdmin ? (
           ""
         ) : (
           <div>

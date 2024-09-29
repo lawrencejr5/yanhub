@@ -58,18 +58,20 @@ const Tasks = () => {
   }, [thisMonth, limit, page]);
 
   useEffect(() => {
-    fetchTasksByPage(limit, page);
-  }, [page, limit]);
-
-  useEffect(() => {
     if (thisMonth) {
-      searchTasks(query, sortVal, currMonth, currYear);
-    } else if (!query && !sortVal) {
-      fetchTasksByPage(limit, page);
+      if (!query && !sortVal) {
+        fetchTasksByPage(limit, page, currMonth, currYear);
+      } else {
+        searchTasks(query, sortVal, currMonth, currYear);
+      }
     } else {
-      searchTasks(query, sortVal);
+      if (!query && !sortVal) {
+        fetchTasksByPage(limit, page);
+      } else {
+        searchTasks(query, sortVal);
+      }
     }
-  }, [query, sortVal, thisMonth, limit, page]);
+  }, [query, sortVal]);
 
   useEffect(() => {
     localStorage.setItem("tmsrt", thisMonth);

@@ -12,9 +12,12 @@ import TaskBox from "../components/TaskBox";
 import Loading from "../components/Loading";
 import UserModal from "../components/modals/UserModal";
 import Notification from "../components/Notification";
+import TasksOptions from "../components/options/TasksOptions";
+import Empty from "../components/Empty";
 
 import { useGlobalContext } from "../Context";
-import TasksOptions from "../components/options/TasksOptions";
+
+import { currMonth, currYear } from "../data/date";
 
 const User = () => {
   const [user, setUser] = useState([]);
@@ -35,7 +38,7 @@ const User = () => {
   useEffect(() => {
     document.title = `Yanhub - ${username}`;
     getUser();
-    fetchTasks();
+    fetchTasks(currMonth, currYear);
     getTasksCompletedPerMonth(currUser._id);
   }, []);
 
@@ -91,10 +94,17 @@ const User = () => {
           </div>
         </div>
         <div className="tasks-sec">
-          <h3>{`${username}'s tasks...`}</h3>
-          {filteredTasks.map((task, index) => {
-            return <TaskBox task={task} hideUsers={true} key={index} />;
-          })}
+          <h3>{`${username}'s ${currMonth} tasks...`}</h3>
+          {!filteredTasks.length ? (
+            <>
+              <br />
+              <Empty />
+            </>
+          ) : (
+            filteredTasks.map((task, index) => {
+              return <TaskBox task={task} hideUsers={true} key={index} />;
+            })
+          )}
         </div>
         <br />
         <br />
