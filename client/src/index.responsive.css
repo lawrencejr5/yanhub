@@ -184,3 +184,8 @@
     border-radius: 10px;
   }
 }
+@media screen and (max-width: 405px) {
+  .notification-container .notification {
+    width: 96%;
+  }
+}
