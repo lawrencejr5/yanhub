@@ -68,7 +68,7 @@ const Account = () => {
     <main className="grid-body account-main">
       <Nav />
       {loading ? (
-        <LoadingContainer />
+        <LoadingContainer full={true} />
       ) : (
         <section className="body">
           <Notification notification={notification} />

@@ -51,7 +51,7 @@ const ShowTasks = () => {
         {!isAdmin ? "" : <TaskNav currVid={currVid} />}
 
         {loading ? (
-          <LoadingContainer />
+          <LoadingContainer full={true} />
         ) : filteredTasks.length === 0 ? (
           <>
             <br />

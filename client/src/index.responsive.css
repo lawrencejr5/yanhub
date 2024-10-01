@@ -39,8 +39,15 @@
     height: 60px;
     position: fixed;
     top: 0.5rem;
-
     width: 97%;
+  }
+
+  /* Loading container component */
+  .loading-container-full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
   }
 }
 

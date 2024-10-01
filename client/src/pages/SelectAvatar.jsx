@@ -91,9 +91,9 @@ const SelectAvatar = () => {
         })}
         <form action="" onSubmit={updateAvatar}>
           {selectedDiv ? (
-            <button>{btnLoad ? "..." : "Proceed"}</button>
+            <button>{btnLoad ? "Proceeding..." : "Proceed"}</button>
           ) : (
-            <button>{btnLoad ? "..." : "Skip"}</button>
+            <button>{btnLoad ? "Proceeding..." : "Skip"}</button>
           )}
         </form>
       </section>

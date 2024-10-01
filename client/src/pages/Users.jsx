@@ -70,55 +70,49 @@ const Users = () => {
         {loading ? (
           <LoadingContainer />
         ) : (
-          <div className="admins-container">
-            <h3>Admins</h3>
-            {!admins.length ? (
-              <Empty />
-            ) : (
-              admins.map((admin, index) => {
-                const { _id: userId, username, pic, role } = admin;
-                return (
-                  <div
-                    className="user-box"
-                    id="admin"
-                    key={index}
-                    onClick={() => clickFunc(userId)}
-                  >
-                    <img src={`/imgs/user-icons/${pic}`} alt="" />
-                    <p>{username}</p>
-                    <small>{role}</small>
-                  </div>
-                );
-              })
-            )}
-          </div>
-        )}
+          <>
+            <div className="admins-container">
+              <h3>Admins</h3>
+              {!admins.length
+                ? "..."
+                : admins.map((admin, index) => {
+                    const { _id: userId, username, pic, role } = admin;
+                    return (
+                      <div
+                        className="user-box"
+                        id="admin"
+                        key={index}
+                        onClick={() => clickFunc(userId)}
+                      >
+                        <img src={`/imgs/user-icons/${pic}`} alt="" />
+                        <p>{username}</p>
+                        <small>{role}</small>
+                      </div>
+                    );
+                  })}
+            </div>
 
-        {loading ? (
-          <LoadingContainer />
-        ) : (
-          <div className="admins-container">
-            <h3>Editors</h3>
-            {!editors.length ? (
-              <Empty />
-            ) : (
-              editors.map((editor, index) => {
-                const { _id: userId, username, pic, role } = editor;
-                return (
-                  <div
-                    className="user-box"
-                    id="editor"
-                    key={index}
-                    onClick={() => clickFunc(userId)}
-                  >
-                    <img src={`/imgs/user-icons/${pic}`} alt="" />
-                    <p>{username}</p>
-                    <small>{role}</small>
-                  </div>
-                );
-              })
-            )}
-          </div>
+            <div className="admins-container">
+              <h3>Editors</h3>
+              {!editors.length
+                ? "..."
+                : editors.map((editor, index) => {
+                    const { _id: userId, username, pic, role } = editor;
+                    return (
+                      <div
+                        className="user-box"
+                        id="editor"
+                        key={index}
+                        onClick={() => clickFunc(userId)}
+                      >
+                        <img src={`/imgs/user-icons/${pic}`} alt="" />
+                        <p>{username}</p>
+                        <small>{role}</small>
+                      </div>
+                    );
+                  })}
+            </div>
+          </>
         )}
       </section>
       <UserModal currUser={currUser} />

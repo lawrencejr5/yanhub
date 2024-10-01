@@ -7,6 +7,7 @@ import MyTasksLayout from "../components/MyTasksLayout";
 import Loading from "../components/Loading";
 import Greet from "../components/Greet";
 import Announcements from "../components/Announcements";
+import Notification from "../components/Notification";
 
 import { currMonth, currYear } from "../data/date";
 
@@ -21,6 +22,7 @@ const Dashboard = () => {
     allTasks,
     getTasksCompletedPerMonth,
     numOfMonthTasks,
+    notification,
   } = useGlobalContext();
 
   useEffect(() => {
@@ -39,12 +41,14 @@ const Dashboard = () => {
   return (
     <main className="grid-body dashboard-main">
       <Nav />
-      <section className="body">
-        <Greet />
-        <h2 className="heading">Your Dashboard</h2>
-        {loading ? (
-          <LoadingContainer />
-        ) : (
+      {loading ? (
+        <LoadingContainer full={true} />
+      ) : (
+        <section className="body">
+          <Notification notification={notification} />
+          <Greet />
+          <h2 className="heading">Your Dashboard</h2>
+
           <div className="layout">
             <div className="layout1">
               <div className="total-xp">
@@ -83,14 +87,15 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-        )}
-        {loading ? <LoadingContainer /> : <Announcements />}
-        {loading ? <LoadingContainer /> : <MyTasksLayout />}
 
-        <br />
-        <br />
-        <br />
-      </section>
+          <Announcements />
+          <MyTasksLayout />
+          <br />
+          <br />
+          <br />
+        </section>
+      )}
+
       <LeaderboardNav />
       <Bell />
     </main>

@@ -69,7 +69,7 @@ const User = () => {
     <main className="grid-body account-main">
       <Nav />
       {loading ? (
-        <LoadingContaier />
+        <LoadingContaier full={true} />
       ) : (
         <section className="body">
           <Notification notification={notification} />

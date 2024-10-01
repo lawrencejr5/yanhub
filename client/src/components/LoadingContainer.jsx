@@ -1,8 +1,8 @@
 import React from "react";
 
-const LoadingContainer = () => {
+const LoadingContainer = ({ full }) => {
   return (
-    <div className="loading-container-middle">
+    <div className={`loading-container-${full ? "full" : "middle"}`}>
       <div className="loading"></div>
     </div>
   );
