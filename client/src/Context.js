@@ -226,18 +226,19 @@ export const Context = ({ children }) => {
   const getTasksCompletedPerMonth = async (userId) => {
     const d = new Date();
     const monthVal = d.getMonth();
-    const month = monthVal < 10 ? `0${monthVal + 1}` : `${monthVal + 1}`;
+    const month = monthVal < 9 ? `0${monthVal + 1}` : `${monthVal + 1}`;
     try {
       setLoading(true);
       const { data } = await axios.get(`${endpoint}/tasks?status=completed`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const monthTasksFilter = data.tasks.filter(
-        (task) => task.createdAt.split("-")[1] === month
+        (task) => task.createdAt.split("-")[1] === month.toString()
       );
       const filteredTasks = monthTasksFilter.filter((task) =>
         task.assignedTo.some((usr) => usr._id === userId)
       );
+
       setNumOfMonthTasks(filteredTasks.length);
       setLoading(false);
     } catch (err) {
@@ -309,6 +310,7 @@ export const Context = ({ children }) => {
     fetchUser();
     fetchUsers();
     fetchShows();
+    getTasksCompletedPerMonth(localStorage.getItem("user"));
   }, []);
 
   useEffect(() => {

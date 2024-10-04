@@ -37,15 +37,15 @@ const Greet = () => {
     const hr = d.getHours();
 
     if (hr >= 0 && hr < 12) {
-      greeting = "Ututu Oma";
+      greeting = "Ututu Oma 👋";
     } else if (hr >= 12 && hr < 16) {
-      greeting = "Efifie Oma";
+      greeting = "Efifie Oma 🤗";
     } else if (hr >= 16 && hr < 20) {
-      greeting = "Mgbede Oma";
+      greeting = "Mgbede Oma 😪";
     } else {
-      greeting = "Aniasi Oma";
+      greeting = "Aniasi Oma 😴";
     }
-
+    // 🤜🤛
     return greeting;
   };
   return (
