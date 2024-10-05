@@ -130,3 +130,294 @@ app.get("/search", async (req, res) => {
 app.listen(3000, () => {
   console.log("Server is running on port 3000");
 });
+
+//protected routes
+import React from "react";
+import { BrowserRouter as Router, Route, Redirect } from "react-router-dom";
+
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) =>
+      localStorage.getItem("token") ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to="/login" />
+      )
+    }
+  />
+);
+
+const App = () => (
+  <Router>
+    <Route path="/login" component={Login} />
+    <PrivateRoute path="/protected" component={ProtectedComponent} />
+  </Router>
+);
+
+export default App;
+
+//1
+// Login route
+app.post("/login", (req, res) => {
+  const { username, password } = req.body;
+  const user = users.find((u) => u.username === username);
+  if (user && bcrypt.compareSync(password, user.password)) {
+    const token = jwt.sign(
+      { id: user.id, role: user.role },
+      "your_jwt_secret",
+      { expiresIn: "1h" }
+    );
+    res.json({ token });
+  } else {
+    res.status(401).send("Invalid credentials");
+  }
+});
+
+//2
+const authorizeRole = (roles) => {
+  return (req, res, next) => {
+    const token = req.headers["authorization"];
+    if (!token) return res.sendStatus(401);
+    jwt.verify(token, "your_jwt_secret", (err, user) => {
+      if (err) return res.sendStatus(403);
+      if (!roles.includes(user.role)) return res.sendStatus(403);
+      req.user = user;
+      next();
+    });
+  };
+};
+
+// Example of a protected route
+app.get("/admin", authenticateToken, authorizeRole(["admin"]), (req, res) => {
+  res.send("This is an admin route");
+});
+
+//3
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+
+const Dashboard = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:3000/dashboard", {
+          headers: { Authorization: token },
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {data ? (
+        <div>
+          <h1>Welcome, {data.username}</h1>
+          {/* Render user-specific content */}
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+};
+
+// export default Dashboard;
+
+//5
+const Dashbodard = () => {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:3000/dashboard", {
+          headers: { Authorization: token },
+        });
+        setData(response.data);
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  return (
+    <div>
+      {data ? (
+        <div>
+          <h1>Welcome, {data.username}</h1>
+          {data.role === "admin" && <AdminContent />}
+          {data.role === "user" && <UserContent />}
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+};
+
+const AdminContent = () => <div>Admin-specific content</div>;
+const UserContent = () => <div>User-specific content</div>;
+
+//1
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
+const Dashboardd = () => {
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const response = await axios.get("http://localhost:3000/dashboard", {
+          headers: { Authorization: token },
+        });
+        setData(response.data);
+      } catch (error) {
+        if (error.response.status === 401) {
+          localStorage.removeItem("token");
+          navigate("/login");
+        } else {
+          console.error("Error fetching data", error);
+        }
+      }
+    };
+
+    fetchData();
+  }, [navigate]);
+
+  return (
+    <div>
+      {data ? (
+        <div>
+          <h1>Welcome, {data.username}</h1>
+          {/* Render user-specific content */}
+        </div>
+      ) : (
+        <p>Loading...</p>
+      )}
+    </div>
+  );
+};
+
+// export default Dashboard;
+
+//2
+import React from "react";
+import { Route, Navigate } from "react-router-dom";
+
+const ProtecteRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return <Navigate to="/login" />;
+      }
+
+      try {
+        // Optionally, you can decode and verify the token here
+        // const decoded = jwt.decode(token);
+        // if (decoded.exp < Date.now() / 1000) {
+        //   localStorage.removeItem('token');
+        //   return <Navigate to="/login" />;
+        // }
+
+        return <Component {...props} />;
+      } catch (error) {
+        localStorage.removeItem("token");
+        return <Navigate to="/login" />;
+      }
+    }}
+  />
+);
+
+// export default ProtectedRoute;
+
+//3
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "./Login";
+import Dashboard from "./Dashboard";
+// import ProtectedRoute from './ProtectedRoute';
+
+const Appp = () => (
+  <Router>
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <ProtectedRoute path="/dashboard" element={<Dashboard />} />
+    </Routes>
+  </Router>
+);
+
+// export default App;
+
+//Token expire
+
+import React from "react";
+import { Route, Navigate } from "react-router-dom";
+
+const ProtectedRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return <Navigate to="/login" />;
+      }
+
+      try {
+        // Optionally, you can decode and verify the token here
+        // const decoded = jwt.decode(token);
+        // if (decoded.exp < Date.now() / 1000) {
+        //   localStorage.removeItem('token');
+        //   return <Navigate to="/login" />;
+        // }
+
+        return <Component {...props} />;
+      } catch (error) {
+        localStorage.removeItem("token");
+        return <Navigate to="/login" />;
+      }
+    }}
+  />
+);
+
+// export default ProtectedRoute;
+
+import React from "react";
+import { useJwt } from "react-jwt";
+
+const Appi = () => {
+  const token = localStorage.getItem("token");
+  const { decodedToken, isExpired } = useJwt(token);
+
+  return (
+    <div>
+      <h1>Decode JWT Example</h1>
+      <p>Decoded Token: {JSON.stringify(decodedToken)}</p>
+      <p>Token Expired: {isExpired ? "Yes" : "No"}</p>
+    </div>
+  );
+};
+
+// export default App;

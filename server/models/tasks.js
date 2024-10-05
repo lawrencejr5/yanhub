@@ -4,15 +4,6 @@ const taskSchema = new mongoose.Schema(
   {
     type: {
       type: String,
-      enum: [
-        "shooting",
-        "cutting & sound",
-        "subtitling",
-        "highlight",
-        "finishing",
-        "rendering",
-        "scaling",
-      ],
       required: true,
     },
     video: {
@@ -30,10 +21,24 @@ const taskSchema = new mongoose.Schema(
       required: true,
       ref: "Users",
     },
+    started: {
+      type: Date,
+    },
+    ended: {
+      type: Date,
+    },
+    month: {
+      type: String,
+      required: true,
+    },
+    year: {
+      type: String,
+      required: true,
+    },
     status: {
       type: String,
-      enum: ["ongoing", "completed"],
-      default: "ongoing",
+      enum: ["undone", "ongoing", "completed"],
+      default: "undone",
     },
   },
   { timestamps: true }

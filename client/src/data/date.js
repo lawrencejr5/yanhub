@@ -1,4 +1,4 @@
-export const month = [
+const months = [
   "January",
   "February",
   "March",
@@ -9,8 +9,15 @@ export const month = [
   "August",
   "September",
   "October",
-  "Novembber",
+  "November",
   "December",
 ];
 
-export const day = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+const days = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+
+const d = new Date();
+const currMonth = months[d.getMonth()];
+// const currMonth = "October";
+const currYear = d.getFullYear();
+
+export { months, days, currMonth, currYear };

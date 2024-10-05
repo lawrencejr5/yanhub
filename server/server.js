@@ -5,6 +5,8 @@ const express = require("express");
 const app = express();
 // Security
 const cors = require("cors");
+const xss = require("xss-clean");
+const helmet = require("helmet");
 // Routers
 const usersRouter = require("./routes/users");
 const tasksRouter = require("./routes/tasks");
@@ -17,7 +19,10 @@ const authMiddleware = require("./middlewares/auth");
 const connectDb = require("./config/conn");
 
 // Middlewares
+app.set("trust proxy", 1);
 app.use(cors());
+app.use(helmet());
+app.use(xss());
 app.use(express.json());
 
 // Routes
@@ -32,7 +37,7 @@ app.use(authMiddleware);
 
 // Function to spin off server
 const startServer = async () => {
-  const port = process.env.PORT || 5001;
+  const port = process.env.PORT || 5000;
   const db = process.env.MONGO_URI;
   try {
     await connectDb(db);

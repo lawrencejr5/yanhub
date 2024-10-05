@@ -8,43 +8,66 @@ import Bell from "../components/Bell";
 import Loading from "../components/Loading";
 import TaskBox from "../components/TaskBox";
 import UserModal from "../components/modals/UserModal";
+import Empty from "../components/Empty";
+import TasksOptions from "../components/options/TasksOptions";
+import Notification from "../components/Notification";
+import LoadingContainer from "../components/LoadingContainer";
+import TaskNav from "../components/TaskNav";
 
 import { useGlobalContext } from "../Context";
-import TaskNav from "../components/TaskNav";
 
 const ShowTasks = () => {
   const { id } = useParams();
 
-  const { currVid, allTasks, fetchTasks, getVidDetails, loading, currUser } =
-    useGlobalContext();
+  const {
+    currVid,
+    allTasks,
+    fetchTasks,
+    getVidDetails,
+    loading,
+    currUser,
+    isAdmin,
+    notification,
+  } = useGlobalContext();
 
   useEffect(() => {
     document.title = "Yanhub - Task";
     getVidDetails(id);
     fetchTasks();
-    console.log(currVid);
   }, []);
 
   const filteredTasks = allTasks.filter((task) => task.video._id === id);
 
-  if (loading) return <Loading />;
   return (
     <main className="grid-body task-main">
       <Nav />
       <section className="body">
+        <Notification notification={notification} />
         <Back
           text={`Tasks under ${currVid.length === 0 ? "" : currVid.show.show}(${
             currVid.ep
           })`}
         />
-        <TaskNav currVid={currVid} />
-        {filteredTasks.map((task, index) => {
-          return <TaskBox task={task} key={index} />;
-        })}
+        {!isAdmin ? "" : <TaskNav currVid={currVid} />}
+
+        {loading ? (
+          <LoadingContainer full={true} />
+        ) : filteredTasks.length === 0 ? (
+          <>
+            <br />
+            <br />
+            <Empty />
+          </>
+        ) : (
+          filteredTasks.map((task, index) => {
+            return <TaskBox task={task} key={index} />;
+          })
+        )}
       </section>
       <UserModal currUser={currUser} />
       <LeaderboardNav />
       <Bell />
+      <TasksOptions />
     </main>
   );
 };

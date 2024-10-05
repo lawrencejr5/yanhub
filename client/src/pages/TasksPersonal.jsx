@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 
 import { useGlobalContext } from "../Context";
 
+import { currMonth, currYear } from "../data/date";
+
 import Nav from "../components/Nav";
 import LeaderboardNav from "../components/LeaderboardNav";
 import Bell from "../components/Bell";
@@ -13,22 +15,42 @@ import Loading from "../components/Loading";
 import Empty from "../components/Empty";
 import UserModal from "../components/modals/UserModal";
 import SortNav from "../components/SortNav";
+import Pagination from "../components/Pagination";
+import LoadingContainer from "../components/LoadingContainer";
+import TasksOptions from "../components/options/TasksOptions";
+import Notification from "../components/Notification";
 
 const TasksPersonal = () => {
-  const { allTasks, fetchTasks, searchTasks, loading, currUser } =
-    useGlobalContext();
+  const {
+    allTasks,
+    fetchTasks,
+    searchPersonalTasks,
+    loading,
+    currUser,
+    notification,
+  } = useGlobalContext();
 
   const [query, setQuery] = useState("");
   const [sortVal, setSortVal] = useState("");
+  const [thisMonth, setThisMonth] = useState(
+    localStorage.getItem("tmsrt") === "true"
+  );
 
   useEffect(() => {
     document.title = "Yanhub - Tasks";
-    fetchTasks();
   }, []);
 
   useEffect(() => {
-    searchTasks(query, sortVal);
-  }, [query, sortVal]);
+    if (thisMonth) {
+      searchPersonalTasks(query, sortVal, currMonth, currYear);
+    } else {
+      searchPersonalTasks(query, sortVal);
+    }
+  }, [query, sortVal, thisMonth]);
+
+  useEffect(() => {
+    localStorage.setItem("tmsrt", thisMonth);
+  }, [thisMonth]);
 
   const userId = localStorage.getItem("user");
   const filteredTasks = allTasks.filter((task) => {
@@ -36,15 +58,26 @@ const TasksPersonal = () => {
   });
   const navigate = useNavigate();
 
-  if (loading) return <Loading />;
+  // if (loading) return <Loading />;
 
   return (
     <main className="grid-body tasks-main">
       <Nav />
       <section className="body">
         <Greet />
-        <div className="header">
-          <h2>Tasks</h2>
+        <Notification notification={notification} />
+        <div className="task-header">
+          <div className="separate">
+            <h2>Tasks</h2>
+            <div className="inp-holder tm-sort">
+              <label htmlFor="">{currMonth} alone</label>&nbsp;&nbsp;
+              <input
+                type="checkbox"
+                checked={thisMonth}
+                onChange={() => setThisMonth((prev) => !prev)}
+              />
+            </div>
+          </div>
           <SearchBox
             what={"personal tasks"}
             query={query}
@@ -65,19 +98,31 @@ const TasksPersonal = () => {
 
           <SortNav sortVal={sortVal} setSortVal={setSortVal} />
         </div>
-        <div className="tasks-container">
-          {filteredTasks.length === 0 ? (
-            <Empty />
-          ) : (
-            filteredTasks.map((task, index) => {
-              return <TaskBox task={task} key={index} />;
-            })
-          )}
-        </div>
+        {loading ? (
+          <LoadingContainer />
+        ) : (
+          <div className="tasks-container">
+            {filteredTasks.length === 0 ? (
+              <Empty />
+            ) : (
+              filteredTasks.map((task, index) => {
+                return (
+                  <TaskBox
+                    task={task}
+                    personal={true}
+                    checkMonth={true}
+                    key={index}
+                  />
+                );
+              })
+            )}
+          </div>
+        )}
       </section>
       <LeaderboardNav />
       <UserModal currUser={currUser} />
       <Bell />
+      <TasksOptions checkMonth={true} />
     </main>
   );
 };

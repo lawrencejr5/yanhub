@@ -1,15 +1,40 @@
 const Task = require("../models/tasks");
 const Video = require("../models/videos");
 
+const months = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+const d = new Date();
+const currMonth = months[d.getMonth()];
+const currYear = d.getFullYear();
+
+// all tasks
 const getAllTasks = async (req, res) => {
   try {
-    const { search, status, limit } = req.query;
+    const { search, status, month, year } = req.query;
 
     const queryObj = {};
     if (status) queryObj.status = status;
+    if (month) queryObj.month = month;
+    if (year) queryObj.year = year;
+
+    const page = Number(req.query.page);
+    const limit = Number(req.query.limit);
+    const skip = (page - 1) * limit;
 
     if (search) {
-      const results = await Task.find(queryObj)
+      let tempTasks = Task.find(queryObj)
         .populate({
           path: "video",
           select: "ep duration",
@@ -19,7 +44,12 @@ const getAllTasks = async (req, res) => {
           },
         })
         .populate("assignedTo", "username pic")
-        .exec();
+        .sort("-createdAt");
+
+      if (page && limit) tempTasks = tempTasks.limit(limit).skip(skip);
+      if (limit) tempTasks = tempTasks.limit(limit);
+
+      const results = await tempTasks;
       const filteredResults = results.filter((task) => {
         const epMatch = task.video.ep.match(new RegExp(search, "i"));
         const showMatch =
@@ -30,7 +60,7 @@ const getAllTasks = async (req, res) => {
       return res.status(200).json({ msg: "Success", tasks: filteredResults });
     }
 
-    const tasks = await Task.find(queryObj)
+    let tempTasks = Task.find(queryObj)
       .populate({
         path: "video",
         select: "ep duration",
@@ -40,7 +70,12 @@ const getAllTasks = async (req, res) => {
         },
       })
       .populate("assignedTo", "username pic")
-      .limit(limit);
+      .sort("-createdAt");
+
+    if (page && limit) tempTasks = tempTasks.limit(limit).skip(skip);
+    if (limit) tempTasks = tempTasks.limit(limit);
+
+    const tasks = await tempTasks;
 
     res.status(200).json({ msg: "Success", rowCount: tasks.length, tasks });
   } catch (err) {
@@ -54,7 +89,7 @@ const getTask = async (req, res) => {
       params: { id },
     } = req;
 
-    const task = await Task.find({ assignedTo: [id] })
+    const task = await Task.findById(id)
       .populate({
         path: "video",
         select: "ep duration",
@@ -78,10 +113,10 @@ const setTask = async (req, res) => {
   try {
     const {
       user: { userId },
-      body: { type, video, assignedTo },
+      body: { type, video, assignedTo, month, year },
     } = req;
 
-    if (!type || !video || !assignedTo)
+    if (!type || !video || !assignedTo || !month || !year)
       return res.status(501).json({ msg: "Fill in required fields" });
 
     const TaskExists = await Task.findOne({ video, type });
@@ -94,7 +129,14 @@ const setTask = async (req, res) => {
       return res.status(200).json({ msg: "Task was updated", updatedTask });
     }
 
-    const dataObj = { type, video, assignedTo, assignedBy: userId };
+    const dataObj = {
+      type,
+      video,
+      assignedTo,
+      month,
+      year,
+      assignedBy: userId,
+    };
     const createdTask = await Task.create({ ...dataObj });
 
     if (createdTask) {
@@ -114,11 +156,37 @@ const updateTask = async (req, res) => {
     const {
       params: { id },
       query: { complete },
-      body: { type, video, assignedTo, status: stat },
+      body: { type, video, assignedTo, started, ended, status: stat },
     } = req;
 
-    if (!type && !video && !assignedTo && !stat)
+    if (!type && !video && !assignedTo && !stat && !started && !ended)
       return res.status(500).json({ msg: "Wetin you come dey update??" });
+
+    if (stat === "undone") {
+      await Task.findByIdAndUpdate(
+        id,
+        { ...req.body, started: "", ended: "" },
+        { new: true, runValidators: true }
+      );
+    } else if (stat === "ongoing") {
+      await Task.findByIdAndUpdate(
+        id,
+        {
+          ...req.body,
+          started: new Date(),
+          ended: "",
+          month: currMonth,
+          year: currYear,
+        },
+        { new: true, runValidators: true }
+      );
+    } else if (stat === "completed") {
+      await Task.findByIdAndUpdate(
+        id,
+        { ...req.body, ended: new Date() },
+        { new: true, runValidators: true }
+      );
+    }
 
     const updatedTask = await Task.findByIdAndUpdate(
       id,

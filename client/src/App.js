@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+} from "react-router-dom";
 import Register from "./pages/Register";
 import SelectAvatar from "./pages/SelectAvatar";
 import Login from "./pages/Login";
@@ -14,6 +19,9 @@ import Account from "./pages/Account";
 import Videos from "./pages/Videos";
 import Video from "./pages/Video";
 import ShowTasks from "./pages/ShowTasks";
+
+import Protected from "./components/Route/Protected";
+import Private from "./components/Route/Private";
 
 import { useGlobalContext } from "./Context";
 
@@ -34,24 +42,96 @@ const App = () => {
     document.body.className = theme;
     localStorage.setItem("theme", theme);
   }, [theme]);
+
   return (
     <>
       <Router>
         <ScrollTop />
         <Routes>
-          <Route exact path="/" element={<Dashboard />}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="register" element={<Register />}></Route>
           <Route path="register/avatar" element={<SelectAvatar />}></Route>
-          <Route path="videos" element={<Videos />}></Route>
-          <Route path="videos/:id" element={<Video />}></Route>
-          <Route path="tasks" element={<Tasks />}></Route>
-          <Route path="tasks/personal" element={<TasksPersonal />}></Route>
-          <Route path="video/assign/:id" element={<AssignTask />}></Route>
-          <Route path="video/tasks/:id" element={<ShowTasks />}></Route>
-          <Route path="users" element={<Users />}></Route>
-          <Route path="user/:id" element={<User />}></Route>
-          <Route path="account" element={<Account />}></Route>
+          <Route
+            exact
+            path="/"
+            element={
+              <Protected>
+                <Dashboard />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="videos"
+            element={
+              <Protected>
+                <Videos />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="videos/:id"
+            element={
+              <Protected>
+                <Video />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="tasks"
+            element={
+              <Protected>
+                <Tasks />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="tasks/personal"
+            element={
+              <Protected>
+                <TasksPersonal />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="video/assign/:id"
+            element={
+              <Private>
+                <AssignTask />
+              </Private>
+            }
+          ></Route>
+          <Route
+            path="video/tasks/:id"
+            element={
+              <Protected>
+                <ShowTasks />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="users"
+            element={
+              <Protected>
+                <Users />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="user/:id"
+            element={
+              <Protected>
+                <User />
+              </Protected>
+            }
+          ></Route>
+          <Route
+            path="account"
+            element={
+              <Protected>
+                <Account />
+              </Protected>
+            }
+          ></Route>
           <Route path="*" element={<Notfound />}></Route>
         </Routes>
       </Router>

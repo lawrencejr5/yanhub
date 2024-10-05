@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
+import { currMonth, currYear } from "./data/date";
+
 const ContextApp = createContext();
 export const Context = ({ children }) => {
   // Modals & nav
@@ -15,6 +17,11 @@ export const Context = ({ children }) => {
   const [avatarModal, setAvatarModal] = useState(false);
 
   const [assignTask, setAssignTask] = useState("");
+
+  // Options
+  const [showOptions, setShowOptions] = useState(false);
+  const [videoOptions, setVideoOptions] = useState(false);
+  const [taskOptions, setTaskOptions] = useState(false);
 
   //Notification
   const [notification, setNotification] = useState({
@@ -33,13 +40,18 @@ export const Context = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [btnLoad, setBtnLoad] = useState(false);
 
+  // Leaderboard
+  const [leaderboard, setLeaderbord] = useState([]);
+
   // Logged in user
   const [loggedIn, setLoggedIn] = useState("lawrencejr");
   const [signedIn, setSignedIn] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   // All data
   const [allUsers, setAllUsers] = useState([]);
   const [allTasks, setAllTasks] = useState([]);
+  const [allShows, setAllShows] = useState([]);
   const [videos, setVideos] = useState([]);
 
   // User states
@@ -52,8 +64,12 @@ export const Context = ({ children }) => {
   const [currShow, setCurrShow] = useState([]);
 
   // Tasks states
+  const [tasks, setTasks] = useState([]);
+  const [currTask, setCurrTask] = useState([]);
   const [checked, setChecked] = useState(null);
   const [numOfMonthTasks, setNumOfMonthTasks] = useState(0);
+  const [page, setPage] = useState(1);
+  const limit = 15;
 
   // Dark mode
   const [theme, setTheme] = useState(
@@ -81,7 +97,8 @@ export const Context = ({ children }) => {
   };
 
   // Endpoint and token
-  const endpoint = "http://localhost:5001/api/v1";
+  const endpoint = "https://yanhub.onrender.com/api/v1";
+  // const endpoint = "http://localhost:5001/api/v1";
   const token = localStorage.getItem("token");
 
   const fetchUser = async () => {
@@ -90,6 +107,7 @@ export const Context = ({ children }) => {
       setLoading(true);
       const { data } = await axios.get(`${endpoint}/users/${userId}`);
       setSignedIn(data.user);
+      setIsAdmin(data.user.admin);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -107,11 +125,26 @@ export const Context = ({ children }) => {
     }
   };
 
-  const fetchTasks = async (limit) => {
+  const getLeaderBoardRanking = async () => {
+    try {
+      // setLoading(true);
+      const { data } = await axios.get(
+        `${endpoint}/users/leaderboard/?month=${currMonth}&year=${currYear}`
+      );
+      setLeaderbord(data.rankings);
+      // setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchTasks = async (month, year) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/tasks?limit=${limit || ""}`,
+        month && year
+          ? `${endpoint}/tasks/?month=${month}&year=${year}`
+          : `${endpoint}/tasks`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -123,11 +156,62 @@ export const Context = ({ children }) => {
     }
   };
 
-  const searchTasks = async (query, status) => {
+  const fetchTask = async (id) => {
+    try {
+      // setLoading(true);
+      const { data } = await axios.get(`${endpoint}/tasks/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setCurrTask(data.task);
+      // setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const fetchTasksByPage = async (limit, pages, month, year) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/tasks?search=${query}&status=${status}`,
+        month && year
+          ? `${endpoint}/tasks?limit=${limit}&page=${pages}&month=${month}&year=${year}`
+          : `${endpoint}/tasks?limit=${limit}&page=${pages}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const searchTasks = async (query, status, month, year) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        month && year
+          ? `${endpoint}/tasks?search=${query}&status=${status}&month=${month}&year=${year}`
+          : `${endpoint}/tasks?search=${query}&status=${status}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setTasks(data.tasks);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const searchPersonalTasks = async (query, status, month, year) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(
+        month && year
+          ? `${endpoint}/tasks?search=${query}&status=${status}&month=${month}&year=${year}`
+          : `${endpoint}/tasks?search=${query}&status=${status}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -142,18 +226,19 @@ export const Context = ({ children }) => {
   const getTasksCompletedPerMonth = async (userId) => {
     const d = new Date();
     const monthVal = d.getMonth();
-    const month = monthVal < 10 ? `0${monthVal + 1}` : `${monthVal + 1}`;
+    const month = monthVal < 9 ? `0${monthVal + 1}` : `${monthVal + 1}`;
     try {
       setLoading(true);
       const { data } = await axios.get(`${endpoint}/tasks?status=completed`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const monthTasksFilter = data.tasks.filter(
-        (task) => task.createdAt.split("-")[1] === month
+        (task) => task.createdAt.split("-")[1] === month.toString()
       );
       const filteredTasks = monthTasksFilter.filter((task) =>
         task.assignedTo.some((usr) => usr._id === userId)
       );
+
       setNumOfMonthTasks(filteredTasks.length);
       setLoading(false);
     } catch (err) {
@@ -165,7 +250,7 @@ export const Context = ({ children }) => {
     try {
       setLoading(true);
       const { data } = await axios.get(
-        `${endpoint}/videos?show=${show}&status=${status}`,
+        `${endpoint}/videos?show=${show}&status=${status || ""}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -179,17 +264,30 @@ export const Context = ({ children }) => {
 
   const getVidDetails = async (id) => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const { data } = await axios.get(`${endpoint}/videos/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCurrVid(data.video);
-      setLoading(false);
+      // setLoading(false);
     } catch (err) {
       const {
         response: { data },
       } = err;
       console.log(data);
+    }
+  };
+
+  const fetchShows = async () => {
+    try {
+      setLoading(true);
+      const { data } = await axios.get(`${endpoint}/shows`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setAllShows(data.shows);
+      setLoading(false);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -199,6 +297,7 @@ export const Context = ({ children }) => {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCurrShow(data.shows);
+      // console.log(currShow);
     } catch (err) {
       const {
         response: { data },
@@ -210,8 +309,13 @@ export const Context = ({ children }) => {
   useEffect(() => {
     fetchUser();
     fetchUsers();
-    fetchTasks();
+    fetchShows();
+    getTasksCompletedPerMonth(localStorage.getItem("user"));
   }, []);
+
+  useEffect(() => {
+    getLeaderBoardRanking();
+  }, [tasks]);
 
   return (
     <ContextApp.Provider
@@ -233,6 +337,13 @@ export const Context = ({ children }) => {
         avatarModal,
         setAvatarModal,
         //
+        showOptions,
+        setShowOptions,
+        videoOptions,
+        setVideoOptions,
+        taskOptions,
+        setTaskOptions,
+        //
         loggedIn,
         setLoggedIn,
         endpoint,
@@ -251,15 +362,29 @@ export const Context = ({ children }) => {
         //
         signedIn,
         allUsers,
+        isAdmin,
+        leaderboard,
+        //
         allTasks,
+        tasks,
+        setTasks,
+        //
+        allShows,
+        //
         videos,
         setSignedIn,
         currVid,
         currUser,
         setCurrUser,
         currShow,
+        currTask,
         assignTask,
         setAssignTask,
+        //
+        limit,
+        page,
+        setPage,
+        //
         checked,
         setChecked,
         //
@@ -269,7 +394,11 @@ export const Context = ({ children }) => {
         fetchUser,
         fetchUsers,
         fetchTasks,
+        fetchTask,
+        fetchTasksByPage,
         searchTasks,
+        searchPersonalTasks,
+        fetchShows,
         getVideos,
         getVidDetails,
         getShowById,

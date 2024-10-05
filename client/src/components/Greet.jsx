@@ -14,7 +14,7 @@ const Greet = () => {
   const { username } = user;
 
   const [datetime, setDatetime] = useState(new Date());
-  const [greet, setGreet] = useState("Good .....");
+  const [greet, setGreet] = useState("..... Oma");
 
   useEffect(() => {
     const timeInterval = setInterval(() => {
@@ -37,15 +37,15 @@ const Greet = () => {
     const hr = d.getHours();
 
     if (hr >= 0 && hr < 12) {
-      greeting = "Good Morning";
+      greeting = "Ututu Oma 👋";
     } else if (hr >= 12 && hr < 16) {
-      greeting = "Good Afternoon";
+      greeting = "Efifie Oma 🤗";
     } else if (hr >= 16 && hr < 20) {
-      greeting = "Good Evening";
+      greeting = "Mgbede Oma 😪";
     } else {
-      greeting = "Good Night";
+      greeting = "Aniasi Oma 😴";
     }
-
+    // 🤜🤛
     return greeting;
   };
   return (

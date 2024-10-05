@@ -6,7 +6,7 @@ import { useGlobalContext } from "../Context";
 const Bell = () => {
   const { theme, toggleTheme } = useGlobalContext();
   return (
-    <div className="announcement" onClick={toggleTheme}>
+    <div className="theme-div" onClick={toggleTheme}>
       {theme === "dark" ? <FaMoon /> : <FaSun />}
     </div>
   );

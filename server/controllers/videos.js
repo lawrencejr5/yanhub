@@ -1,4 +1,5 @@
 const Video = require("../models/videos");
+const Task = require("../models/tasks");
 
 const getAllVideos = async (req, res) => {
   try {
@@ -10,7 +11,9 @@ const getAllVideos = async (req, res) => {
 
     if (status) queryObj.status = status;
 
-    const videos = await Video.find(queryObj).populate("show", "show");
+    const videos = await Video.find(queryObj)
+      .populate("show", "show")
+      .sort("-createdAt");
     res.status(200).json({ msg: "Success", rowCount: videos.length, videos });
   } catch (err) {
     res.status(500).json({ msg: "An error occured", err });
@@ -23,7 +26,9 @@ const getVideo = async (req, res) => {
       params: { id },
     } = req;
 
-    const video = await Video.findById(id).populate("show", "show");
+    const video = await Video.findById(id)
+      .populate("show", "show")
+      .sort("-createdAt");
 
     if (!video)
       return res.status(404).json({ msg: `Video with id: ${id} not found` });
@@ -80,6 +85,9 @@ const delVideo = async (req, res) => {
     const { id } = req.params;
 
     const deletedVideo = await Video.findByIdAndDelete(id);
+    if (deletedVideo) {
+      await Task.deleteMany({ video: id });
+    }
     if (!deletedVideo)
       return res.status(400).json({ msg: `No show with id: ${id}` });
 

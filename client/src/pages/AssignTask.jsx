@@ -14,6 +14,7 @@ import TaskNav from "../components/TaskNav";
 import { taskTypes } from "../data/tasks";
 
 import { useGlobalContext } from "../Context";
+import LoadingContainer from "../components/LoadingContainer";
 
 const AssignTask = () => {
   const {
@@ -33,20 +34,23 @@ const AssignTask = () => {
     fetchUsers();
   }, []);
 
-  if (loading) return <Loading />;
   return (
     <main className="grid-body task-main">
       <Nav />
-      <section className="body">
-        <Back text={`Assign tasks to ${currVid.ep}`} />
-        <TaskNav currVid={currVid} />
-        <Notification notification={notification} />
-        <div className="task-container">
-          {taskTypes.map((task, index) => {
-            return <VidSingleTask key={index} task={task} />;
-          })}
-        </div>
-      </section>
+      {loading ? (
+        <LoadingContainer />
+      ) : (
+        <section className="body">
+          <Notification notification={notification} />
+          <Back text={`Assign tasks to ${currVid.ep}`} />
+          <div className="task-container">
+            {taskTypes.map((task, index) => {
+              return <VidSingleTask key={index} task={task} />;
+            })}
+          </div>
+        </section>
+      )}
+
       <LeaderboardNav />
       <Bell />
       <AssignModal assignTask={assignTask} />

@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { FaEllipsisV } from "react-icons/fa";
+import { format } from "date-fns";
 
 import { useGlobalContext } from "../Context";
 
 const SingleVideo = ({ vid }) => {
-  const { getVidDetails } = useGlobalContext();
+  const { getVidDetails, setVideoOptions, isAdmin } = useGlobalContext();
 
   const navigate = useNavigate();
 
@@ -13,32 +15,46 @@ const SingleVideo = ({ vid }) => {
     getVidDetails(id);
   };
 
+  const openOptions = () => {
+    setVideoOptions(true);
+    getVidDetails(vid._id);
+  };
+
+  const hrs = vid.duration.split(":")[0];
+  const mins = vid.duration.split(":")[1];
   return (
-    <div className="video" onClick={() => set(vid._id)}>
+    <div className="video">
       <div
         className="img"
         style={{
           backgroundImage: `url(/imgs/background/${"white1.jpg"})`,
         }}
+        onClick={() => set(vid._id)}
       ></div>
       <div className="details">
         <div className="header">
-          <strong>{`${vid.show.show}(${vid.ep})`}</strong>
-          <span
-            className={
-              vid.status === "completed"
-                ? "status success"
-                : vid.status === "ongoing"
-                ? "status warning"
-                : "status danger"
-            }
-          >
-            {vid.status}
-          </span>{" "}
+          <strong
+            onClick={() => set(vid._id)}
+          >{`${vid.show.show}(${vid.ep})`}</strong>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <span
+              className={
+                vid.status === "completed"
+                  ? "status success"
+                  : vid.status === "ongoing"
+                  ? "status warning"
+                  : "status danger"
+              }
+            >
+              {vid.status}
+            </span>
+            &nbsp;&nbsp;
+            {isAdmin && <FaEllipsisV onClick={openOptions} />}
+          </div>
         </div>
         <div className="info">
-          <span className="dur">{vid.duration}</span> {" . "}
-          <span className="date">{vid.createdAt}</span>
+          <span className="dur">{`${hrs}h ${mins}m`}</span> {" . "}
+          <span className="date">{format(vid.createdAt, "PP")}</span>
         </div>
       </div>
     </div>

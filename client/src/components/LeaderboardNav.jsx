@@ -1,10 +1,12 @@
 import React from "react";
 
-import { leaderboard } from "../data/leaderboard";
-import { month } from "../data/date";
+import { months } from "../data/date";
+
+import { useGlobalContext } from "../Context";
 const LeaderboardNav = () => {
+  const { leaderboard } = useGlobalContext();
   const d = new Date();
-  const currMonth = month[d.getMonth()];
+  const currMonth = months[d.getMonth()];
   return (
     <aside className="relative">
       <div className="sticky">
@@ -12,14 +14,14 @@ const LeaderboardNav = () => {
 
         <div className="list">
           <ul>
-            {leaderboard.map((item, index) => {
-              const { rank, username, xp } = item;
+            {leaderboard.slice(0, 5).map((item, index) => {
+              const { name, taskCount } = item;
               return (
-                <li key={index} className={rank === 1 ? "first" : ""}>
-                  <span>{rank}.&nbsp;</span>
-                  {username}
+                <li key={index} className={index === 0 ? "first" : ""}>
+                  <span>{index + 1}.&nbsp;</span>
+                  {name}
                   <br />
-                  <small>{xp || "0xp"}</small>
+                  <small>{taskCount} task(s)</small>
                 </li>
               );
             })}

@@ -39,8 +39,15 @@
     height: 60px;
     position: fixed;
     top: 0.5rem;
-
     width: 97%;
+  }
+
+  /* Loading container component */
+  .loading-container-full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
   }
 }
 
@@ -124,6 +131,25 @@
   .sort-nav {
     padding: 0 1rem;
   }
+
+  /* Pagingation Component styling */
+  .pagination-container {
+    bottom: 0;
+  }
+  .pagination-container button {
+    background-color: var(--secondary2);
+    border: 2px solid var(--primary);
+    margin: 0 0.3rem;
+    padding: 0.1rem 0.3rem;
+    border-radius: 5px;
+    outline: 0;
+    color: var(--text1);
+  }
+
+  /* Options */
+  .options .edit-sec input {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -156,5 +182,10 @@
   .user-modal-container .user-modal {
     width: 100%;
     border-radius: 10px;
+  }
+}
+@media screen and (max-width: 405px) {
+  .notification-container .notification {
+    width: 96%;
   }
 }

@@ -11,7 +11,6 @@ const SearchBox = ({ what, query, queryFunc }) => {
           <input
             type="text"
             value={query}
-            autoFocus
             onChange={(e) => queryFunc(e.target.value)}
             placeholder={`Search ${what}...`}
           />
