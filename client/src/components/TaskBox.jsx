@@ -14,7 +14,7 @@ const TaskBox = ({ task, hideUsers, personal, checkMonth }) => {
     isAdmin,
     endpoint,
     token,
-    setLoading,
+    // setLoading,
     fetchTasks,
     fetchTask,
     fetchTasksByPage,
@@ -29,7 +29,7 @@ const TaskBox = ({ task, hideUsers, personal, checkMonth }) => {
   const {
     _id: id,
     video: {
-      _id: vidId,
+      // _id: vidId,
       ep,
       duration,
       show: { show },
@@ -51,34 +51,34 @@ const TaskBox = ({ task, hideUsers, personal, checkMonth }) => {
     fetchTask(task._id);
   };
 
-  const complete = async (id, type, video) => {
-    try {
-      setLoading(true);
-      const { data } = await axios.patch(
-        `${endpoint}/tasks/${id}?complete=true`,
-        { status: "completed", type, video },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      if (checkMonth) {
-        thisMonth ? fetchTasks(currMonth, currYear) : fetchTasks();
-        thisMonth
-          ? fetchTasksByPage(limit, page, currMonth, currYear)
-          : fetchTasksByPage(limit, page);
-      } else {
-        fetchTasks();
-        fetchTasksByPage(limit, page);
-      }
-      setNotification({ text: data.msg, theme: "success", status: true });
-      setLoading(false);
-    } catch (err) {
-      const {
-        response: { data },
-      } = err;
-      setLoading(false);
-      setNotification({ text: data.msg, theme: "danger", status: true });
-      console.log(data);
-    }
-  };
+  // const complete = async (id, type, video) => {
+  //   try {
+  //     setLoading(true);
+  //     const { data } = await axios.patch(
+  //       `${endpoint}/tasks/${id}?complete=true`,
+  //       { status: "completed", type, video },
+  //       { headers: { Authorization: `Bearer ${token}` } }
+  //     );
+  //     if (checkMonth) {
+  //       thisMonth ? fetchTasks(currMonth, currYear) : fetchTasks();
+  //       thisMonth
+  //         ? fetchTasksByPage(limit, page, currMonth, currYear)
+  //         : fetchTasksByPage(limit, page);
+  //     } else {
+  //       fetchTasks();
+  //       fetchTasksByPage(limit, page);
+  //     }
+  //     setNotification({ text: data.msg, theme: "success", status: true });
+  //     setLoading(false);
+  //   } catch (err) {
+  //     const {
+  //       response: { data },
+  //     } = err;
+  //     setLoading(false);
+  //     setNotification({ text: data.msg, theme: "danger", status: true });
+  //     console.log(data);
+  //   }
+  // };
 
   const updateStat = async (e) => {
     try {
@@ -154,20 +154,12 @@ const TaskBox = ({ task, hideUsers, personal, checkMonth }) => {
           >
             <option value="undone">not started</option>
             <option value="ongoing">started</option>
-            <option value="completed">finished</option>
+            <option value="pending">finished</option>
           </select>
         ) : !isAdmin ? (
           ""
         ) : (
           <div>
-            <button className="text-success">
-              {status !== "completed" ? (
-                <FaRegCheckCircle onClick={() => complete(id, type, vidId)} />
-              ) : (
-                <FaCheckCircle />
-              )}
-            </button>
-            &nbsp;&nbsp;&nbsp;
             <FaEllipsisH onClick={openTaskOptions} />
           </div>
         )}

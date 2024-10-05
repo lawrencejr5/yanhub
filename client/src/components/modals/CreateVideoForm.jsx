@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaTimes } from "react-icons/fa";
 import axios from "axios";
 
@@ -18,6 +18,10 @@ const CreateVideoForm = ({ open, showId, currShow }) => {
   const [ep, setEp] = useState("");
   const [show, setShow] = useState(currShow.show);
 
+  useEffect(() => {
+    setShow(currShow.show);
+  });
+
   const createVideo = async (e) => {
     e.preventDefault();
 
@@ -30,7 +34,7 @@ const CreateVideoForm = ({ open, showId, currShow }) => {
       );
       setBtnLoad(false);
       setEp("");
-      await getVideos(showId);
+      getVideos(showId);
       setOpenCreateVideoModal(false);
       setNotification({ text: data.msg, theme: "success", status: true });
     } catch (err) {

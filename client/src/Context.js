@@ -292,11 +292,13 @@ export const Context = ({ children }) => {
   };
 
   const getShowById = async (id) => {
+    setLoading(true);
     try {
       const { data } = await axios.get(`${endpoint}/shows/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCurrShow(data.shows);
+      setLoading(false);
       // console.log(currShow);
     } catch (err) {
       const {

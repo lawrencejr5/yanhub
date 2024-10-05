@@ -17,7 +17,6 @@ const videoSchema = new mongoose.Schema(
     },
     status: {
       type: String,
-      enum: ["ongoing", "completed", "undone"],
       default: "undone",
     },
     createdBy: {
