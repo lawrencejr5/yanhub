@@ -121,7 +121,9 @@ const TaskBox = ({ task, hideUsers, personal, checkMonth }) => {
               ? "success"
               : status === "ongoing"
               ? "warning"
-              : "danger"
+              : status === "undone"
+              ? "danger"
+              : "secondary"
           }
         >
           {status}
@@ -149,7 +151,7 @@ const TaskBox = ({ task, hideUsers, personal, checkMonth }) => {
           <select
             name=""
             className="up-select"
-            defaultValue={status}
+            defaultValue={status === "completed" ? "pending" : status}
             onChange={updateStat}
           >
             <option value="undone">not started</option>

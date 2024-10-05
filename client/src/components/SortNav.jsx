@@ -24,6 +24,13 @@ const SortNav = ({ sortVal, setSortVal }) => {
         ongoing
       </button>
       <button
+        id="pending"
+        className={sortVal === "pending" ? "active" : ""}
+        onClick={(e) => setSortVal(e.target.id)}
+      >
+        pending
+      </button>
+      <button
         id="completed"
         className={sortVal === "completed" ? "active" : ""}
         onClick={(e) => setSortVal(e.target.id)}
