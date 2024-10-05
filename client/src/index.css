@@ -765,7 +765,6 @@ main {
 .sort-nav button {
   border: 2px solid var(--primary);
   font-size: 12px;
-  /* font-weight: 600; */
   margin: 0 0.2rem;
   padding: 0.2rem 0.4rem;
   border-radius: 15px;

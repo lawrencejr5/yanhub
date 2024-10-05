@@ -188,4 +188,20 @@
   .notification-container .notification {
     width: 96%;
   }
+  .sort-nav button {
+    font-size: 9px;
+  }
+}
+@media screen and (max-width: 405px) {
+  .notification-container .notification {
+    width: 96%;
+  }
+  .sort-nav button {
+    font-size: 10px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .sort-nav button {
+    font-size: 9px;
+  }
 }
