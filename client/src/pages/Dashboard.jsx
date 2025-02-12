@@ -92,11 +92,11 @@ const Dashboard = () => {
                 <>
                   <br />
                   <h3>{latestTask.video.show.show}</h3>
-                  <br />
+                  {/* <br /> */}
                   <p>Ep: {latestTask.video.ep}</p>
-                  <br />
+                  {/* <br /> */}
                   <p>Type: {latestTask.type}</p>
-                  <br />
+                  {/* <br /> */}
                   <p>Duration: {latestTask.video.duration}</p>
                 </>
               )}
