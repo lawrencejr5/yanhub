@@ -36,7 +36,19 @@ const Dashboard = () => {
     task.assignedTo.some((usr) => usr._id === signedIn._id)
   );
 
-  const latestTask = filteredTasks[filteredTasks.length - 1];
+  const getLatestTask = (tasks) => {
+    const ongoingOrUndoneTasks = tasks.filter(
+      (task) => task.status === "ongoing" || task.status === "undone"
+    );
+
+    if (ongoingOrUndoneTasks.length > 0) {
+      return ongoingOrUndoneTasks[0]; // Return the latest ongoing or undone task
+    } else {
+      return tasks[0]; // Return the latest completed task if no ongoing or undone tasks
+    }
+  };
+
+  const latestTask = getLatestTask(filteredTasks);
 
   return (
     <main className="grid-body dashboard-main">
@@ -78,10 +90,13 @@ const Dashboard = () => {
                 </>
               ) : (
                 <>
-                  <h4>{latestTask.video.show.show}</h4>
+                  <br />
+                  <h3>{latestTask.video.show.show}</h3>
                   <br />
                   <p>Ep: {latestTask.video.ep}</p>
+                  <br />
                   <p>Type: {latestTask.type}</p>
+                  <br />
                   <p>Duration: {latestTask.video.duration}</p>
                 </>
               )}
