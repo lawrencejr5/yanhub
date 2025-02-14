@@ -2,9 +2,13 @@ export const taskTypes = [
   "shooting",
   "cutting & sound",
   "subtitling",
-  "highlight",
+  "highlight 1",
+  "highlight 2",
+  "highlight 3",
   "scaling",
-  "finishing",
+  "finishing 1",
+  "finishing 2",
+  "finishing 3",
   "rendering",
 ];
 
